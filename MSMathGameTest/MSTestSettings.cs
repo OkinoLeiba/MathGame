@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting; 
-using Microsoft.VisualStudio.TestTools.UnitTesting.Parallel; 
+﻿using Microsoft.VisualStudio.TestTools;
+using Microsoft.VisualStudio.UnitTesting;
 
 [assembly: Parallelize(Workers = 0, Scope = ExecutionScope.MethodLevel)]

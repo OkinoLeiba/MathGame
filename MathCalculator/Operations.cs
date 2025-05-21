@@ -10,7 +10,7 @@ public class Operations
 	/// <param name="a">First number.</param>
 	/// <param name="b">Second number.</param>
 	/// <returns>The sum of a and b.</returns>
-	public double Add(double a, double b)
+	public double Addition(double a, double b)
 	{
 		return a + b;
 	}
