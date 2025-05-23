@@ -1,9 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using MathGame;									
+﻿using System;
+using MathGame;
+using UnitTest = Microsoft.VisualStudio.TestTools.UnitTesting;
+//using QualityTools = Microsoft.VisualStudio.QualityTools;
+using TestPlatform = Microsoft.VisualStudio.TestPlatform;
+
 
 namespace MathGameTest
 {
+	
 	[TestClass]
 	public class OperationsTest
 	{
@@ -26,7 +30,7 @@ namespace MathGameTest
 
 
 			// act
-			double result = _operations.Add(a, b);
+			double result = _operations.Addition(a, b);
 
 			// assert
 			Assert.AreEqual(8, result);
@@ -43,7 +47,7 @@ namespace MathGameTest
 			double a = 5, b = 3;
 
 			// act
-			double result = _operations.Add(a, b);
+			double result = _operations.Addition(a, b);
 
 			// assert
 			Assert.AreNotEqual(20, result);

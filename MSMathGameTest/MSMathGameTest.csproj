@@ -8,12 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
-    <PackageReference Include="Microsoft.TestPlatform" Version="17.13.0" />
-    <PackageReference Include="Microsoft.VisualStudio.TestPlatform" Version="14.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.UnitTesting" Version="11.0.50727.1" />
-    <PackageReference Include="MSTest" Version="3.8.3" />
-    <PackageReference Include="MSTest.TestAdapter" Version="3.8.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.0" />
+    <PackageReference Include="Microsoft.TestPlatform" Version="17.14.0" />
+    <PackageReference Include="Microsoft.VisualStudio.TestPlatform" Version="14.0.0" Alias="VSTestPlatform" />
+    <PackageReference Include="Microsoft.VisualStudio.UnitTesting" Version="11.0.50727.1" Alias="VSUnitTesting" />
+    <PackageReference Include="MSTest" Version="3.9.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.9.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,7 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" Alias="VSTestTools" />
   </ItemGroup>
+  
 
 </Project>

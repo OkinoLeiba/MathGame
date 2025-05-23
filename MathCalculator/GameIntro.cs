@@ -13,39 +13,25 @@ using static MathGame.OperationsEnum;
 namespace MathGame
 {
 	/// <summary>
-	/// Beginning of program after main entry point and iniatilized
+	/// Beginning of program after main entry point and initialized
 	/// </summary>
 	internal class GameIntro
 	{
 		public string? name = default(string);
-		public string gameSelect = default(string)!;
-		public List<string> methodNames = default(List<string>)!;
-		//Enum EnumMethodName;
-		int inputRepeatValidationSignal = default(int);
+		public int score = default(int);
+
 
 		public string? Name { get; set; }
-		public string GameSelect { get; set; }
-		public List<string> MethodNames { get; set; }
+		
+		public int Score { get; set; }
 
 		Operations operations = new Operations();
+		GameSelection gameSelection = new GameSelection();	
 
-		 
+
 		public GameIntro() {
 			Name = name ?? string.Empty;
-			GameSelect = gameSelect ?? string.Empty;
-			// get method names from Operations class as game options for user
-			MethodNames = typeof(Operations)
-				.GetMethods(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.DeclaredOnly)
-				.Select(m => m.Name)
-				.Distinct()
-				.ToList();
-
-			//attempted to cast list<T> to enum
-			//Enum.Parse(typeof(List<string>), methodNames.First());
-			//enum EMethodName = methodNames.Select(s => Enum.Parse(typeof(Enum), s)).ToList();
-
-			//attempted to dynamically add element of enum at runtime
-			//methodNames.Select(s =>  EnumMethodName s = EnumMethodName(0)); 
+			
 		}
 
 		/// <summary>
@@ -54,209 +40,186 @@ namespace MathGame
 		/// <return>void</return>
 		public void GameIntroMethod()
 		{
-			do { 
-			Console.WriteLine("Hello, World!");
+			do {
+				Console.WriteLine("Hello, World!");
 
-			Console.WriteLine("What is your name, Chief...\n");
-			Name = Console.ReadLine();
+				Console.WriteLine("What is your name, Chief...\n");
+				Name = Console.ReadLine();
 
-			DateTime date = DateTime.UtcNow;
+				DateTime date = DateTime.UtcNow;
 
-			Console.WriteLine("-----------------------------------------------------------------------");
-			Console.WriteLine($"Hello {Name}, the date is {date}.\nDo you want to play a game with me?");
-			} while (string.IsNullOrEmpty(Name));
-			GameRequestSelectionUser();
-		}
-
-		/// <summary>
-		/// Manage the selection of the game by user
-		/// </summary>
-		/// <return>void</return>
-		public void GameRequestSelectionUser()
-		{
-			
-			if (inputRepeatValidationSignal != 3)
-			{
-				Console.WriteLine("What game would you like to play today with me?\n");
-			}
-			else
-			{
-				Console.WriteLine("""
-					Please input a valid game option from the list below.
-					Example 'A' or 'Add'
-
-					""");
-			}
-				for (int i = 0, c = 0; i < MethodNames.Count; i++)
-				{
-					string col = default(string);
-					if (c == 24) c += 8;
-					//TODO: create two columns 05/20/2025
-					if (i == Math.Abs(MethodNames.Count / 2)) col = "10";
-					Console.WriteLine($"{(char)('A' + c++)} - {MethodNames[i]}{col}");
-					
-				}
-
-				Console.WriteLine("Exit");
 				Console.WriteLine("-----------------------------------------------------------------------");
-
-			// convert unicode characters from enum into symbols that define mathematical operation
-			var unicodeTest = Encoding.Unicode.GetString(Encoding.Unicode.GetBytes("\u002B"));
-				
-
-			GameSelect = Console.ReadLine()!;
+				Console.WriteLine($"Hello {Name}, the date is {date}.\nDo you want to play a game with me?");
+			} while (string.IsNullOrEmpty(Name));
+			gameSelection.GameRequestSelectionUser();
+		}
 
 		
-			// validate the game select to make the value is not null, not a number, and a member of the list of games
-			bool validInputGame = !string.IsNullOrEmpty(GameSelect)
-			&& !int.TryParse(GameSelect, out int result)
-			&& (Enum.GetNames(typeof(OperationsEnum.EnumOperationsMethod)).Contains(GameSelect)
-			|| Enum.GetNames(typeof(OperationsEnum.EnumOperationsMethodPrefix)).Contains(GameSelect));
 
-			// recursively validate the game selection input
-			if (!validInputGame) { inputRepeatValidationSignal++; GameRequestSelectionUser(); }
-
-			// manage game selection
-			try
-			{
-				if (GameSelect.Count() == 1)
-				{
-					int selectCount = 0;
-					foreach (var selectedGame in Enum.GetValues(typeof(OperationsEnum.EnumOperationsMethodPrefix)))
-					{
-						// different approach to retrieve string from enum via the cast of int to string literal
-						//Enum.GetName(typeof(OperationEnum.EnumOperationMethod), (int) game).ToString();
-						string gameName = ((OperationsEnum.EnumOperationsMethod)selectCount++).ToString();
-						if (GameSelect.ToLower() == selectedGame.ToString()!.ToLower())
-						{
-							Console.WriteLine($"The {gameName} game was selected.");
-							//typeof(Operations).GetMethod(selectedGame.ToString()).Invoke();
-							GameInputManager(gameName);
-						}
-						
-					}
-				}
-				else if (GameSelect.Count() > 1)
-				{
-					foreach (var selectedGame in Enum.GetNames(typeof(OperationsEnum.EnumOperationsMethod)))
-					{
-						if (GameSelect.ToLower() == selectedGame.ToString().ToLower()) Console.WriteLine($"The {selectedGame} game was selected.");
-						GameInputManager(selectedGame);
-					}
-				}
-				else if (GameSelect.Trim().ToLower() == "exit")
-				{
-					Console.WriteLine("Bye for Now!");
-					Environment.Exit(1);
-				}
-				else
-				{
-					Console.WriteLine("No game was selected!\nDo you want to Exit or Restart?");
-					string optionRestartorExit = Console.ReadLine();
-					if (optionRestartorExit?.Trim() == null) { Console.WriteLine(optionRestartorExit); }
-					else if (optionRestartorExit.Trim().ToLower() == "exit"
-						|| optionRestartorExit.Trim().ToLower() == "e"
-						|| optionRestartorExit.Trim().ToLower() == "close") { Environment.Exit(1); }
-					else { GameIntroMethod(); }
-
-				}
-			}
-			catch(NullReferenceException nfe)
-			{
-				Console.WriteLine(nfe.Message);
-			}
-
-			// generate a list of characters 
-			// exclude ascii characters after 5A
-			//var charList = Enumerable.Range(0, 60)
-			//	.Where(i => i < 20 || i > 20)
-			//	.Select(i => (char)('A' + i))
-			//	.ToList();
-		}
 
 		public void GameInputManager(string operation)
 		{
-			int firstNum = default(int);
-			string? firstStringNum = default(string);
-			int secondNum = default(int);
-			string? secondStringNum = default(string);
+			// declaring and initializing string with the default keyword is best practices
+			// declaring and initializing numeric variables is unnecessary considering the default values
+				// done for my awareness and purposes
 
-	
+			double firstNum = 0.0d;
+			//string? firstStringNum = default(string);
+			double secondNum = 0.0d;
+			//string? secondStringNum = default(string);
+
+			double result = 0.0d;
+			double answer = 0.0d;
+			string? answerString = default(string);
+
+			Random random = new Random();
+
+			// approach to initialize Operations class with minimal memory overhead 
+			// to be used throughout the lifecycle of the class
+			// the assigned instance is thread-safe and could provide an optimization through concurrent operations
+			// of the utility or helper class Operations
+			// how critical is the Operations class to my application requiring consideration
+			// of performance and safety and reliability 
 			//LazyInitializer.EnsureInitialized(Operations);
 
 			// initial approach to find the method signature, specifically the count of parameters
 			//MethodInfo.GetCurrentMethod();
 			int numOfParam = typeof(Operations).GetMethod(operation)!.GetParameters().Length;
 
+			//if (numOfParam == 1)
+			//{
+			//	try
+			//	{
+			//		do
+			//		{
+			//			Console.WriteLine("Enter a number");
+			//			firstNum = Convert.ToDouble(Console.ReadLine());
+			//		} while (Double.TryParse(Console.ReadLine(), out firstNum));
+
+			//	}
+			//	catch (NullReferenceException nfe)
+			//	{
+			//		Console.WriteLine(nfe.Message);
+			//	}
+
+			//	typeof(Operations).GetMethod(operation)!.Invoke(this.GetType(), new object[] { firstNum });
+			//}
+			//else if (numOfParam == 2) 
+			//{
+			//	try
+			//	{
+			//		do
+			//		{
+			//			Console.WriteLine("Enter first number");
+			//			firstStringNum = Console.ReadLine();
+			//		} while (firstStringNum is null && !Double.TryParse(firstStringNum, out firstNum));
+			//		firstNum = Convert.ToDouble(firstStringNum);
+
+			//		do
+			//		{
+			//			Console.WriteLine("Enter second number");
+			//			secondStringNum = Console.ReadLine();
+			//		} while (secondStringNum is null && !Double.TryParse(secondStringNum, out secondNum));
+			//		secondNum = Convert.ToDouble(secondStringNum);
+			//	}
+			//	catch (NullReferenceException nfe)
+			//	{
+			//		Console.WriteLine(nfe.Message);
+			//	}
+
+
+			// // access the specific symbol for the mathematical operation
+			// // the operation as the conditional variable
+			//	var operationSybmol = typeof(EnumOperationsMethodUnitSymbol)
+			//		.GetTypeInfo()
+			//		.DeclaredMembers
+			//		//.GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase)
+			//		.SingleOrDefault(m => m.Name.Trim().ToLower() == operation.Trim().ToLower())?
+			//		.GetCustomAttributes<DescriptionAttribute>(false)
+			//		.First()
+			//		.Description
+			//		.ToString();
+
+
+			// provide user feedback concerning the problem to be solved and take input from user
+			//	Console.WriteLine($"{operation}: {firstNum} {operationSybmol} {secondNum}");
+			//	Console.WriteLine("Please provide an answer");
+			//	answerString = Console.ReadLine();
+			//	while (answerString is null && !Double.TryParse(answerString, out answer))
+			//	{
+			//		Console.WriteLine("Please provide an valid answer");
+			//		answerString = Console.ReadLine();
+			//	}
+			//	answer = Convert.ToDouble(answerString);
+
+
+
+			//	// two approaches to invoke methods utilizing reflection and type 
+			//	//result = (double) typeof(Operations).InvokeMember(operation, BindingFlags.InvokeMethod | BindingFlags.Instance, null, Activator.CreateInstance(typeof(Operations)), new object[] { firstNum, secondNum });
+			//	result = (double) typeof(Operations).GetMethod(operation)!.Invoke(Activator.CreateInstance(typeof(Operations)), new object[] { firstNum, secondNum });
+			//}
+			//else
+			//{
+			//	Console.WriteLine("No valid numbers were provided!");
+			//}
+
+
+			// generate the numbers for the questions
 			if (numOfParam == 1)
 			{
-				try
-				{
-					do
-					{
-						Console.WriteLine("Enter a number");
-						firstNum = Convert.ToInt16(Console.ReadLine());
-					} while (int.TryParse(Console.ReadLine(), out firstNum));
-
-				}
-				catch (NullReferenceException nfe)
-				{
-					Console.WriteLine(nfe.Message);
-				}
-
-				typeof(Operations).GetMethod(operation)!.Invoke(this.GetType(), new object[] { firstNum });
+				firstNum = random.Next(0, 99);
 			}
-			else if (numOfParam == 2) 
+			if (numOfParam == 2)
 			{
-				try
-				{
-					do
-					{
-						Console.WriteLine("Enter first number");
-						firstStringNum = Console.ReadLine();
-					} while (firstStringNum is null && !int.TryParse(firstStringNum, out firstNum));
-					firstNum = Convert.ToInt16(firstStringNum);
-
-					do
-					{
-						Console.WriteLine("Enter second number");
-						secondStringNum = Console.ReadLine();
-					} while (secondStringNum is null && !int.TryParse(secondStringNum, out secondNum));
-					secondNum = Convert.ToInt16(secondStringNum);
-				}
-				catch (NullReferenceException nfe)
-				{
-					Console.WriteLine(nfe.Message);
-				}
-
-				var operationSybmol = typeof(EnumOperationsMethodUnitSymbol)
-					.GetTypeInfo()
-					.DeclaredMembers
-					//.GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase)
-					.SingleOrDefault(m => m.Name.Trim().ToLower() == operation.Trim().ToLower())?
-					.GetCustomAttributes<DescriptionAttribute>(false)
-					.First()
-					.Description
-					.ToString();
-
-				
-
-				Console.WriteLine($"{operation}: {firstNum} {operationSybmol} {secondNum}");
-
-
-				// two approaches to invoke methods utilizing reflection and type 
-				typeof(Operations).InvokeMember(operation, BindingFlags.InvokeMethod | BindingFlags.Instance, null, Activator.CreateInstance(typeof(Operations)), new object[] { firstNum, secondNum });
-				
-				typeof(Operations).GetMethod(operation)!.Invoke(Activator.CreateInstance(typeof(Operations)), new object[] { firstNum, secondNum });
+				firstNum = random.Next(0, 99);
+				secondNum = random.Next(0, 99); 
 			}
-			else
+
+
+			// ensure that the dividend it greater than divisor and divisor non-zero number
+			if (operation.Trim().ToLower() == "divide")
 			{
-				Console.WriteLine("No valid numbers were provided!");
+				firstNum = Math.Max(firstNum, secondNum);
+				secondNum = Math.Min(firstNum, secondNum);
+
+				if (secondNum == 0) { secondNum = 1; }
+
 			}
 
-			
+			// access the specific symbol for the mathematical operation
+			// the operation as the conditional variable
+			var operationSybmol = typeof(EnumOperationsMethodUnitSymbol)
+				.GetTypeInfo()
+				.DeclaredMembers
+				//.GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase)
+				.SingleOrDefault(m => m.Name.Trim().ToLower() == operation.Trim().ToLower())?
+				.GetCustomAttributes<DescriptionAttribute>(false)
+				.First()
+				.Description
+				.ToString();
+
+			// provide user feedback concerning the problem to be solved and take input from user
+			Console.WriteLine($"{operation}: {firstNum} {operationSybmol} {secondNum}");
+			Console.WriteLine("Please provide an answer");
+			answerString = Console.ReadLine();
+			while (answerString is null && !Double.TryParse(answerString, out answer))
+			{
+				Console.WriteLine("Please provide an valid answer");
+				answerString = Console.ReadLine();
+			}
+			answer = Convert.ToDouble(answerString);
+
+
+
+			// two approaches to invoke methods utilizing reflection and type 
+			//result = (double) typeof(Operations).InvokeMember(operation, BindingFlags.InvokeMethod | BindingFlags.Instance, null, Activator.CreateInstance(typeof(Operations)), new object[] { firstNum, secondNum });
+			result = (double)typeof(Operations).GetMethod(operation)!.Invoke(Activator.CreateInstance(typeof(Operations)), new object[] { firstNum, secondNum });
+
+			GameAnswerManager(result, answer);
 		}
-
+		// extension method to recover the enum attributes
+		// workout to declare enum with strings and access strings
+		// creating it as an generic may be an issue
 		//public string? ToEnumMember<T>(this T value) where T : Enum
 		//{
 		//	return typeof(T)
@@ -266,5 +229,22 @@ namespace MathGame
 		//		.GetCustomAttribute<EnumMemberAttribute>(false)?
 		//		.Value;
 		//}
+
+		public void GameAnswerManager(double result, double answer)
+		{
+			if (result == answer)
+			{
+				Console.WriteLine("Your answer was correct! Press any key for the next question.");
+				Score++;
+				Console.ReadLine();
+			}
+			else
+			{
+				Console.WriteLine("Your answer was incorrect! Press any key for the next question.");
+				Console.ReadLine();
+			}
+		}
+
+
 	}
 }
