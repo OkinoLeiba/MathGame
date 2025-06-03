@@ -1,14 +1,16 @@
 ﻿using System;
 using MathGame;
-using UnitTest = Microsoft.VisualStudio.TestTools.UnitTesting;
+using static Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute;
+using static Microsoft.VisualStudio.TestPlatform.Utilities.MSTestSettingsUtilities;
+//using UnitTest = Microsoft.VisualStudio.TestTools.UnitTesting;
 //using QualityTools = Microsoft.VisualStudio.QualityTools;
-using TestPlatform = Microsoft.VisualStudio.TestPlatform;
+//using TestPlatform = Microsoft.VisualStudio.TestPlatform;
 
 
 namespace MathGameTest
 {
 	
-	[TestClass]
+	[UnitTest.TestClass]
 	public class OperationsTest
 	{
 		private Operations _operations;
@@ -54,7 +56,7 @@ namespace MathGameTest
 		}
 
 		/// <summary>
-		/// Tests Subtract method with valid input.
+		/// Tests Subtraction method with valid input.
 		/// </summary>
 		[TestMethod]
 		public void Subtract_Success()
@@ -63,14 +65,14 @@ namespace MathGameTest
 			double a = 10, b = 4;
 
 			// act
-			double result = _operations.Subtract(a, b);
+			double result = _operations.Subtraction(a, b);
 
 			// assert
 			Assert.AreEqual(6, result);
 		}
 
 		/// <summary>
-		/// Tests Multiply method with valid input.
+		/// Tests Mutliplication method with valid input.
 		/// </summary>
 		[TestMethod]
 		public void Multiply_Success()
@@ -79,14 +81,14 @@ namespace MathGameTest
 			double a = 7, b = 6;
 
 			// act
-			double result = _operations.Multiply(a, b);
+			double result = _operations.Mutliplication(a, b);
 
 			// assert
 			Assert.AreEqual(42, result);
 		}
 
 		/// <summary>
-		/// Tests Divide method with valid input.
+		/// Tests Division method with valid input.
 		/// </summary>
 		[TestMethod]
 		public void Divide_Success()
@@ -95,14 +97,14 @@ namespace MathGameTest
 			double a = 20, b = 4;
 
 			// act
-			double result = _operations.Divide(a, b);
+			double result = _operations.Division(a, b);
 
 			// assert
 			Assert.AreEqual(5, result);
 		}
 
 		/// <summary>
-		/// Tests Divide method with zero denominator (should throw).
+		/// Tests Division method with zero denominator (should throw).
 		/// </summary>
 		[TestMethod]
 		[ExpectedException(typeof(DivideByZeroException))]
@@ -112,7 +114,7 @@ namespace MathGameTest
 			double a = 10, b = 0;
 
 			// act
-			_operations.Divide(a, b);
+			_operations.Division(a, b);
 
 			// assert handled by ExpectedException
 		}

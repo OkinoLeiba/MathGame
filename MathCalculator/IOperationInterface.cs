@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace MathGame
 {
-	internal interface OperationInterface
+	internal interface IOperationInterface
 	{
 
 		/// <summary>
@@ -23,7 +20,7 @@ namespace MathGame
 		/// <param name="a">First number.</param>
 		/// <param name="b">Second number.</param>
 		/// <returns>The result of a minus b.</returns>
-		public double Subtract(double a, double b);
+		public double Subtraction(double a, double b);
 
 		/// <summary>
 		/// Multiplies two numbers.
@@ -31,7 +28,7 @@ namespace MathGame
 		/// <param name="a">First number.</param>
 		/// <param name="b">Second number.</param>
 		/// <returns>The product of a and b.</returns>
-		public double Multiply(double a, double b);
+		public double Mutliplication(double a, double b);
 
 		/// <summary>
 		/// Divides the first number by the second.
@@ -40,7 +37,7 @@ namespace MathGame
 		/// <param name="b">Denominator.</param>
 		/// <returns>The result of a divided by b.</returns>
 		/// <exception cref="DivideByZeroException">Thrown when b is zero.</exception>
-		public double Divide(double a, double b);
+		public double Division(double a, double b);
 
 		/// <summary>
 		/// Raises a number to the power of another number.
@@ -75,7 +72,7 @@ namespace MathGame
 		public double SquareRootScratch(double a);
 
 		/// <summary>
-		/// Returns the square root of a number using binary search.
+		/// Returns the square root of a number using binary search method.
 		/// </summary>
 		/// <param name="a">The number.</param>
 		/// <returns>The square root of a.</returns>

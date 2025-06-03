@@ -2,21 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization; // may be needed for enums
+using System.Threading.Tasks; // may be needed for Operations class
+using System.Timers;       
 
 namespace MathGame
 {
 	internal class GameSelection
 	{
-		public string gameSelect = default(string)!;
+		public string? gameSelect = default(string)!;
 		public List<string> methodNames = default(List<string>)!;
-		//Enum EnumMethodName;
 		public int inputRepeatValidationSignal = default(int);
 
-		public string GameSelect { get; set; }
+		public string? GameSelect { get; set; }
 		public List<string> MethodNames { get; set; }
 
-		public GameIntro gameIntro = new GameIntro();
+		Timer timer = new Timer();
+
+		// the class is initialize within this function because of my concern 
+		// with creating a invocation loop
+		GameIntro gameIntro = new GameIntro();
+
+
 
 		public GameSelection() 
 		{
@@ -30,9 +38,9 @@ namespace MathGame
 
 			//attempted to cast list<T> to enum
 			//Enum.Parse(typeof(List<string>), methodNames.First());
-			//enum EMethodName = methodNames.Select(s => Enum.Parse(typeof(Enum), s)).ToList();
+			//enum EnumMethodName = methodNames.Select(s => Enum.Parse(typeof(Enum), s)).ToList();
 
-			//attempted to dynamically add element of enum at runtime
+			//attempted to dynamically add elements to enum or of type enum at runtime
 			//methodNames.Select(s =>  EnumMethodName s = EnumMethodName(0)); 
 		}
 		/// <summary>
@@ -41,7 +49,9 @@ namespace MathGame
 		/// <return>void</return>
 		public void GameRequestSelectionUser()
 		{
-			Console.Clear();
+
+			GameLogManager gameLogManager = new GameLogManager();
+
 			if (inputRepeatValidationSignal != 3)
 			{
 				Console.WriteLine("What game would you like to play today with me?\n");
@@ -64,6 +74,8 @@ namespace MathGame
 
 			}
 
+			Console.WriteLine("Prev - Previous Game History");
+			Console.WriteLine("Q - Exit");
 			Console.WriteLine("-----------------------------------------------------------------------");
 
 			GameSelect = Console.ReadLine()!;
@@ -85,18 +97,27 @@ namespace MathGame
 			{
 				if (GameSelect.Count() == 1)
 				{
+
 					int selectCount = 0;
 					foreach (var selectedGame in Enum.GetValues(typeof(OperationsEnum.EnumOperationsMethodPrefix)))
 					{
-						// different approach to retrieve string from enum via the cast of int to string literal
-						//Enum.GetName(typeof(OperationEnum.EnumOperationMethod), (int) game).ToString();
 						string gameName = ((OperationsEnum.EnumOperationsMethod)selectCount++).ToString();
-						if (GameSelect.ToLower() == selectedGame.ToString()!.ToLower())
+						if (GameSelect?.ToLower() == selectedGame.ToString()!.ToLower())
 						{
+							// different approach to retrieve string from enum via the cast of int to string literal
+							//Enum.GetName(typeof(OperationEnum.EnumOperationMethod), (int) game).ToString();
+							
 							Console.WriteLine($"The {gameName} game was selected.");
-							//typeof(Operations).GetMethod(selectedGame.ToString()).Invoke();
-							gameIntro.GameInputManager(gameName);
+							GameSelect = gameName;
+							
+							// prevent the execution of the conditional body when function stack unravels 
+							// to location where it jumped from -- solution? move invocation of function
+							//GameSelect = null;
+							//break;
+							//return;
+							
 						}
+						
 
 					}
 				}
@@ -105,22 +126,76 @@ namespace MathGame
 					foreach (var selectedGame in Enum.GetNames(typeof(OperationsEnum.EnumOperationsMethod)))
 					{
 						if (GameSelect.ToLower() == selectedGame.ToString().ToLower()) Console.WriteLine($"The {selectedGame} game was selected.");
-						gameIntro.GameInputManager(selectedGame);
+						
 					}
+				}
+				else if (GameSelect.Trim().ToLower() == "prev" || GameSelect.Trim().ToLower() == "previous" || GameSelect.Trim().ToLower() == "game history")
+				{
+					foreach (var history in gameLogManager.GameHistory)
+					{
+						Console.WriteLine(history);
+					}
+					Console.WriteLine("-----------------------------------------------------------------------");
+					Console.WriteLine("Do you want to Exit or Return to Game Selection?");
+					string? optionReturnOrExit = Console.ReadLine();
+
+					if (optionReturnOrExit?.Trim() == null) { Console.WriteLine(optionReturnOrExit); }
+					else if (optionReturnOrExit.Trim().ToLower() == "exit" || optionReturnOrExit.Trim().ToLower() == "e" || optionReturnOrExit.Trim().ToLower() == "close")
+					{
+						Console.WriteLine("Bye for Now!");
+						timer.Interval = 10000;
+						timer.Stop();
+						timer.Dispose();
+						Environment.Exit(1);
+					}
+					else if ((s => s = optionReturnOrExit.Trim().ToLower()))
+					{
+						gameIntro.GameIntroMethod();
+					}
+					else
+					{
+						Console.WriteLine("Invalid selection, returning to game selection.");
+						gameIntro.GameIntroMethod();
+					}
+				}
+				else if (GameSelect.Trim().ToLower() == "q" || GameSelect.Trim().ToLower() == "exit" || GameSelect.Trim().ToLower() == "close")
+				{
+					Console.WriteLine("Bye for Now!");
+					timer.Interval = 10000;
+					timer.Stop();
+					timer.Dispose();
+		
+					Environment.Exit(1);
+				}
+				else if (GameSelect.Trim().ToLower() == "restart" || GameSelect.Trim().ToLower() == "r")
+				{
+					gameIntro.GameIntroMethod();
 				}
 				else if (GameSelect.Trim().ToLower() == "exit")
 				{
 					Console.WriteLine("Bye for Now!");
+
+					timer.Interval = 10000;
+					timer.Stop();
+					timer.Dispose();
+
 					Environment.Exit(1);
 				}
 				else
 				{
 					Console.WriteLine("No game was selected!\nDo you want to Exit or Restart?");
 					string? optionRestartorExit = Console.ReadLine();
+
 					if (optionRestartorExit?.Trim() == null) { Console.WriteLine(optionRestartorExit); }
 					else if (optionRestartorExit.Trim().ToLower() == "exit"
 						|| optionRestartorExit.Trim().ToLower() == "e"
-						|| optionRestartorExit.Trim().ToLower() == "close") { Environment.Exit(1); }
+						|| optionRestartorExit.Trim().ToLower() == "close")
+					{
+						timer.Interval = 10000;
+						timer.Stop();
+						timer.Dispose();
+						Environment.Exit(1);
+					}
 					else { gameIntro.GameIntroMethod(); }
 
 				}
@@ -129,6 +204,9 @@ namespace MathGame
 			{
 				Console.WriteLine(nfe.Message);
 			}
+
+			//typeof(Operations).GetMethod(selectedGame.ToString()).Invoke();
+			gameIntro.GameInputManager(GameSelect);
 
 			// generate a list of characters 
 			// exclude ascii characters after 5A
@@ -368,8 +446,42 @@ namespace MathGame
 
 
 			Console.WriteLine("-----------------------------------------------------------------------");
-
-
 		}
+
+		//TODO: In Development - generate random selection of game
+		public string RandomGameSelect()
+		{
+			Random random = new Random();
+			CollectionsMarshal.AsSpan(MethodNames);
+
+			// default value provide to user if null 
+			// log if default value or behavior occurs within a threshold
+			//TODO: create corrective behavior to manage occurrence of anomalous behavior
+			return random.GetItems((ReadOnlySpan<string>) CollectionsMarshal.AsSpan<string>(MethodNames), MethodNames.Count).First()!;
+			
+			
+		}
+
+		public void ContinueGameSelectOrEnd(string gameName, GameIntro gameIntro)
+		{
+			const int GAMECOUNT = 1;
+			int gameTotal = gameIntro.CorrectAnswer + gameIntro.WrongAnswer;
+
+			string gameFinalFeedback = ((double) gameIntro.Score / (double) gameTotal) switch
+			{
+				1.0 => $"Game over, your Great!!! You are super-awesome. Your final score is {gameIntro.Score}.",
+				>= 0.8 => $"Game over, your Great!!! You did well. Your final score is {gameIntro.Score}.",
+				>= 0.5 => $"Game over, your Great!!! You did alright. Your final score is {gameIntro.Score}.",
+				>= 0.0 => $"Game over, your Great!!! You did it, keep trying. Your final score is {gameIntro.Score}.",
+				_ => "Keep trying, you get it!"
+			};
+
+			if (gameTotal >= GAMECOUNT) Console.WriteLine(gameFinalFeedback);
+			else gameIntro.GameInputManager(gameName);
+
+			
+		}
+
+
 	}
 }

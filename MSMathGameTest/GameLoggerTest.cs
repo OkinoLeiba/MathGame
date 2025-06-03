@@ -1,8 +1,8 @@
 using System;
-using MathGame;
-//using Microsoft.VisualStudio.TestPlatform;
-using VSQualityTools = Microsoft.VisualStudio.QualityTools.UnitTestFramework;
-using VSTestPlatform = Microsoft.VisualStudio.TestPlatform;
+using MathGame.Model;
+using Microsoft.VisualStudio.TestPlatform;
+//using VSQualityTools = Microsoft.VisualStudio.QualityTools.UnitTestFramework;
+//using VSTestPlatform = Microsoft.VisualStudio.TestPlatform;
 
 
 

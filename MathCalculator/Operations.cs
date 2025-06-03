@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace MathGame;
 
 public class Operations
@@ -20,7 +21,7 @@ public class Operations
 	/// <param name="a">First number.</param>
 	/// <param name="b">Second number.</param>
 	/// <returns>The result of a minus b.</returns>
-	public double Subtract(double a, double b)
+	public double Subtraction(double a, double b)
 	{
 		return a - b;
 	}
@@ -31,7 +32,7 @@ public class Operations
 	/// <param name="a">First number.</param>
 	/// <param name="b">Second number.</param>
 	/// <returns>The product of a and b.</returns>
-	public double Multiply(double a, double b)
+	public double Mutliplication(double a, double b)
 	{
 		return a * b;
 	}
@@ -43,7 +44,7 @@ public class Operations
 	/// <param name="b">Denominator.</param>
 	/// <returns>The result of a divided by b.</returns>
 	/// <exception cref="DivideByZeroException">Thrown when b is zero.</exception>
-	public double Divide(double a, double b)
+	public double Division(double a, double b)
 	{
 		if (b == 0)
 		{
@@ -117,7 +118,7 @@ public class Operations
 	}
 
 	/// <summary>
-	/// Returns the square root of a number using binary search.
+	/// Returns the square root of a number using binary search method.
 	/// </summary>
 	/// <param name="a">The number.</param>
 	/// <returns>The square root of a.</returns>
@@ -191,6 +192,7 @@ public class Operations
 	/// Returns e raised to the power of a using Taylor series.
 	/// </summary>
 	/// <param name="a">Exponent.</param>
+	/// <see cref="https://en.wikipedia.org/wiki/Taylor_series"/>
 	/// <returns>e^a.</returns>
 	public double ExponentialScratch(double a)
 	{
@@ -436,6 +438,7 @@ public class Operations
 	/// Returns the sine of an angle in radians using Taylor series.
 	/// </summary>
 	/// <param name="a">Angle in radians.</param>
+	/// <see cref="https://en.wikipedia.org/wiki/Taylor_series"/>
 	/// <returns>sin(a).</returns>
 	public double SinScratch(double a)
 	{
@@ -465,6 +468,7 @@ public class Operations
 	/// Returns the cosine of an angle in radians using Taylor series.
 	/// </summary>
 	/// <param name="a">Angle in radians.</param>
+	/// <see cref="https://en.wikipedia.org/wiki/Taylor_series"/>
 	/// <returns>cos(a).</returns>
 	public double CosScratch(double a)
 	{
@@ -609,5 +613,10 @@ public class Operations
 		}
 		return result;
 	}
+
+	//public void Exit()
+	//{
+	//	Environment.Exit(1);
+	//}
 }
 

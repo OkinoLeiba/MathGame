@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.Http.Headers;
 
 
-namespace MathGame
+
+namespace MathGame.Model
 {
-	public class GameLogger
+	public struct GameLogger
 	{
-		public string? userName = default(string);
+		public string? userName = default;
 		public DateTime date;
 		public int score;
 		public int maxScore;
@@ -41,9 +40,20 @@ namespace MathGame
 			get => totalScore; 
 			set => Score += value; 
 		}
-		public int AverageScore { 
+		public int AverageScore
+		{
 			get => averageScore;
-			set => averageScore = TotalScore/GameCount;
+			set
+			{
+				try
+				{
+					averageScore = TotalScore / GameCount;
+				}
+				catch (DivideByZeroException dze)
+				{
+					Console.WriteLine(dze.Message);
+				}
+			}
 		}
 		public int CorrectAnswer { get; set; }
 		public int WrongAnswer { get; set; }

@@ -1,20 +1,9 @@
 ﻿using System;
-using static System.Net.Mime.MediaTypeNames;
+using System.Threading.Tasks;
 
 namespace MathGame
 {
-	// The current class provides Utility or Helper Methods, mathematical operations, so a static class is more ideal.
-	// No State or Instance Variables are needed nor any Instance-Specific Data is required, so since no State needs to be maintained.
-    // Global Access to the Methods are needed throughout the lifecycle of application negating the need to create an instance.
-	// Performance Optimization is gained by reducing memory overhead since it doesn't need to be instantiated.
-    // Thread Safety will be taking into consideration since Static Members are shared across the application; concurrency problems.
-	// Access to Static Data or Instance-Specific Data is not relevant to this use case.
-	// Class will be Sealed.
-
-	/// <summary>
-	/// Container for all mathematical operations necessary for our gam
-	/// </summary>
-	internal static class OperationsUtility
+	internal class OperationsInterface : IOperationInterface
 	{
 
 		/// <summary>
@@ -23,7 +12,7 @@ namespace MathGame
 		/// <param name="a">First number.</param>
 		/// <param name="b">Second number.</param>
 		/// <returns>The sum of a and b.</returns>
-		public static double Addition(double a, double b)
+		public double Addition(double a, double b)
 		{
 			return a + b;
 		}
@@ -34,7 +23,7 @@ namespace MathGame
 		/// <param name="a">First number.</param>
 		/// <param name="b">Second number.</param>
 		/// <returns>The result of a minus b.</returns>
-		public static double Subtraction(double a, double b)
+		public double Subtraction(double a, double b)
 		{
 			return a - b;
 		}
@@ -45,7 +34,7 @@ namespace MathGame
 		/// <param name="a">First number.</param>
 		/// <param name="b">Second number.</param>
 		/// <returns>The product of a and b.</returns>
-		public static double Mutliplication(double a, double b)
+		public double Mutliplication(double a, double b)
 		{
 			return a * b;
 		}
@@ -57,7 +46,7 @@ namespace MathGame
 		/// <param name="b">Denominator.</param>
 		/// <returns>The result of a divided by b.</returns>
 		/// <exception cref="DivideByZeroException">Thrown when b is zero.</exception>
-		public static double Division(double a, double b)
+		public double Division(double a, double b)
 		{
 			if (b == 0)
 			{
@@ -72,7 +61,7 @@ namespace MathGame
 		/// <param name="a">Base number.</param>
 		/// <param name="b">Exponent.</param>
 		/// <returns>a raised to the power of b.</returns>
-		public static double Power(double a, double b)
+		public double Power(double a, double b)
 		{
 			return Math.Pow(a, b);
 		}
@@ -83,7 +72,7 @@ namespace MathGame
 		/// <param name="a">Base number.</param>
 		/// <param name="b">Exponent.</param>
 		/// <returns>a added to itself b times.</returns>
-		public static double PowerScratch(double a, double b)
+		public double PowerScratch(double a, double b)
 		{
 			double result = default(double);
 			for (int i = 0; i < b; i++)
@@ -99,7 +88,7 @@ namespace MathGame
 		/// <param name="a">The number.</param>
 		/// <returns>The square root of a.</returns>
 		/// <exception cref="ArgumentException">Thrown when a is negative.</exception>
-		public static double SquareRoot(double a)
+		public double SquareRoot(double a)
 		{
 			if (a < 0)
 			{
@@ -114,7 +103,7 @@ namespace MathGame
 		/// <param name="a">The number.</param>
 		/// <returns>The square root of a.</returns>
 		/// <exception cref="ArgumentException">Thrown when a is negative.</exception>
-		public static double SquareRootScratch(double a)
+		public double SquareRootScratch(double a)
 		{
 			if (a < 0)
 			{
@@ -136,7 +125,7 @@ namespace MathGame
 		/// <param name="a">The number.</param>
 		/// <returns>The square root of a.</returns>
 		/// <exception cref="ArgumentException">Thrown when a is negative.</exception>
-		public static double SquareRootBinaryScratch(double a)
+		public double SquareRootBinaryScratch(double a)
 		{
 			if (a < 0)
 			{
@@ -169,7 +158,7 @@ namespace MathGame
 		/// </summary>
 		/// <param name="a">The number.</param>
 		/// <returns>The cube root of a.</returns>
-		public static double CubeRoot(double a)
+		public double CubeRoot(double a)
 		{
 			return Math.Cbrt(a);
 		}
@@ -179,7 +168,7 @@ namespace MathGame
 		/// </summary>
 		/// <param name="a">The number.</param>
 		/// <returns>The cube root of a.</returns>
-		public static double CubeRootScratch(double a)
+		public double CubeRootScratch(double a)
 		{
 			double result = a;
 			double lastResult = 0;
@@ -196,7 +185,7 @@ namespace MathGame
 		/// </summary>
 		/// <param name="a">Exponent.</param>
 		/// <returns>e^a.</returns>
-		public static double Exponential(double a)
+		public double Exponential(double a)
 		{
 			return Math.Exp(a);
 		}
@@ -207,7 +196,7 @@ namespace MathGame
 		/// <param name="a">Exponent.</param>
 		/// <see cref="https://en.wikipedia.org/wiki/Taylor_series"/>
 		/// <returns>e^a.</returns>
-		public static double ExponentialScratch(double a)
+		public double ExponentialScratch(double a)
 		{
 			double result = 1;
 			double term = 1;
@@ -227,7 +216,7 @@ namespace MathGame
 		/// <param name="a">The number.</param>
 		/// <returns>log10(a).</returns>
 		/// <exception cref="ArgumentException">Thrown when a is not positive.</exception>
-		public static double LogarithmBase10(double a)
+		public double LogarithmBase10(double a)
 		{
 			if (a <= 0)
 			{
@@ -242,7 +231,7 @@ namespace MathGame
 		/// <param name="a">The number.</param>
 		/// <returns>log10(a).</returns>
 		/// <exception cref="ArgumentException">Thrown when a is not positive.</exception>
-		public static double LogarithmBase10Scratch(double a)
+		public double LogarithmBase10Scratch(double a)
 		{
 			if (a <= 0)
 			{
@@ -262,7 +251,7 @@ namespace MathGame
 		/// <param name="n">The number.</param>
 		/// <returns>n!.</returns>
 		/// <exception cref="ArgumentException">Thrown when n is negative.</exception>
-		public static double Factorial(int n)
+		public double Factorial(int n)
 		{
 			if (n < 0)
 			{
@@ -286,7 +275,7 @@ namespace MathGame
 		/// <param name="n">The number.</param>
 		/// <returns>n!.</returns>
 		/// <exception cref="ArgumentException">Thrown when n is negative.</exception>
-		public static double FactorialScratch(int n)
+		public double FactorialScratch(int n)
 		{
 			if (n < 0)
 			{
@@ -311,7 +300,7 @@ namespace MathGame
 		/// <param name="b">The base.</param>
 		/// <returns>log_b(a).</returns>
 		/// <exception cref="ArgumentException">Thrown when a is not positive or b is less than or equal to 1.</exception>
-		public static double Logarithm(double a, double b)
+		public double Logarithm(double a, double b)
 		{
 			if (a <= 0 || b <= 1)
 			{
@@ -328,7 +317,7 @@ namespace MathGame
 		/// <param name="b">The base.</param>
 		/// <returns>log_b(a).</returns>
 		/// <exception cref="ArgumentException">Thrown when a is not positive or b is less than or equal to 1.</exception>
-		public static double LogarithmScratch(double a, double b)
+		public double LogarithmScratch(double a, double b)
 		{
 			if (a <= 0 || b <= 1)
 			{
@@ -348,7 +337,7 @@ namespace MathGame
 		/// <param name="a">The number.</param>
 		/// <returns>ln(a).</returns>
 		/// <exception cref="ArgumentException">Thrown when a is not positive.</exception>
-		public static double LogarithmNatural(double a)
+		public double LogarithmNatural(double a)
 		{
 			if (a <= 0)
 			{
@@ -363,7 +352,7 @@ namespace MathGame
 		/// <param name="a">The number.</param>
 		/// <returns>ln(a).</returns>
 		/// <exception cref="ArgumentException">Thrown when a is not positive.</exception>
-		public static double LogarithmNaturalScratch(double a)
+		public double LogarithmNaturalScratch(double a)
 		{
 			if (a <= 0)
 			{
@@ -382,7 +371,7 @@ namespace MathGame
 		/// </summary>
 		/// <param name="a">The number.</param>
 		/// <returns>The absolute value of a.</returns>
-		public static double AbsoluteValue(double a)
+		public double AbsoluteValue(double a)
 		{
 			return Math.Abs(a);
 		}
@@ -392,7 +381,7 @@ namespace MathGame
 		/// </summary>
 		/// <param name="a">The number.</param>
 		/// <returns>The absolute value of a.</returns>
-		public static double AbsoluteValueScratch(double a)
+		public double AbsoluteValueScratch(double a)
 		{
 			if (a < 0)
 			{
@@ -408,7 +397,7 @@ namespace MathGame
 		/// <param name="b">Divisor.</param>
 		/// <returns>a % b.</returns>
 		/// <exception cref="DivideByZeroException">Thrown when b is zero.</exception>
-		public static double Modulus(double a, double b)
+		public double Modulus(double a, double b)
 		{
 			if (b == 0)
 			{
@@ -424,7 +413,7 @@ namespace MathGame
 		/// <param name="b">Divisor.</param>
 		/// <returns>a % b.</returns>
 		/// <exception cref="DivideByZeroException">Thrown when b is zero.</exception>
-		public static double ModulusScratch(double a, double b)
+		public double ModulusScratch(double a, double b)
 		{
 			if (b == 0)
 			{
@@ -442,7 +431,7 @@ namespace MathGame
 		/// </summary>
 		/// <param name="a">Angle in radians.</param>
 		/// <returns>sin(a).</returns>
-		public static double Sin(double a)
+		public double Sin(double a)
 		{
 			return Math.Sin(a);
 		}
@@ -453,7 +442,7 @@ namespace MathGame
 		/// <param name="a">Angle in radians.</param>
 		/// <see cref="https://en.wikipedia.org/wiki/Taylor_series"/>
 		/// <returns>sin(a).</returns>
-		public static double SinScratch(double a)
+		public double SinScratch(double a)
 		{
 			double result = 0;
 			double term = a;
@@ -472,7 +461,7 @@ namespace MathGame
 		/// </summary>
 		/// <param name="a">Angle in radians.</param>
 		/// <returns>cos(a).</returns>
-		public static double Cos(double a)
+		public double Cos(double a)
 		{
 			return Math.Cos(a);
 		}
@@ -483,7 +472,7 @@ namespace MathGame
 		/// <param name="a">Angle in radians.</param>
 		/// <see cref="https://en.wikipedia.org/wiki/Taylor_series"/>
 		/// <returns>cos(a).</returns>
-		public static double CosScratch(double a)
+		public double CosScratch(double a)
 		{
 			double result = 0;
 			double term = 1;
@@ -502,7 +491,7 @@ namespace MathGame
 		/// </summary>
 		/// <param name="a">Angle in radians.</param>
 		/// <returns>tan(a).</returns>
-		public static double Tan(double a)
+		public double Tan(double a)
 		{
 			return Math.Tan(a);
 		}
@@ -513,7 +502,7 @@ namespace MathGame
 		/// <param name="a">Angle in radians.</param>
 		/// <returns>tan(a).</returns>
 		/// <exception cref="DivideByZeroException">Thrown when cosine is zero.</exception>
-		public static double TanScratch(double a)
+		public double TanScratch(double a)
 		{
 			double sin = SinScratch(a);
 			double cos = CosScratch(a);
@@ -529,7 +518,7 @@ namespace MathGame
 		/// </summary>
 		/// <param name="a">Angle in radians.</param>
 		/// <returns>cot(a).</returns>
-		public static double Cot(double a)
+		public double Cot(double a)
 		{
 			return 1 / Tan(a);
 		}
@@ -540,7 +529,7 @@ namespace MathGame
 		/// <param name="a">Angle in radians.</param>
 		/// <returns>cot(a).</returns>
 		/// <exception cref="DivideByZeroException">Thrown when sine is zero.</exception>
-		public static double CotScratch(double a)
+		public double CotScratch(double a)
 		{
 			double sin = SinScratch(a);
 			double cos = CosScratch(a);
@@ -556,7 +545,7 @@ namespace MathGame
 		/// </summary>
 		/// <param name="a">Angle in radians.</param>
 		/// <returns>sec(a).</returns>
-		public static double Sec(double a)
+		public double Sec(double a)
 		{
 			return 1 / Cos(a);
 		}
@@ -567,7 +556,7 @@ namespace MathGame
 		/// <param name="a">Angle in radians.</param>
 		/// <returns>sec(a).</returns>
 		/// <exception cref="DivideByZeroException">Thrown when cosine is zero.</exception>
-		public static double SecScratch(double a)
+		public double SecScratch(double a)
 		{
 			double cos = CosScratch(a);
 			if (cos == 0)
@@ -582,7 +571,7 @@ namespace MathGame
 		/// </summary>
 		/// <param name="a">Angle in radians.</param>
 		/// <returns>csc(a).</returns>
-		public static double Csc(double a)
+		public double Csc(double a)
 		{
 			return 1 / Sin(a);
 		}
@@ -593,7 +582,7 @@ namespace MathGame
 		/// <param name="a">Angle in radians.</param>
 		/// <returns>csc(a).</returns>
 		/// <exception cref="DivideByZeroException">Thrown when sine is zero.</exception>
-		public static double CscScratch(double a)
+		public double CscScratch(double a)
 		{
 			double sin = SinScratch(a);
 			if (sin == 0)
@@ -609,7 +598,7 @@ namespace MathGame
 		/// <param name="a">The number.</param>
 		/// <returns>a!.</returns>
 		/// <exception cref="ArgumentException">Thrown when a is negative.</exception>
-		public static double FactorialScratch(double a)
+		public double FactorialScratch(double a)
 		{
 			if (a < 0)
 			{
