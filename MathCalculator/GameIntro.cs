@@ -136,19 +136,6 @@ namespace MathGame
 		
 
 
-			var operationSybmol = typeof(EnumOperationsMethodUnitSymbol)
-				.GetTypeInfo()
-				.DeclaredMembers
-				//.GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase)
-				.SingleOrDefault(m => m.Name.Trim().ToLower() == operation.Trim().ToLower())?
-				.GetCustomAttributes<DescriptionAttribute>(false)
-				.First()
-				.Description
-				.ToString();
-
-
-
-			if (numOfParam == 1) Console.WriteLine($"{operation}: {firstNum} {operationSybmol} {secondNum}"); else Console.WriteLine($"{operation}: {operationSybmol} {firstNum}");
 
 
 			// two approaches to invoke methods utilizing reflection and type 
