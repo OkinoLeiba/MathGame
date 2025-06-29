@@ -8,9 +8,9 @@ namespace MathGame
 		public enum EnumOperationsMethod : int
 		{
 			Addition,
-			Subtract,
-			Multiply,
-			Divide,
+			Subtraction,
+			Multiplication,
+			Division,
 			Power,
 			PowerScratch,
 			SquareRoot,
@@ -103,6 +103,7 @@ namespace MathGame
 				[Description("³√x")] CubeRoot,
 				[Description("eˣ")] Exponential,
 				[Description("log10")] LogarithmBase10,
+				[Description("!")] Factorial,
 				[Description("ln")] NaturalLogarithm,
 				[Description("|x|")] AbsoluteValue,
 				[Description("mod")] Modulus,
