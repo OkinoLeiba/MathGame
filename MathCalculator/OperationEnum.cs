@@ -43,7 +43,8 @@ namespace MathGame
 			Sec,
 			SecScratch,
 			Csc,
-			CscScratch
+			CscScratch,
+			Exit
 		}
 
 		// unicode characters will be used to aviod issues and be able to use a variety of characters
@@ -159,6 +160,7 @@ namespace MathGame
 			o,
 			p,
 			q,
+			r,
 		}
 	}
 }
