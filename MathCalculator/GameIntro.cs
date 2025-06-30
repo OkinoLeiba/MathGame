@@ -18,7 +18,7 @@ namespace MathGame
 	/// </summary>
 	public class GameIntro
 	{
-		public string? name = default(string);
+		static public string? name = default(string);
 		public DateTime? date = default(DateTime?);
 		static public int score = 0;
 		static public int correctAnswer = 0;
@@ -28,7 +28,7 @@ namespace MathGame
 		public int answer = 0;
 
 
-		public string? Name { get; set; }
+		static public string? Name { get; set; }
 		public DateTime? Date { get; set; }
 		static public int Score { get; set; }
 		static public int CorrectAnswer { get; set; }
@@ -91,15 +91,23 @@ namespace MathGame
     """);
 				Console.WriteLine("Hello, All World!");
 
-				Console.WriteLine("What is your name, Chief...\n");
-				Name = Console.ReadLine();
+				if (!string.IsNullOrEmpty(Name))
+				{
+					Console.WriteLine("-----------------------------------------------------------------------");
+					Console.WriteLine($"Welcome back {Name}!");
+				}
+				else 
+				{ 
+					Console.WriteLine("What is your name, Chief...\n");
+					Name = Console.ReadLine();
+				}
 
 				//Name = AnsiConsole.Prompt(
 				//	new TextPrompt<string>("What is your name, Chief...\n")
 				//		.Validate(input => string.IsNullOrEmpty(input) ? ValidationResult.Error("Name cannot be empty") : ValidationResult.Success())
 				//		.PromptStyle("green"));
 
-			Date = DateTime.UtcNow;
+				Date = DateTime.UtcNow;
 
 			Console.WriteLine("-----------------------------------------------------------------------");
 			

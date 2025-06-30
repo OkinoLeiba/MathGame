@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MathGameMaui.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="20,0"
+            Spacing="20"
+            BackgroundColor="DarkMagenta">
+            <Image
+                Source="dotnet_bot.png"
+                HeightRequest="185"
+                Aspect="AspectFit"
+                SemanticProperties.Description="dot net bot in a hovercraft number nine" />
+
+            <Label
+                 x:Name="FigletWelcome"
+                 Text=""
+                 TextColor="Silver"
+                 Style="{StaticResource Headline}"
+                 SemanticProperties.HeadingLevel="Level1" />
+
+            <Label
+                Text="Hello, All World!"
+                TextColor="Silver"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level1" />
+
+            <Label
+                Text="Welcome to &#10; MathGame"
+                TextColor="DarkGoldenrod"
+                Style="{StaticResource SubHeadline}"
+                SemanticProperties.HeadingLevel="Level2"
+                SemanticProperties.Description="Welcome user to math game and UI entry point." />
+
+
+            <Label
+                Text="Do you want to play a game with me!\n What game would you like to play."
+                TextColor="Firebrick"
+                Style="{StaticResource SubHeadline}"
+                SemanticProperties.HeadingLevel="Level2"
+                SemanticProperties.Description="A prompt of the user to select a game " />
+
+            <Grid 
+                x:Name="GameGrid"
+                BackgroundColor="AliceBlue" 
+                IsVisible="Hidden"/>
+
+            <Grid
+                RowDefinitions="Auto, Auto, Auto"
+                ColumnDefinitions="Auto, Auto"
+                HorizontalOptions="Center"
+                BackgroundColor="OldLace">
+                <Button
+                    x:Name="MathGameBtn"
+                    Text="Math Game" 
+                    SemanticProperties.Hint="Starts the Math Game"
+                    Clicked="OnMathGameClicked"
+                    Grid.Row="0" Grid.Column="0" />
+                
+                <Button
+                    x:Name="PreviousGameHistoryBtn"
+                    Text="Previous Game History" 
+                    BackgroundColor="LightSteelBlue"
+                    SemanticProperties.Hint="Navigates to page with previous game history."
+                    Clicked="OnGameHistoryClicked"
+                    Grid.Row="0" Grid.Column="1" />
+
+                <Button
+                    x:Name="ExitBtn"
+                    Text="Exit" 
+                    BackgroundColor="RosyBrown"
+                    SemanticProperties.Hint="Exits the application"
+                    Clicked="OnExitClicked"
+                    Grid.Row="1" Grid.ColumnSpan="2" />
+
+
+   
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

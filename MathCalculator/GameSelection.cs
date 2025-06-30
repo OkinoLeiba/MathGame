@@ -39,6 +39,8 @@ public class GameSelection
 			.GetMethods(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.DeclaredOnly)
 			.Select(m => m.Name)
 			.Distinct()
+			.Append("Prev - Previous Game History")
+			.Append("Q - Exit")
 			.ToList();
 
 		//attempted to cast list<T> to enum
@@ -48,6 +50,24 @@ public class GameSelection
 		// attempted to dynamically add elements to enum or of type enum at runtime
 		// one approach is to keep reinitializing the enum while garbage collecting the old enum type
 		//methodNames.Select(s =>  EnumMethodName s = EnumMethodName(0)); 
+
+
+		// another attempt to dynamically add element of enum at runtime
+		// it is will not work as enums are static and cannot be modified at runtime
+		// two theoretical approaches is to create a new enum type at runtime using Reflection.Emit,
+		// but it is complex and may not be recommended for this use case
+		// dynamically create copies of the enum type while garbage collecting the old enum type 
+
+		//EnumMethodName enumMethodName = (EnumMethodName)Enum.Parse(typeof(EnumMethodName), methodNames.First());
+		//enum EMethodName = methodNames.Select(s => Enum.Parse(typeof(Enum), s)).ToList();
+		//methodNames.Select(s =>  EnumMethodName s = EnumMethodName(0)); 
+
+		//Console.WriteLine("What game would you like to play today with me?");
+		//for (int i = 0; i < methodNames.Count; i++)
+		//{
+		//	if (i == 59) i = +12;
+		//	Console.WriteLine($"{(char)('A' + i)} - {methodNames[i]}");
+		//};
 	}
 
 	/// <summary>

@@ -1,6 +1,7 @@
 ﻿
 
 using System;
+using System.Timers;
 
 namespace MathGame;
 
@@ -24,17 +25,28 @@ public class GameAnswer
 
 	public void gameAnswerPrompt()
 	{
-
+		Timer timer = new Timer();
 		Console.WriteLine("-----------------------------------------------------------------------");
 		Console.WriteLine("Please provide an answer");
 		answerString = Console.ReadLine();
 
-		while (string.IsNullOrEmpty(answerString) && !Double.TryParse(answerString, out _))
+
+		while (string.IsNullOrEmpty(answerString) 
+			|| (!Double.TryParse(answerString, out _) || !Int32.TryParse(answerString, out _)))
 		{
 			Console.WriteLine("Please provide an valid answer");
 			answerString = Console.ReadLine();
 		}
-		//TODO: create exception handler
+
+		if (answerString.Trim().ToLower() == "exit" || answerString.Trim().ToLower() == "e" || answerString.Trim().ToLower() == "close")
+		{
+			Console.WriteLine("Bye for Now!");
+			timer.Interval = 10000;
+			timer.Stop();
+			timer.Dispose();
+			Environment.Exit(1);
+		}
+
 		answer = Convert.ToDouble(answerString);
 
 		gameAnswerManager(); // call the gameAnswerManager method to process the answer

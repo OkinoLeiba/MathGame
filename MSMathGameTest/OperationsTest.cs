@@ -82,7 +82,7 @@ namespace MathGameTest
 			double a = 7, b = 6;
 
 			// act
-			double result = _operations.Mutliplication(a, b);
+			double result = _operations.Multiplication(a, b);
 
 			// assert
 			UnitTest.UnitTest.Assert.AreEqual(42, result);

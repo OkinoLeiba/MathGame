@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using MathGame;
 using System;
+using System.Linq;
 
 
 //// Program or AppManager will initialize the GameIntro class and GameLogManager class
@@ -38,20 +39,12 @@ internal class Program
 		GameIntro gameIntro = new GameIntro();
 		//GameSelection gameSelection = new GameSelection();
 		GameLogManager gameLogManager = new GameLogManager();
-		gameLogManager.UpdateGameHistory("Addition");
+		//gameLogManager.UpdateGameHistory("Addition");
 		gameIntro.GameIntroMethod();
 
 		AppManager appManager = new AppManager(gameIntro, gameLogManager);
 
 	}
 }
-
-
-
-
-	
-
-
-
 
 

@@ -44,7 +44,7 @@ namespace MathGame
 			SecScratch,
 			Csc,
 			CscScratch,
-			Exit
+			
 		}
 
 		// unicode characters will be used to aviod issues and be able to use a variety of characters
@@ -98,22 +98,39 @@ namespace MathGame
 				[Description("−")] Subtraction,
 				[Description("×")] Multiplication,
 				[Description("÷")] Division,
+				[Description("^")] Power,
+				[Description("^")] PowerScratch,
 				[Description("xⁿ")] Exponentiation,
 				[Description("√x")] SquareRoot,
+				[Description("√x")] SquareRootScratch,
+				[Description("√x")] SquareRootBinaryScratch,
 				[Description("³√x")] CubeRoot,
+				[Description("³√x")] CubeRootScratch,
 				[Description("eˣ")] Exponential,
+				[Description("eˣ")] ExponentialScratch,
 				[Description("log10")] LogarithmBase10,
+				[Description("log10")] LogarithmBase10Scratch,
 				[Description("!")] Factorial,
+				[Description("!")] FactorialScratch,
 				[Description("ln")] NaturalLogarithm,
+				[Description("ln")] NaturalLogarithmScratch,
 				[Description("|x|")] AbsoluteValue,
+				[Description("|x|")] AbsoluteValueScratch,
 				[Description("mod")] Modulus,
+				[Description("mod")] ModulusScratch,
 				[Description("sin")] Sine,
+				[Description("sin")] SineScratch,
 				[Description("cos")] Cosine,
+				[Description("cos")] CosineScratch,
 				[Description("tan")] Tangent,
+				[Description("tan")] TangentScratch,
 				[Description("cot")] Cotangent,
+				[Description("cot")] CotangentScratch,
 				[Description("sec")] Secant,
-				[Description("csc")] Cosecant
-		}
+				[Description("sec")] SecantScratch,
+				[Description("csc")] Cosecant,
+				[Description("csc")] CosecantScratch
+			}
 
 
 		public enum EnumOperationsMethodPrefix

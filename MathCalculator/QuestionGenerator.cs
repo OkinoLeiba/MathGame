@@ -44,7 +44,9 @@ public class QuestionGenerator
 
 		if (numOfParam == 1) firstNum = random.Next(1, 99); else firstNum = random.Next(0, 99); secondNum = random.Next(0, 99);
 
-		if (operation.Trim().ToLower() == "division" ||  operation.Trim().ToLower() == "subtraction") firstNum = int.Max(firstNum, secondNum); secondNum = int.Min(firstNum, secondNum);
+		if (operation.Trim().ToLower() == "division" 
+			||  operation.Trim().ToLower() == "subtraction" 
+			|| operation.Trim().ToLower() == "power") firstNum = int.Max(firstNum, secondNum); secondNum = int.Min(firstNum, secondNum);
 
 		if (operation.Trim().ToLower() == "division" && secondNum == 0) secondNum = 1;
 

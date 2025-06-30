@@ -32,7 +32,7 @@ public class Operations
 	/// <param name="a">First number.</param>
 	/// <param name="b">Second number.</param>
 	/// <returns>The product of a and b.</returns>
-	public double Mutliplication(double a, double b)
+	public double Multiplication(double a, double b)
 	{
 		return a * b;
 	}

@@ -158,5 +158,29 @@ namespace MathGame
 			else GameHistory.Add($"{gameIntro.Date} - {gameSelection.GameSelect}: {GameIntro.Score}");
 			
 		}
+
+		public void PrintGameHistory()
+		{
+			if (GameHistory.Count == 0)
+			{
+				Console.WriteLine("No game history available.");
+				return;
+			}
+			Console.WriteLine("Game History:");
+			foreach (var game in GameHistory)
+			{
+				Console.WriteLine(game);
+			}
+			Console.WriteLine("Press any key to return to the main menu...");
+			var mainMenu = Console.ReadKey();
+
+			if (mainMenu.GetType().ToString() == "ConsoleKeyInfo") gameIntro.GameIntroMethod();
+		}
+
+		public void ClearGameHistory()
+		{
+			GameHistory.Clear();
+			Console.WriteLine("Game history cleared.");
+		}
 	}
 }
