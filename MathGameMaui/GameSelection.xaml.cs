@@ -16,7 +16,7 @@ public partial class GameSelection : ContentPage
 			
 	}
 
-	
+
 
 	private void CreateGridButtons()
 	{
@@ -34,7 +34,33 @@ public partial class GameSelection : ContentPage
 
 		// Grid grid = new Grid { };
 
-		for (int i = 0; i < rowCount; i++)
+		// var buttonStyle = (Style)Application.Current.Resources["GameButton"];
+		// define the button style in the resources
+		var buttonStyle = new Style(typeof(Button))
+		{
+			Setters =
+		   	{
+		   		new Setter { Property = Button.BackgroundColorProperty, Value = Colors.Chocolate },
+		   		new Setter { Property = Button.FontFamilyProperty, Value = "Helvetica" },
+		   		new Setter { Property = Button.FontSizeProperty, Value = 28 },
+		   		new Setter { Property = Button.VerticalOptionsProperty, Value = LayoutOptions.Center },
+		   		new Setter { Property = Button.HorizontalOptionsProperty, Value = LayoutOptions.Center },
+		   		new Setter { Property = Button.WidthRequestProperty, Value = 30 },
+		   		new Setter { Property = Button.ScaleProperty, Value = 1.0 },
+		   		new Setter { Property = Button.PaddingProperty, Value = new Thickness(8) }
+		   	}
+		};
+	
+		  //var buttonStyle2 = new { "BackgroundColor" : "Chocolate",
+		  //					"FontFamily" : "Helvetica",
+		  //					"FontSize" : 28,
+		  //					"VerticalOptions" : "Center",
+		  //					"HorizontalOptions" : "Center",
+		  //					"WidthRequest" : 30,
+		  //					"Scale" : 1.0,
+		  //					"Padding" : 8};
+
+			for (int i = 0; i < rowCount; i++)
 		{
 			GameGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 		}
@@ -56,6 +82,11 @@ public partial class GameSelection : ContentPage
 			};
 			GameGrid.SetRow(button, row);
 			GameGrid.SetColumn(button, column);
+
+			GameGrid.HorizontalOptions = LayoutOptions.Center;
+			GameGrid.VerticalOptions = LayoutOptions.Center;
+			GameGrid.BackgroundColor = Colors.Chocolate;
+			GameGrid.WidthRequest = 1200; // set the maximum width of the grid
 			//button.Clicked += (sender, e) =>
 			//{
 			//	// Handle button click event here
@@ -64,8 +95,16 @@ public partial class GameSelection : ContentPage
 
 			// TOOO: change the name of method to navigate to the corresponding operation
 			button.Clicked += OnGameSelectionClicked; // attach the event handler for button clicks
-														//GameGrid.Children.Add(button);
-			// Update the line causing the error
+			// GameGrid.Style = buttonStyle; // apply the button style from resources
+			button.BackgroundColor = Colors.Chocolate;
+			button.FontFamily = "Helvetica";
+			button.FontSize = 24;
+			button.VerticalOptions = LayoutOptions.Center;
+			button.HorizontalOptions = LayoutOptions.Center;
+			button.WidthRequest = 300;
+			button.Scale = 1.0;
+			button.Padding = new Thickness(8);
+			// update the line causing the error
 			GameGrid.Children.Add(button); // Add the button to the grid
 
 			// Set the row and column for the button using the appropriate methods

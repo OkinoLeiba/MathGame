@@ -96,10 +96,13 @@ public partial class GamePage : ContentPage
 			.ToString();
 
 		QuestionLabel.Text = numParams == 1 ?
-			$"{string.Concat(char.ToUpper(GameSelect[0]), GameSelect.Substring(1))}\n{operationSybmol} {FirstNum}" : 
-			$"{string.Concat(char.ToUpper(GameSelect[0]), GameSelect.Substring(1))}\n{FirstNum} {operationSybmol} {SecondNum}";
+			$"{operationSybmol} {FirstNum}" : 
+			$"{FirstNum} {operationSybmol} {SecondNum}";
 
-		
+			//$"{string.Concat(char.ToUpper(GameSelect[0]), GameSelect.Substring(1))}\n{operationSybmol} {FirstNum}" : 
+			//$"{string.Concat(char.ToUpper(GameSelect[0]), GameSelect.Substring(1))}\n{FirstNum} {operationSybmol} {SecondNum}";
+
+
 	}
 
 	private void GenerateResult()

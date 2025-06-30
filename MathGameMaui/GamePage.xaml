@@ -3,30 +3,54 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MathGameMaui.GamePage"
              Title="GamePage">
-    <VerticalStackLayout>
+    <ContentPage.Resources>
+        <Style TargetType="Label" x:Key="Title">
+            <Setter Property="FontSize" Value="48" />
+            <Setter Property="TextColor" Value="MediumSlateBlue" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="WidthRequest" Value="800" />
+        </Style>
+        <Style TargetType="Label" x:Key="SubTitle">
+            <Setter Property="FontSize" Value="32" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="TextColor" Value="DarkGoldenrod" />
+            <Setter Property="WidthRequest" Value="300" />
+        </Style>
+    </ContentPage.Resources>
+     <VerticalStackLayout>
         <Label 
             Text="Welcome to GamePage"
+            TextColor="NavajoWhite"
+            FontSize="56"
+            Style="{StaticResource Title}"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"/>
         
         <Label 
             Text="{Binding GameSelect}"
-            VerticalOptions="Center"
-            HorizontalOptions="Center" />
+            Style="{StaticResource SubTitle}"/>
     
         <Label 
             x:Name="QuestionLabel"
             Text="{Binding Question}"
-            VerticalOptions="Center"
-            HorizontalOptions="Center"
-            BackgroundColor="Maroon"/>
+            TextColor="PapayaWhip"
+            FontSize="Medium"
+            Style="{StaticResource SubTitle}"
+            BackgroundColor="Maroon"
+            WidthRequest="300"/>
 
         <Entry
             x:Name="AnswerEntry"
             VerticalOptions="Center"
             HorizontalOptions="Center"
             HorizontalTextAlignment="Center"
-            BackgroundColor="OliveDrab">
+            BackgroundColor="OliveDrab"
+            WidthRequest="300">
 
         </Entry>
 
@@ -37,6 +61,7 @@
             VerticalOptions="Center"
             HorizontalOptions="Center"
             BackgroundColor="Peru"
+            WidthRequest="300"
             />
 
         <Label 
