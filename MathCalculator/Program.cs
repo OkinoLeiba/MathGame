@@ -5,13 +5,16 @@ using System;
 
 //// Program or AppManager will initialize the GameIntro class and GameLogManager class
 //// and call the GameIntroMethod to start the game intro process.
-//// This create a method chain where the GameIntro class will handle or start.
+//// This create a method chain where the GameIntro class will handle or start, 
+//// or AppManager will handle the game intro process.
 //// Consider whether to refactor the code to separate concerns!!!
 //// Consider which or if methods will be static or instance methods!!!
 //// Consider whether to use dependency injection or not!!!
 //// Consider whether to use interfaces or not!!! [for better abstraction and testing purposes]!!!
 //// AppManager could implement an interface like IAppManager
 //// Consider whether to use a factory pattern and initialize all needed classes on the onset or start of program!!!
+//// instances of different game classes can be created and managed by the AppManager class
+//// time to live, temporary or permanent instances, and how they are managed???
 //// Pass a reference to the classes and invoke methods in the classes as needed???
 //// Manage all instances of the classes in a single namespace or class???
 //// Consider whether to use of a singleton pattern for the GameLogManager class!!!

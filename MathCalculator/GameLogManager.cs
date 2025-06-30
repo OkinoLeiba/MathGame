@@ -8,7 +8,7 @@ namespace MathGame
 {
 	internal class GameLogManager
 	{
-		public List<string> gameHistory = new List<string>();
+		public List<string> gameHistory;
 
 		public List<string> GameHistory {  get { return gameHistory; } }
 
@@ -20,7 +20,8 @@ namespace MathGame
 		GameSelection gameSelection = new GameSelection();
 		GameIntro gameIntro = new GameIntro();
 
-
+		// the correctAnswer, wrongAnswer, score variables and perspective properties are static and can be accessed without creating an instance of the GameLogger class
+		// and update the gameWin, gameLost, score for the game name in the dictionary
 		GameLogger gameLog = new GameLogger
 			(
 				userName: "",
@@ -103,6 +104,8 @@ namespace MathGame
 			// two approaches to find dictionary item in LinkedList by game name and update score
 			// both assign a reference to the GameWon and GameLost properties so changes will be reflected in the instance 
 			// of the class and will not require return the value and replacing it in the property 
+			// the first approach is to use LINQ to find the dictionary in the LinkedList that contains the game name
+			// the second approach is to use a foreach loop to iterate through the LinkedList and find the dictionary that contains the game name
 			Dictionary<string, int> gameWin = (Dictionary<string, int>) gameLogger.GameWon.Where(n => n.ContainsKey(gameName));
 			gameWin[gameName] += 1;
 
@@ -111,8 +114,8 @@ namespace MathGame
 				if (game.ContainsKey(gameName)) game[gameName] += 1; 
 			}
 
-			Dictionary<string, int> gameLose = (Dictionary<string, int>)gameLogger.GameWon.Where(n => n.ContainsKey(gameName));
-			gameLose[gameName] += 1;
+			Dictionary<string, int> gameLost = (Dictionary<string, int>)gameLogger.GameLost.Where(n => n.ContainsKey(gameName));
+			gameLost[gameName] += 1;
 
 			foreach (var game in gameLogger.GameLost)
 			{

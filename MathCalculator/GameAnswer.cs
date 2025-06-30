@@ -16,13 +16,10 @@ public class GameAnswer
 
 	public GameAnswer(string game)
 	{
-		this.GameSelect = game;
+		GameSelect = game;
 		gameSelectionManager = new GameSelection();
 
 	}
-
-	QuestionGenerator questionGenerator = new QuestionGenerator();
-
 
 
 	public void gameAnswerPrompt()
@@ -37,6 +34,7 @@ public class GameAnswer
 			Console.WriteLine("Please provide an valid answer");
 			answerString = Console.ReadLine();
 		}
+		//TODO: create exception handler
 		answer = Convert.ToDouble(answerString);
 
 		gameAnswerManager(); // call the gameAnswerManager method to process the answer
