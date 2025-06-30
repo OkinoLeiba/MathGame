@@ -1,10 +1,16 @@
 ﻿using MathGame.Model;
+using Spectre.Console;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using static MathGame.OperationsEnum;
 
+
+// keep the instance tracker even though there is another version in the GameIntro class
+// both will perform the same function, but this one is a struct and the other is a class
+// the class also creates a new instance of GameLogger, and assigns it to the GameLog property
+// kept for experimentation and learning purposes
 namespace MathGame
 {
 	/// <summary>
@@ -14,9 +20,9 @@ namespace MathGame
 	{
 		public string? name = default(string);
 		public DateTime? date = default(DateTime?);
-		public int score = 0;
-		public int correctAnswer = 0;
-		public int wrongAnswer = 0;
+		static public int score = 0;
+		static public int correctAnswer = 0;
+		static public int wrongAnswer = 0;
 		public int gameCount = 0;
 		public int result = 0;
 		public int answer = 0;
@@ -24,15 +30,15 @@ namespace MathGame
 
 		public string? Name { get; set; }
 		public DateTime? Date { get; set; }
-		public int Score { get; set; }
-		public int CorrectAnswer { get; set; }
-		public int WrongAnswer { get; set; }
+		static public int Score { get; set; }
+		static public int CorrectAnswer { get; set; }
+		static public int WrongAnswer { get; set; }
 		public int GameCount { get => gameCount; set => gameCount = CorrectAnswer + WrongAnswer; } 
 		public GameLogger GameLog { get; set; } 
 
-		// Class containing game methods or mathematical operations to be used in the game selection process
+		// class containing game methods or mathematical operations to be used in the game selection process
 		Operations operations = new Operations();
-		// Class containing the model for game logger and game history
+		// class containing the model for game logger and game history
 		GameLogger gameLogger = new GameLogger();
 
 		private static readonly List<GameIntro> _instances = new List<GameIntro>();
@@ -40,18 +46,12 @@ namespace MathGame
 		public GameIntro() {
 			Name = name ?? string.Empty;
 			Date = date ?? DateTime.Now;
-			Score = score;
-			CorrectAnswer = correctAnswer;
-			WrongAnswer = wrongAnswer;
-			GameCount = gameCount;
 			GameLog = gameLogger;
 
 			_instances.Add(this);
 
 		}
 
-
-		
 
 		//public GameIntro() : GameLogger(string.Empty, DateTime.Now, 0, 0, 0, 0, new GameLogger())
 		//{
@@ -77,23 +77,31 @@ namespace MathGame
 		/// <return>void</return>
 		public void GameIntroMethod()
 		{
-			GameSelection gameSelection = new GameSelection(String.Empty);
+			GameSelection gameSelection = new GameSelection();
 			do { 
-			Console.WriteLine("Hello, World!");
+			Console.WriteLine("Hello, All World!");
 
 				Console.WriteLine("What is your name, Chief...\n");
 				Name = Console.ReadLine();
 
-			DateTime date = DateTime.UtcNow;
+				//Name = AnsiConsole.Prompt(
+				//	new TextPrompt<string>("What is your name, Chief...\n")
+				//		.Validate(input => string.IsNullOrEmpty(input) ? ValidationResult.Error("Name cannot be empty") : ValidationResult.Success())
+				//		.PromptStyle("green"));
+
+			Date = DateTime.UtcNow;
 
 			Console.WriteLine("-----------------------------------------------------------------------");
-			Console.WriteLine($"Hello {Name}, the date is {date}.\nDo you want to play a game with me?");
+			
 			} while (string.IsNullOrEmpty(Name));
+
+			Console.WriteLine($"Hello {Name}, the date is {Date}.\nDo you want to play a game with me?");
 			gameSelection.GameRequestSelectionUser();
 		}
 
-	
 
+		//TODO: In Development - manage game selection process and invoke methods based on user input
+		//TODO: Try to remember why I created this method and what it is supposed to do
 		public void GameInputManager(string operation)
 		{
 			int firstNum = default(int);

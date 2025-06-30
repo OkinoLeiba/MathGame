@@ -12,15 +12,17 @@ public class GameAnswer
 	public string answerString;
 
 	public string GameSelect { get; set; }
-
+	GameSelection gameSelectionManager;
 
 	public GameAnswer(string game)
 	{
 		this.GameSelect = game;
+		gameSelectionManager = new GameSelection();
+
 	}
 
 	QuestionGenerator questionGenerator = new QuestionGenerator();
-	GameSelection gameSelectionManager = new GameSelection(GameSelect);
+
 
 
 	public void gameAnswerPrompt()
@@ -44,10 +46,10 @@ public class GameAnswer
 
 	public void gameAnswerManager()
 	{
-		int numOfParam = questionGenerator.numOfParam; // number of parameters for the operation method
+		int numOfParam = QuestionGenerator.NumOfParam; // number of parameters for the operation method
 		ref double refAnswer = ref answer; // using ref to avoid unnecessary copying of the result variable 
-		int firstNum = questionGenerator.firstNum; // first number for the operation method
-		int secondNum = questionGenerator.secondNum; // second number for the operation method
+		int firstNum = QuestionGenerator.FirstNum; // first number for the operation method
+		int secondNum = QuestionGenerator.SecondNum; // second number for the operation method
 
 		GameIntro gameIntro = new GameIntro(); // create an instance of the GameIntro class to get the reference answer
 
@@ -55,7 +57,7 @@ public class GameAnswer
 		{
 			try
 			{
-				result = (double)typeof(Operations).GetMethod(char.ToUpper(gameSelection[0]) + gameSelection.Substring(1))?.Invoke(typeof(Operations), new object[] { firstNum })!;
+				result = (double)typeof(Operations).GetMethod(string.Concat(char.ToUpper(GameSelect[0]), GameSelect.Substring(1)))?.Invoke(new Operations(), new object[] { firstNum })!;
 			}
 			catch (NullReferenceException nfe) { Console.WriteLine(nfe.Message); return; } // exit if the method is not found 
 		}
@@ -63,7 +65,7 @@ public class GameAnswer
 		{
 			try
 			{
-				result = (double)typeof(Operations).GetMethod(char.ToUpper(gameSelection[0]) + gameSelection.Substring(1))?.Invoke(typeof(Operations), new object[] { firstNum, secondNum })!;
+				result = (double)typeof(Operations).GetMethod(string.Concat(char.ToUpper(GameSelect[0]), GameSelect.Substring(1)))?.Invoke(new Operations(), new object[] { firstNum, secondNum })!;
 			}
 			catch (NullReferenceException nfe) { Console.WriteLine(nfe.Message); return; } // exit if the method is not found 
 		}
@@ -71,15 +73,17 @@ public class GameAnswer
 		if (Math.Abs(result - refAnswer) < 0.0001) // using a tolerance for floating point comparison
 		{
 			Console.WriteLine("Congratulations! You got the correct answer!");
-			score++;
+			GameIntro.Score++;
+			GameIntro.CorrectAnswer++;
 		}
 		else
 		{
 			Console.WriteLine($"Sorry, the correct answer is {result}.");
+			GameIntro.WrongAnswer++;
 		}
-		Console.WriteLine($"Your current score is: {score}");
+		Console.WriteLine($"Your current score is: {GameIntro.Score}");
 		Console.WriteLine("-----------------------------------------------------------------------");
 
-		gameSelectionManager.ContinueGameSelectOrEnd(gameSelection, GameIntro.Instances[0]); // call the ContinueGameSelectOrEnd method to continue or end the game
+		gameSelectionManager.ContinueGameSelectOrEnd(GameSelect); // call the ContinueGameSelectOrEnd method to continue or end the game
 	}
 }

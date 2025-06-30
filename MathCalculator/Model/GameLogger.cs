@@ -8,9 +8,12 @@ namespace MathGame.Model
 {
 	public struct GameLogger
 	{
-		// a static list to hold all instances of GameLogger\
+		// a static list to hold all instances of GameLogger
 		// this allows us to keep track of all game logs created during the program's execution
 		// using registry design pattern: consider weak references if memory consumption is a concern
+		// keep the instance tracker even though there is another version in the GameIntro class
+		// both will perform the same function, but this one is a struct and the other is a class
+		// kept for experimentation and learning purposes
 
 		public string? userName = default;
 		public DateTime date;
@@ -57,7 +60,8 @@ namespace MathGame.Model
 				}
 				catch (DivideByZeroException dze)
 				{
-					Console.WriteLine(dze.Message);
+					// this will excecute when the program starts to run
+					//Console.WriteLine();
 				}
 			}
 		}

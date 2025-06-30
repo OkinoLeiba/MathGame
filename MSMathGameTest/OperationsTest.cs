@@ -16,7 +16,7 @@ namespace MathGameTest
 	{
 		private Operations _operations;
 
-		[TestInitialize]
+		[UnitTest.TestInitialize]
 		public void MathGameInit()
 		{
 			_operations = new Operations();
@@ -25,7 +25,7 @@ namespace MathGameTest
 		/// <summary>
 		/// Tests Add method with valid input.
 		/// </summary>
-		[TestMethod]
+		[UnitTest.UnitTest.TestMethod]
 		public void Add_Success()
 		{
 			// arrange
@@ -36,14 +36,14 @@ namespace MathGameTest
 			double result = _operations.Addition(a, b);
 
 			// assert
-			Assert.AreEqual(8, result);
+			UnitTest.UnitTest.Assert.AreEqual(8, result);
 		
 		}
 
 		/// <summary>
 		/// Tests Add method with valid input with output that will fail.
 		/// </summary>
-		[TestMethod]
+		[UnitTest.UnitTest.TestMethod]
 		public void Add_Failure()
 		{
 			// arrange
@@ -53,13 +53,13 @@ namespace MathGameTest
 			double result = _operations.Addition(a, b);
 
 			// assert
-			Assert.AreNotEqual(20, result);
+			UnitTest.UnitTest.Assert.AreNotEqual(20, result);
 		}
 
 		/// <summary>
 		/// Tests Subtraction method with valid input.
 		/// </summary>
-		[TestMethod]
+		[UnitTest.UnitTest.TestMethod]
 		public void Subtract_Success()
 		{
 			// arrange
@@ -69,13 +69,13 @@ namespace MathGameTest
 			double result = _operations.Subtraction(a, b);
 
 			// assert
-			Assert.AreEqual(6, result);
+			UnitTest.UnitTest.Assert.AreEqual(6, result);
 		}
 
 		/// <summary>
 		/// Tests Mutliplication method with valid input.
 		/// </summary>
-		[TestMethod]
+		[UnitTest.UnitTest.TestMethod]
 		public void Multiply_Success()
 		{
 			// arrange
@@ -85,13 +85,13 @@ namespace MathGameTest
 			double result = _operations.Mutliplication(a, b);
 
 			// assert
-			Assert.AreEqual(42, result);
+			UnitTest.UnitTest.Assert.AreEqual(42, result);
 		}
 
 		/// <summary>
 		/// Tests Division method with valid input.
 		/// </summary>
-		[TestMethod]
+		[UnitTest.UnitTest.TestMethod]
 		public void Divide_Success()
 		{
 			// arrange
@@ -101,14 +101,14 @@ namespace MathGameTest
 			double result = _operations.Division(a, b);
 
 			// assert
-			Assert.AreEqual(5, result);
+			UnitTest.UnitTest.Assert.AreEqual(5, result);
 		}
 
 		/// <summary>
 		/// Tests Division method with zero denominator (should throw).
 		/// </summary>
-		[TestMethod]
-		[ExpectedException(typeof(DivideByZeroException))]
+		[UnitTest.UnitTest.TestMethod]
+		[UnitTest.ExpectedException(typeof(DivideByZeroException))]
 		public void Divide_Failure_DivideByZero()
 		{
 			// arrange
@@ -123,7 +123,7 @@ namespace MathGameTest
 		/// <summary>
 		/// Tests Power method with valid input.
 		/// </summary>
-		[TestMethod]
+		[UnitTest.UnitTest.TestMethod]
 		public void Power_Success()
 		{
 			// arrange
@@ -133,13 +133,13 @@ namespace MathGameTest
 			double result = _operations.Power(a, b);
 
 			// assert
-			Assert.AreEqual(8, result);
+			UnitTest.Assert.AreEqual(8, result);
 		}
 
 		/// <summary>
 		/// Tests PowerScratch method with valid input.
 		/// </summary>
-		[TestMethod]
+		[UnitTest.TestMethod]
 		public void PowerScratch_Success()
 		{
 			// arrange
@@ -149,13 +149,13 @@ namespace MathGameTest
 			double result = _operations.PowerScratch(a, b);
 
 			// assert
-			Assert.AreEqual(6, result); // 2 + 2 + 2 = 6
+			UnitTest.Assert.AreEqual(6, result); // 2 + 2 + 2 = 6
 		}
 
 		/// <summary>
 		/// Tests SquareRoot method with valid input.
 		/// </summary>
-		[TestMethod]
+		[UnitTest.TestMethod]
 		public void SquareRoot_Success()
 		{
 			// arrange
@@ -165,14 +165,14 @@ namespace MathGameTest
 			double result = _operations.SquareRoot(a);
 
 			// assert
-			Assert.AreEqual(3, result, 0.0001);
+			UnitTest.Assert.AreEqual(3, result, 0.0001);
 		}
 
 		/// <summary>
 		/// Tests SquareRoot method with negative input (should throw).
 		/// </summary>
-		[TestMethod]
-		[ExpectedException(typeof(ArgumentException))]
+		[UnitTest.TestMethod]
+		[UnitTest.ExpectedException(typeof(ArgumentException))]
 		public void SquareRoot_Failure_Negative()
 		{
 			// arrange
@@ -187,7 +187,7 @@ namespace MathGameTest
 		/// <summary>
 		/// Tests Modulus method with valid input.
 		/// </summary>
-		[TestMethod]
+		[UnitTest.TestMethod]
 		public void Modulus_Success()
 		{
 			// arrange
@@ -197,14 +197,14 @@ namespace MathGameTest
 			double result = _operations.Modulus(a, b);
 
 			// assert
-			Assert.AreEqual(1, result, 0.0001);
+			UnitTest.Assert.AreEqual(1, result, 0.0001);
 		}
 
 		/// <summary>
 		/// Tests Modulus method with zero divisor (should throw).
 		/// </summary>
-		[TestMethod]
-		[ExpectedException(typeof(DivideByZeroException))]
+		[UnitTest.TestMethod]
+		[UnitTest.ExpectedException(typeof(DivideByZeroException))]
 		public void Modulus_Failure_DivideByZero()
 		{
 			// arrange
@@ -219,7 +219,7 @@ namespace MathGameTest
 		/// <summary>
 		/// Tests Factorial method with valid input.
 		/// </summary>
-		[TestMethod]
+		[UnitTest.TestMethod]
 		public void Factorial_Success()
 		{
 			// arrange
@@ -229,14 +229,14 @@ namespace MathGameTest
 			double result = _operations.Factorial(n);
 
 			// assert
-			Assert.AreEqual(120, result);
+			UnitTest.Assert.AreEqual(120, result);
 		}
 
 		/// <summary>
 		/// Tests Factorial method with negative input (should throw).
 		/// </summary>
-		[TestMethod]
-		[ExpectedException(typeof(ArgumentException))]
+		[UnitTest.TestMethod]
+		[UnitTest.ExpectedException(typeof(ArgumentException))]
 		public void Factorial_Failure_Negative()
 		{
 			// arrange
@@ -251,7 +251,7 @@ namespace MathGameTest
 		/// <summary>
 		/// Tests LogarithmBase10 method with valid input.
 		/// </summary>
-		[TestMethod]
+		[UnitTest.TestMethod]
 		public void LogarithmBase10_Success()
 		{
 			// arrange
@@ -261,14 +261,14 @@ namespace MathGameTest
 			double result = _operations.LogarithmBase10(a);
 
 			// assert
-			Assert.AreEqual(2, result, 0.0001);
+			UnitTest.Assert.AreEqual(2, result, 0.0001);
 		}
 
 		/// <summary>
 		/// Tests LogarithmBase10 method with zero input (should throw).
 		/// </summary>
-		[TestMethod]
-		[ExpectedException(typeof(ArgumentException))]
+		[UnitTest.TestMethod]
+		[UnitTest.ExpectedException(typeof(ArgumentException))]
 		public void LogarithmBase10_Failure_Zero()
 		{
 			// arrange
@@ -283,7 +283,7 @@ namespace MathGameTest
 		/// <summary>
 		/// Tests AbsoluteValue method with negative input.
 		/// </summary>
-		[TestMethod]
+		[UnitTest.TestMethod]
 		public void AbsoluteValue_Success()
 		{
 			// arrange
@@ -293,13 +293,13 @@ namespace MathGameTest
 			double result = _operations.AbsoluteValue(a);
 
 			// assert
-			Assert.AreEqual(5, result);
+			UnitTest.Assert.AreEqual(5, result);
 		}
 
 		/// <summary>
 		/// Tests AbsoluteValue method with positive input.
 		/// </summary>
-		[TestMethod]
+		[UnitTest.TestMethod]
 		public void AbsoluteValue_Positive_Success()
 		{
 			// arrange
@@ -309,7 +309,7 @@ namespace MathGameTest
 			double result = _operations.AbsoluteValue(a);
 
 			// assert
-			Assert.AreEqual(5, result);
+			UnitTest.Assert.AreEqual(5, result);
 		}
 	}
 }

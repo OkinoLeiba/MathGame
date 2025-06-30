@@ -22,6 +22,8 @@ namespace MathGame
 		//TODO: consider designing AppManager to have access to state and data of all the classes in the application and within the entire namespace
 		//TODO: consider whether to use a singleton pattern for the AppManager class or not
 		//TODO: consider using the observer pattern to notify other classes of changes in the game state or user interactions; meaning global accessibility for the AppManager class
+
+		// tight coupling between most of the classes in the namespace may not be ideal for maintainability and scalability, but it is acceptable for a small application like this
 		private readonly GameIntro _gameIntro;
 		private readonly GameLogManager _gameLogManager;
 

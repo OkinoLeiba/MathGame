@@ -1,12 +1,17 @@
 ﻿using Spectre.Console;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization; // may be needed for enums
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks; // may be needed for Operations class
-using System.Timers;       
+using static MathGame.OperationsEnum;
+
+using Timer = System.Timers.Timer;
 
 namespace MathGame
 {
@@ -14,6 +19,7 @@ namespace MathGame
 	{
 		
 		public List<string> methodNames = default(List<string>)!;
+		public string? gameSelect = default(string)!;
 		public int inputRepeatValidationSignal = default(int);
 
 		public string? GameSelect { get; set; }
@@ -21,13 +27,13 @@ namespace MathGame
 
 		Timer timer = new Timer();
 
-		// the class is initialize within this function because of my concern 
+		// the classes may be initialized within this function because of my concern 
 		// with creating a invocation loop
 		GameIntro gameIntro = new GameIntro();
 		QuestionGenerator questionGenerator = new QuestionGenerator();
 
 
-		public GameSelection(string gameSelect) 
+		public GameSelection() 
 		{
 			GameSelect = gameSelect ?? string.Empty;
 			// get method names from Operations class as game options for user
@@ -42,7 +48,7 @@ namespace MathGame
 			//enum EnumMethodName = methodNames.Select(s => Enum.Parse(typeof(Enum), s)).ToList();
 
 			// attempted to dynamically add elements to enum or of type enum at runtime
-			// one approach is to keep reinitiatize the enum
+			// one approach is to keep reinitializing the enum
 			//methodNames.Select(s =>  EnumMethodName s = EnumMethodName(0)); 
 		}
 
@@ -93,8 +99,74 @@ namespace MathGame
 						MethodNames
 					));
 
+
 			// render each item in list on separate line
 			AnsiConsole.Write(new Columns(MethodNames));
+
+			var table = new Table().Centered();
+
+			// print game options in columns with 10 items per column
+			int itemsPerColumn = 10;
+			int totalItems = MethodNames.Count;
+			int numColumns = (int)Math.Ceiling(totalItems / (double)itemsPerColumn);
+
+			for (int row = 0; row < itemsPerColumn; row++)
+			{
+				for (int col = 0; col < numColumns; col++)
+				{
+					// calculate the index for the current item in the column
+					// from multi-dimensional array index to single dimensional array index
+					int index = col * itemsPerColumn + row;
+					if (index < totalItems)
+					{
+						// char optionChar = (char)('A' + index);
+						// correctly retrieve the enum value using Enum.GetName
+						string optionChar = Enum.GetName(typeof(EnumOperationsMethodPrefix), index % Enum.GetNames(typeof(EnumOperationsMethodPrefix)).Length)!;  // use modulo to wrap around if needed
+						Console.Write($"{optionChar} - {MethodNames[index],-25}");
+					}
+				}
+				Console.WriteLine();
+			}
+
+			// create a Spectre.Console table with 10 items per column
+			// add columns to the table
+			for (int col = 0; col < numColumns; col++)
+			{
+				table.AddColumn(new TableColumn($"Game Option {col + 1}"));
+			}
+
+			// add rows to the table
+			for (int row = 0; row < itemsPerColumn; row++)
+			{
+				var rowItems = new List<string>();
+				for (int col = 0; col < numColumns; col++)
+				{
+					int index = col * itemsPerColumn + row;
+					if (index < totalItems)
+					{
+						// char optionChar = (char)('A' + index);
+						string optionChar = Enum.GetName(typeof(EnumOperationsMethodPrefix), index % Enum.GetNames(typeof(EnumOperationsMethodPrefix)).Length)!; // use modulo to wrap around if needed
+						rowItems.Add($"{optionChar} - {MethodNames[index]}");
+					}
+					else
+					{
+						rowItems.Add(""); // empty cell if no more items
+					}
+				}
+				table.AddRow(rowItems.ToArray());
+			}
+
+			AnsiConsole.Live(table)
+				.AutoClear(false)   // do not remove when done
+				.Overflow(VerticalOverflow.Ellipsis) // show ellipsis when overflowing
+				.Cropping(VerticalOverflowCropping.Top) // crop overflow at top
+				.Start(ctx =>
+				{
+					//table.AddColumn(new TableColumn("Game Options").Centered()); // add a column for game options
+					//table.AddColumn(new TableColumn(MethodNames));
+					ctx.Refresh();
+					Thread.Sleep(1000);
+				});
 
 			GameSelect = gameSelection;
 
@@ -132,7 +204,7 @@ namespace MathGame
 							GameSelect = gameName;
 							
 							// prevent the execution of the conditional body when function stack unravels 
-							// to location where it jumped from -- solution? move invocation of function
+							// to location where it jumped from -- solution?: move invocation of function
 							//GameSelect = null;
 							//break;
 							//return;
@@ -486,22 +558,23 @@ namespace MathGame
 			
 		}
 
-		public void ContinueGameSelectOrEnd(string gameName, GameIntro gameIntro)
+		public void ContinueGameSelectOrEnd(string gameName)
 		{
 			// TODO: refactor the code to use a switch expression or a switch statement
 			// TODO: refactor the code to use a ternary operator or a conditional operator
 			// TODO: refactor the code to use a lambda expression or a delegate
 			// TODO: change GAMECOUNT to a constant value of 10
-			const int GAMECOUNT = 1;
-			int gameTotal = gameIntro.CorrectAnswer + gameIntro.WrongAnswer;
+			GameSelect = gameName;
+			const int GAMECOUNT = 10;
+			int gameTotal = GameIntro.CorrectAnswer + GameIntro.WrongAnswer;
 
-			string gameFinalFeedback = ((double) gameIntro.Score / (double) gameTotal) switch
+			string gameFinalFeedback = ((double) GameIntro.Score / (double) gameTotal) switch
 			{
-				1.0 => $"Game over, your Great!!! You are super-awesome. Your final score is {gameIntro.Score}.",
-				>= 0.8 => $"Game over, your Great!!! You did well. Your final score is {gameIntro.Score}.",
-				>= 0.5 => $"Game over, your Great!!! You did alright. Your final score is {gameIntro.Score}.",
-				>= 0.0 => $"Game over, your Great!!! You did it, keep trying. Your final score is {gameIntro.Score}.",
-				_ => "Keep trying, you get it!"
+				1.0 => $"\nGame over, your Great!!! You are super-awesome. Your final score is {GameIntro.Score}.\n",
+				>= 0.8 => $"\nGame over, your Great!!! You did well. Your final score is {GameIntro.Score}.\n",
+				>= 0.5 => $"\nGame over, your Great!!! You did alright. Your final score is {GameIntro.Score}.\n",
+				>= 0.0 => $"\nGame over, your Great!!! You did it, keep trying. Your final score is {GameIntro.Score}.\n",
+				_ => "\nKeep trying, you get it!\n"
 			};
 
 
@@ -509,6 +582,30 @@ namespace MathGame
 			else questionGenerator.MathQuestion(GameSelect);
 
 			
+			if (gameTotal >= GAMECOUNT)
+			{
+				Console.WriteLine("Do you want to continue playing or exit? (Type 'continue' or 'exit')");
+				string? optionContinueOrExit = Console.ReadLine()?.Trim().ToLower();
+				if (optionContinueOrExit == "continue" || optionContinueOrExit == "c")
+				{
+					gameIntro.GameIntroMethod();
+				}
+				else if (optionContinueOrExit == "exit" || optionContinueOrExit == "e")
+				{
+					Console.WriteLine("Bye for Now!");
+					timer.Interval = 10000;
+					timer.Stop();
+					timer.Dispose();
+					Environment.Exit(1);
+				}
+				else
+				{
+					Console.WriteLine("Invalid selection, returning to game selection.");
+					gameIntro.GameIntroMethod();
+				}
+			}
+
+
 		}
 	}
 }

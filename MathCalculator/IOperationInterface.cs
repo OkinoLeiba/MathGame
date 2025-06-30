@@ -253,10 +253,8 @@ namespace MathGame
 		/// </summary>
 		/// <param name="a">Angle in radians.</param>
 		/// <returns>cot(a).</returns>
-		public double Cot(double a)
-		{
-			return 1 / Tan(a);
-		}
+		public double Cot(double a);
+		
 
 		/// <summary>
 		/// Returns the cotangent of an angle in radians using scratch implementations.
@@ -264,26 +262,16 @@ namespace MathGame
 		/// <param name="a">Angle in radians.</param>
 		/// <returns>cot(a).</returns>
 		/// <exception cref="DivideByZeroException">Thrown when sine is zero.</exception>
-		public double CotScratch(double a)
-		{
-			double sin = SinScratch(a);
-			double cos = CosScratch(a);
-			if (sin == 0)
-			{
-				throw new DivideByZeroException("Cannot divide by zero.");
-			}
-			return cos / sin;
-		}
+		public double CotScratch(double a);
+
 
 		/// <summary>
 		/// Returns the secant of an angle in radians.
 		/// </summary>
 		/// <param name="a">Angle in radians.</param>
 		/// <returns>sec(a).</returns>
-		public double Sec(double a)
-		{
-			return 1 / Cos(a);
-		}
+		public double Sec(double a);
+		
 
 		/// <summary>
 		/// Returns the secant of an angle in radians using scratch implementation.

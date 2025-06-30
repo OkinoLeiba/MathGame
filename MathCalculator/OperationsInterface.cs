@@ -45,14 +45,20 @@ namespace MathGame
 		/// <param name="a">Numerator.</param>
 		/// <param name="b">Denominator.</param>
 		/// <returns>The result of a divided by b.</returns>
-		/// <exception cref="DivideByZeroException">Thrown when b is zero.</exception>
 		public double Division(double a, double b)
 		{
 			if (b == 0)
 			{
+				return double.NaN;
+			}
+			try
+			{
+				return a / b;
+			}
+			catch (DivideByZeroException)
+			{
 				throw new DivideByZeroException("Cannot divide by zero.");
 			}
-			return a / b;
 		}
 
 		/// <summary>
@@ -92,7 +98,7 @@ namespace MathGame
 		{
 			if (a < 0)
 			{
-				throw new ArgumentException("Cannot take the square root of a negative nubmer.");
+				throw new ArgumentException("Cannot take the square root of a negative number.");
 			}
 			return Math.Sqrt(a);
 		}
@@ -107,7 +113,7 @@ namespace MathGame
 		{
 			if (a < 0)
 			{
-				throw new ArgumentException("Cannot take the square root of a negative nubmer.");
+				throw new ArgumentException("Cannot take the square root of a negative number.");
 			}
 			double result = a;
 			double lastResult = 0;
@@ -129,7 +135,7 @@ namespace MathGame
 		{
 			if (a < 0)
 			{
-				throw new ArgumentException("Cannot take the square root of a negative nubmer.");
+				throw new ArgumentException("Cannot take the square root of a negative number.");
 			}
 			double low = 0;
 			double high = a;
@@ -396,14 +402,21 @@ namespace MathGame
 		/// <param name="a">Dividend.</param>
 		/// <param name="b">Divisor.</param>
 		/// <returns>a % b.</returns>
-		/// <exception cref="DivideByZeroException">Thrown when b is zero.</exception>
 		public double Modulus(double a, double b)
 		{
 			if (b == 0)
 			{
-				throw new DivideByZeroException("Cannot divide by zero.");
+				return double.NaN; // throwing an exception is an option but may execute since the default value of int is zero
 			}
-			return a % b;
+			try 
+			{
+				return a % b;
+			}
+			catch (DivideByZeroException)
+			{
+				throw new DivideByZeroException("Cannot compute modulus: divisor is zero.");
+			}
+			
 		}
 
 		/// <summary>
@@ -412,12 +425,11 @@ namespace MathGame
 		/// <param name="a">Dividend.</param>
 		/// <param name="b">Divisor.</param>
 		/// <returns>a % b.</returns>
-		/// <exception cref="DivideByZeroException">Thrown when b is zero.</exception>
 		public double ModulusScratch(double a, double b)
 		{
 			if (b == 0)
 			{
-				throw new DivideByZeroException("Cannot divide by zero.");
+				return double.NaN; // throwing an exception is an option but may execute since the default value of int is zero
 			}
 			while (a >= b)
 			{
@@ -501,16 +513,22 @@ namespace MathGame
 		/// </summary>
 		/// <param name="a">Angle in radians.</param>
 		/// <returns>tan(a).</returns>
-		/// <exception cref="DivideByZeroException">Thrown when cosine is zero.</exception>
 		public double TanScratch(double a)
 		{
 			double sin = SinScratch(a);
 			double cos = CosScratch(a);
 			if (cos == 0)
 			{
-				throw new DivideByZeroException("Cannot divide by zero.");
+				return double.PositiveInfinity; // throwing an exception is an option but may execute since the default value of int is zero
 			}
-			return sin / cos;
+			try
+			{
+				return sin / cos;
+			}
+			catch (DivideByZeroException)
+			{
+				throw new DivideByZeroException("Cannot compute tangent: cosine is zero.");
+			}
 		}
 
 		/// <summary>
@@ -528,16 +546,22 @@ namespace MathGame
 		/// </summary>
 		/// <param name="a">Angle in radians.</param>
 		/// <returns>cot(a).</returns>
-		/// <exception cref="DivideByZeroException">Thrown when sine is zero.</exception>
 		public double CotScratch(double a)
 		{
 			double sin = SinScratch(a);
 			double cos = CosScratch(a);
 			if (sin == 0)
 			{
-				throw new DivideByZeroException("Cannot divide by zero.");
+				return double.PositiveInfinity; // throwing an exception is an option but may execute since the default value of int is zero
 			}
-			return cos / sin;
+			try
+			{
+				return cos / sin;
+			}
+			catch (DivideByZeroException)
+			{
+				throw new DivideByZeroException("Cannot compute cotangent: sine is zero.");
+			}
 		}
 
 		/// <summary>
@@ -555,15 +579,21 @@ namespace MathGame
 		/// </summary>
 		/// <param name="a">Angle in radians.</param>
 		/// <returns>sec(a).</returns>
-		/// <exception cref="DivideByZeroException">Thrown when cosine is zero.</exception>
 		public double SecScratch(double a)
 		{
 			double cos = CosScratch(a);
 			if (cos == 0)
 			{
-				throw new DivideByZeroException("Cannot divide by zero.");
+				return double.PositiveInfinity; // throwing an exception is an option but may execute since the default value of int is zero
 			}
-			return 1 / cos;
+			try
+			{
+				return 1 / cos;
+			}
+			catch (DivideByZeroException)
+			{
+				throw new DivideByZeroException("Cannot compute secant: cosine is zero.");
+			}
 		}
 
 		/// <summary>
@@ -581,15 +611,21 @@ namespace MathGame
 		/// </summary>
 		/// <param name="a">Angle in radians.</param>
 		/// <returns>csc(a).</returns>
-		/// <exception cref="DivideByZeroException">Thrown when sine is zero.</exception>
 		public double CscScratch(double a)
 		{
 			double sin = SinScratch(a);
 			if (sin == 0)
 			{
-				throw new DivideByZeroException("Cannot divide by zero.");
+				return double.PositiveInfinity; // throwing an exception is an option but may execute since the default value of int is zero
 			}
-			return 1 / sin;
+			try
+			{
+				return 1 / sin;
+			}
+			catch (DivideByZeroException)
+			{
+				throw new DivideByZeroException("Cannot compute cosecant: sine is zero.");
+			}
 		}
 
 		/// <summary>

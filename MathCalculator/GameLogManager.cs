@@ -132,14 +132,14 @@ namespace MathGame
 		//}
 		public override string ToString()
 		{
-			string localRefGame = $"{gameIntro.Date} - {gameSelection.GameSelect}: {gameIntro.Score}";
+			string localRefGame = $"{gameIntro.Date} - {gameSelection.GameSelect}: {GameIntro.Score}";
 			return localRefGame;
 			//return base.ToString(localRefGame);
 		}
 
 		public void UpdateGameHistory(string gameName)
 		{
-			string localRefGame = $"{gameIntro.Date} - {gameSelection.GameSelect}: {gameIntro.Score}";
+			string localRefGame = $"{gameIntro.Date} - {gameSelection.GameSelect}: {GameIntro.Score}";
 			//gameHistory.Add("31/05/2025 16:38:27 - Addition : 0");
 			//bool test = localRefGame.Contains(gameName);
 			//bool tst = GameHistory.Any(h => h.Contains("gameName"));
@@ -149,10 +149,10 @@ namespace MathGame
 			if (GameHistory.Any(h => h.Contains(gameName)) == true)
 			{ 
 				GameHistory.Remove(GameHistory.Find(h => h.Contains(gameName)));
-				GameHistory.Add($"{gameIntro.Date} - {gameName}: {gameIntro.Score}");
+				GameHistory.Add($"{gameIntro.Date} - {gameName}: {GameIntro.Score}");
 		
 			}
-			else GameHistory.Add($"{gameIntro.Date} - {gameSelection.GameSelect}: {gameIntro.Score}");
+			else GameHistory.Add($"{gameIntro.Date} - {gameSelection.GameSelect}: {GameIntro.Score}");
 			
 		}
 	}
