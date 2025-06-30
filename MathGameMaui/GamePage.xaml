@@ -8,9 +8,57 @@
             Text="Welcome to GamePage"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
+        
         <Label 
             Text="{Binding GameSelect}"
             VerticalOptions="Center"
             HorizontalOptions="Center" />
+    
+        <Label 
+            x:Name="QuestionLabel"
+            Text="{Binding Question}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            BackgroundColor="Maroon"/>
+
+        <Entry
+            x:Name="AnswerEntry"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            BackgroundColor="OliveDrab">
+
+        </Entry>
+
+        <Button
+            x:Name="AnswerButton"
+            Text="Answer"
+            Clicked="OnAnswerSubmit"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            BackgroundColor="Peru"
+            />
+
+        <Label 
+            x:Name="ResultLabel"
+            IsVisible="False"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            BackgroundColor="MediumSlateBlue" />
+
+        <Label 
+            x:Name="ScoreLabel"
+            IsVisible="False"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            BackgroundColor="SpringGreen" />
+
+        <Label 
+          x:Name="GameOverLabel"
+          IsVisible="False"
+          VerticalOptions="Center"
+          HorizontalOptions="Center"
+          BackgroundColor="MediumSlateBlue" />
+
     </VerticalStackLayout>
 </ContentPage>

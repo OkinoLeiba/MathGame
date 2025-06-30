@@ -6,7 +6,7 @@
     <ScrollView
         BackgroundColor="DarkMagenta">
         <VerticalStackLayout
-            Padding="20,0"
+            Padding="20,5"
             Spacing="20"
             BackgroundColor="LightSeaGreen">
             <Image
@@ -37,7 +37,7 @@
 
 
             <Label
-                Text="Do you want to play a game with me!\n What game would you like to play."
+                Text="Do you want to play a game with me!&#x0a;What game would you like to play."
                 TextColor="Firebrick"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
@@ -46,11 +46,12 @@
             <Grid 
                 x:Name="GameGrid"
                 BackgroundColor="AliceBlue" 
-                IsVisible="Hidden" />
+                IsVisible="Visible">
+             </Grid>
 
             <Grid
                 RowDefinitions="Auto, Auto, Auto"
-                ColumnDefinitions="Auto, Auto"
+                ColumnDefinitions="Auto"
                 HorizontalOptions="Center"
                 BackgroundColor="OldLace">
                 <Button
@@ -66,7 +67,7 @@
                     BackgroundColor="LightSteelBlue"
                     SemanticProperties.Hint="Navigates to page with previous game history."
                     Clicked="OnGameHistoryClicked"
-                    Grid.Row="0" Grid.Column="1" />
+                    Grid.Row="1" Grid.Column="0" />
 
                 <Button
                     x:Name="ExitBtn"
@@ -74,7 +75,7 @@
                     BackgroundColor="RosyBrown"
                     SemanticProperties.Hint="Exits the application"
                     Clicked="OnExitClicked"
-                    Grid.Row="1" Grid.ColumnSpan="2" />
+                    Grid.Row="2" Grid.ColumnSpan="0" />
 
             </Grid>
 

@@ -72,6 +72,9 @@
 	  <MauiXaml Update="GamePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="GameSelection.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="PreviousHistory.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

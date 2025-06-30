@@ -17,7 +17,8 @@ namespace MathGameMaui
 
 		public MainPage()
 		{
-			InitializeComponent(); 
+			InitializeComponent();
+	
 		}
 
 		//public MainPage(string? userName)
@@ -37,6 +38,7 @@ namespace MathGameMaui
 		{
 			base.OnAppearing();
 			CreateGridButtons(); // Call the method to create grid buttons when the page appears
+			WelcomeFiglet();
 		}
 
 		public void WelcomeFiglet()
@@ -81,8 +83,11 @@ namespace MathGameMaui
 				var button = new Button
 				{
 					Text = MethodName[i],
-					Style = (Style)Application.Current.Resources["ButtonStyle"]
+					//Style = (Style)Application.Current.Resources["Button"]
+					
 				};
+				GameGrid.SetRow(button, row);
+				GameGrid.SetColumn(button, column);
 				//button.Clicked += (sender, e) =>
 				//{
 				//	// Handle button click event here
@@ -91,8 +96,11 @@ namespace MathGameMaui
 
 				// TOOO: change the name of method to navigate to the corresponding operation
 				button.Clicked += OnGameSelectionClicked; // attach the event handler for button clicks
+				//GameGrid.Children.Add(button);
 				//GameGrid.Children.Add(button, column, row);
-				
+				GameGrid.IsVisible = true; // ensure the grid is visible
+
+
 			}
 
 			// Uncomment and adjust the following lines if needed
@@ -105,7 +113,18 @@ namespace MathGameMaui
 
 		private void OnMathGameClicked(object sender, EventArgs e)
 		{
-			CreateGridButtons();
+			//CreateGridButtons();
+			if (sender is Button button)
+			{
+				Button btn = (Button)sender;
+				Navigation.PushAsync(new GameSelection());
+
+				SemanticScreenReader.Announce($"{btn.Text} pressed.");
+			}
+			else
+			{
+				new ArgumentException("Argument passed not type button.");
+			}
 		}
 
 		private void OnGameButtonClicked(object sender, EventArgs e)
@@ -170,7 +189,7 @@ namespace MathGameMaui
 			Button button = (Button)sender;
 			// logic to exit the application
 			Application.Current.Quit(); // close the application
-			//Environment.Exit(0); // or use to terminate the process
+			Environment.Exit(0); // or use to terminate the process
 			SemanticScreenReader.Announce(SemanticProperties.GetDescription(button));
 		}
 

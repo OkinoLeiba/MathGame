@@ -3,7 +3,7 @@
 
 namespace MathGame
 {
-	internal struct OperationsEnum
+	public struct OperationsEnum
 	{
 		public enum EnumOperationsMethod : int
 		{
