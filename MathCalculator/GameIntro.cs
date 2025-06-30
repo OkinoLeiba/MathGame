@@ -1,8 +1,8 @@
 ﻿using MathGame.Model;
 using System;
-using System.ComponentModel;
-using System.Linq;
+using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using static MathGame.OperationsEnum;
 
 namespace MathGame
@@ -10,7 +10,7 @@ namespace MathGame
 	/// <summary>
 	/// Beginning of program after main entry point and initialized
 	/// </summary>
-	internal class GameIntro
+	public class GameIntro
 	{
 		public string? name = default(string);
 		public DateTime? date = default(DateTime?);
@@ -35,7 +35,8 @@ namespace MathGame
 		// Class containing the model for game logger and game history
 		GameLogger gameLogger = new GameLogger();
 
-		 
+		private static readonly List<GameIntro> _instances = new List<GameIntro>();
+
 		public GameIntro() {
 			Name = name ?? string.Empty;
 			Date = date ?? DateTime.Now;
@@ -44,8 +45,31 @@ namespace MathGame
 			WrongAnswer = wrongAnswer;
 			GameCount = gameCount;
 			GameLog = gameLogger;
-			
+
+			_instances.Add(this);
+
 		}
+
+
+		
+
+		//public GameIntro() : GameLogger(string.Empty, DateTime.Now, 0, 0, 0, 0, new GameLogger())
+		//{
+		//	// this constructor initializes the properties with default values for game logger
+		//	Name = string.Empty;
+		//	Date = DateTime.Now;
+		//	Score = 0;
+		//	CorrectAnswer = 0;
+		//	WrongAnswer = 0;
+		//	GameCount = 0;
+		//	GameLog = new GameLogger();
+		//	_instances.Add(this);
+		//}
+	
+			
+
+		public static IReadOnlyList<GameIntro> Instances => _instances.AsReadOnly();
+
 
 		/// <summary>
 		/// Greeting the user, prompting the user to provide name, prompting user to select a game, and printing out result
@@ -53,7 +77,7 @@ namespace MathGame
 		/// <return>void</return>
 		public void GameIntroMethod()
 		{
-			GameSelection gameSelection = new GameSelection();
+			GameSelection gameSelection = new GameSelection(String.Empty);
 			do { 
 			Console.WriteLine("Hello, World!");
 
@@ -77,13 +101,20 @@ namespace MathGame
 			int secondNum = default(int);
 			string? secondStringNum = default(string);
 
+			int numOfParam = 0; // number of parameters for the operation method
+
 			// since operations are critical to the game, we will ensure that the Operations class is initialized
 			// and that the methods are available for use in the game selection process without having to create an instance of the class
 			// LazyInitializer is used to ensure that the Operations class is initialized only once and is thread-safe
-			// LazyInitializer.EnsureInitialized<Operations>(ref operations);
-			//LazyInitializer.EnsureInitialized(Operations);
+			//System.Threading.LazyInitializer.EnsureInitialized<Operations>(ref operations);
+			//System.Threading.LazyInitializer.EnsureInitialized(Operations);
 
-			int numOfParam = typeof(Operations).GetMethod(operation)!.GetParameters().Length;
+			try
+			{
+				numOfParam = typeof(Operations).GetMethod(char.ToUpper(operation[0]) + operation.Substring(1))!.GetParameters().Length;
+			}
+			catch (NullReferenceException nfe) { Console.WriteLine(nfe.Message); return; } // exit if the method is not found 
+
 
 			if (numOfParam == 1)
 			{
@@ -101,7 +132,10 @@ namespace MathGame
 					Console.WriteLine(nfe.Message);
 				}
 
-				var result = typeof(Operations).GetMethod(operation)!.Invoke(this.GetType(), new object[] { firstNum });
+				try { 
+					var result = (double) typeof(Operations).GetMethod(char.ToUpper(operation[0]) + operation.Substring(1))?.Invoke(this.GetType(), new object[] { firstNum })!;
+				}
+				catch (NullReferenceException nfe) { Console.WriteLine(nfe.Message); return; } // exit if the method is not found 
 			}
 			else if (numOfParam == 2) 
 			{
@@ -125,8 +159,11 @@ namespace MathGame
 				{
 					Console.WriteLine(nfe.Message);
 				}
-
-				var result = typeof(Operations).GetMethod(operation)!.Invoke(this.GetType(), new object[] { firstNum, secondNum });
+				
+				try { 
+					var result = (double) typeof(Operations).GetMethod(char.ToUpper(operation[0]) + operation.Substring(1))?.Invoke(typeof(Operations), new object[] { firstNum, secondNum })!;
+				}
+				catch (NullReferenceException nfe) { Console.WriteLine(nfe.Message); return; } // exit if the method is not found 
 
 			}
 			else
@@ -139,12 +176,18 @@ namespace MathGame
 
 
 			// two approaches to invoke methods utilizing reflection and type 
-			typeof(Operations).InvokeMember(operation, BindingFlags.InvokeMethod | BindingFlags.Instance, null, Activator.CreateInstance(typeof(Operations)), new object[] { firstNum, secondNum });
-				
-			typeof(Operations).GetMethod(operation)!.Invoke(Activator.CreateInstance(typeof(Operations)), new object[] { firstNum, secondNum });
-		
+			try {
+				var _ = (double) typeof(Operations).InvokeMember(char.ToUpper(operation[0]) + operation.Substring(1), BindingFlags.InvokeMethod | BindingFlags.Instance, null, Activator.CreateInstance(typeof(Operations)), new object[] { firstNum, secondNum })!;
+			}
+			catch (NullReferenceException nfe) { Console.WriteLine(nfe.Message); return; } // exit if the method is not found 
 
-			
+			try {
+				var _ = (double) typeof(Operations).GetMethod(char.ToUpper(operation[0]) + operation.Substring(1))?.Invoke(Activator.CreateInstance(typeof(Operations)), new object[] { firstNum, secondNum })!;
+			}
+			catch (NullReferenceException nfe) { Console.WriteLine(nfe.Message); return; } // exit if the method is not found 
+
+
+
 			//Console.WriteLine($"Your score is {Score} and you got {CorrectAnswer} correct and {WrongAnswer} wrong. Press any key to continue...");
 			//Console.ReadKey();
 		}

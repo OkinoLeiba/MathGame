@@ -38,4 +38,21 @@ internal partial class GameModel : Component
 
 		InitializeComponent();
 	}
+
+
+	private void InitializeComponent()
+	{
+		// add initialization logic here if needed.
+		// this method is required to resolve the CS0103 error.
+		// ensures that the code compiles and can be extended later.
+	}
 }
+
+
+
+
+	
+	
+
+
+

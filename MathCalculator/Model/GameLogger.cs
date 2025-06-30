@@ -8,6 +8,10 @@ namespace MathGame.Model
 {
 	public struct GameLogger
 	{
+		// a static list to hold all instances of GameLogger\
+		// this allows us to keep track of all game logs created during the program's execution
+		// using registry design pattern: consider weak references if memory consumption is a concern
+
 		public string? userName = default;
 		public DateTime date;
 		public int score;
@@ -21,6 +25,8 @@ namespace MathGame.Model
 		public LinkedList<Dictionary<string, int>> gameWon = new LinkedList<Dictionary<string, int>>();
 		public LinkedList<Dictionary<string, int>> gameLost = new LinkedList<Dictionary<string, int>>();
 		public DateTime update;
+
+		private static readonly List<GameLogger> _instances = new List<GameLogger>();
 
 
 		public string? UserName { get; set; }
@@ -61,6 +67,8 @@ namespace MathGame.Model
 		public LinkedList<Dictionary<string, int>> GameWon { get; set; } = new LinkedList<Dictionary<string, int>>();
 		public LinkedList<Dictionary<string, int>> GameLost { get; set; } = new LinkedList<Dictionary<string, int>>();
 		public DateTime Update { get; set; }
+
+		public static IReadOnlyList<GameIntro> Instances => (IReadOnlyList<GameIntro>)_instances.AsReadOnly();
 
 
 		public GameLogger
@@ -106,6 +114,12 @@ namespace MathGame.Model
 			GameWon = gameWon;
 			GameLost = gameLost;
 			Update = update;
+
+			_instances.Add(this); // add the current instance to the list of instances
 		}
+
+		
+
+		
 	}
 }

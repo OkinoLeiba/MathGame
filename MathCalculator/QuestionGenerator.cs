@@ -7,16 +7,43 @@ using static MathGame.OperationsEnum;
 
 namespace MathGame;
 
-internal class QuestionGenerator
+public class QuestionGenerator
 {
 	public int firstNum = 0;
 	public int secondNum = 0;
+	public int numOfParam = 0; // number of parameters for the operation method
 
 	Random random = new Random();
 
+	public int FirstNum { get; private set; }
+	public int SecondNum { get; private set; }
+	public int NumOfParam { get; private set; }
+
+	public QuestionGenerator()
+	{
+		FirstNum = firstNum;
+		SecondNum = secondNum;
+		NumOfParam = numOfParam;
+	}
+
 	public void MathQuestion(string operation)
 	{
-		int numOfParam = typeof(Operations).GetMethod(operation)!.GetParameters().Length;
+
+		try
+		{
+			// strings requires conversion to title case
+			int numOfParam = typeof(Operations).GetMethod(char.ToUpper(operation[0]) + operation.Substring(1))!.GetParameters().Length;
+		} catch(NullReferenceException nfe) { Console.WriteLine(nfe.Message); }
+		//var methodInfo = typeof(Operations).GetMethod(operation);
+		//if (methodInfo != null)
+		//{
+		//	numOfParam = methodInfo.GetParameters().Length;
+			
+		//}
+		//else
+		//{
+		//	Console.WriteLine("Method not found.");
+		//}
 
 		if (numOfParam == 1) firstNum = random.Next(1, 99); else firstNum = random.Next(0, 99); secondNum = random.Next(0, 99);
 
@@ -36,9 +63,15 @@ internal class QuestionGenerator
 
 
 		// provide user feedback concerning the problem to be solved and take input from user
-		if (numOfParam == 1) Console.WriteLine($"{operation}: {firstNum} {operationSybmol} {secondNum}"); else Console.WriteLine($"{operation}: {operationSybmol} {firstNum}");
+		if (numOfParam == 1) Console.WriteLine($"\n{char.ToUpper(operation[0]) + operation.Substring(1)}: {operationSybmol} {firstNum}"); else Console.WriteLine($"\n{char.ToUpper(operation[0]) + operation.Substring(1)}: {firstNum} {operationSybmol} {secondNum}");
 
-		GameAnswer gameAnswer = new GameAnswer();
+		GameAnswer gameAnswer = new GameAnswer(operation);
 		gameAnswer.gameAnswerPrompt();
 	}
 }
+
+
+
+
+
+

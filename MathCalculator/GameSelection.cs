@@ -10,9 +10,9 @@ using System.Timers;
 
 namespace MathGame
 {
-	internal class GameSelection
+	public class GameSelection
 	{
-		public string? gameSelect = default(string)!;
+		
 		public List<string> methodNames = default(List<string>)!;
 		public int inputRepeatValidationSignal = default(int);
 
@@ -24,10 +24,10 @@ namespace MathGame
 		// the class is initialize within this function because of my concern 
 		// with creating a invocation loop
 		GameIntro gameIntro = new GameIntro();
+		QuestionGenerator questionGenerator = new QuestionGenerator();
 
 
-
-		public GameSelection() 
+		public GameSelection(string gameSelect) 
 		{
 			GameSelect = gameSelect ?? string.Empty;
 			// get method names from Operations class as game options for user
@@ -227,8 +227,8 @@ namespace MathGame
 				Console.WriteLine(nfe.Message);
 			}
 
-			//typeof(Operations).GetMethod(selectedGame.ToString()).Invoke();
-			gameIntro.GameInputManager(GameSelect);
+			
+			questionGenerator.MathQuestion(GameSelect.Trim().ToLower());
 
 			// generate a list of characters 
 			// exclude ascii characters after 5A
@@ -504,8 +504,9 @@ namespace MathGame
 				_ => "Keep trying, you get it!"
 			};
 
+
 			if (gameTotal >= GAMECOUNT) Console.WriteLine(gameFinalFeedback);
-			else gameIntro.GameInputManager(gameName);
+			else questionGenerator.MathQuestion(GameSelect);
 
 			
 		}
@@ -556,8 +557,10 @@ namespace MathGame
 //	&& !int.TryParse(GameSelect, out int result)
 //	&& (Enum.GetNames(typeof(OperationsEnum.EnumOperationsMethod)).Contains(GameSelect)
 //	|| Enum.GetNames(typeof(OperationsEnum.EnumOperationsMethodPrefix)).Contains(GameSelect));
-
-//	//	typeof(Operations).GetMethod(operation)!.Invoke(this.GetType(), new object[] { firstNum });
+//  // try
+//  // }
+//	//	  var _ = (double) typeof(Operations).GetMethod(char.ToUpper(operation[0]) + operation.Substring(1))!.Invoke(this.GetType(), new object[] { firstNum });
+//  // } catch(NullReferenceException nfe) { Console.WriteLine(nfe.Message); return; } // exit if the method is not found
 //	//}
 //	//else if (numOfParam == 2) 
 //	//{
