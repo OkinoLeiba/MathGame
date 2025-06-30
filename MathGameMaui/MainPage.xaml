@@ -3,11 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MathGameMaui.MainPage">
 
-    <ScrollView>
+    <ScrollView
+        BackgroundColor="DarkMagenta">
         <VerticalStackLayout
             Padding="20,0"
             Spacing="20"
-            BackgroundColor="DarkMagenta">
+            BackgroundColor="LightSeaGreen">
             <Image
                 Source="dotnet_bot.png"
                 HeightRequest="185"
@@ -45,7 +46,7 @@
             <Grid 
                 x:Name="GameGrid"
                 BackgroundColor="AliceBlue" 
-                IsVisible="Hidden"/>
+                IsVisible="Hidden" />
 
             <Grid
                 RowDefinitions="Auto, Auto, Auto"
@@ -58,7 +59,7 @@
                     SemanticProperties.Hint="Starts the Math Game"
                     Clicked="OnMathGameClicked"
                     Grid.Row="0" Grid.Column="0" />
-                
+
                 <Button
                     x:Name="PreviousGameHistoryBtn"
                     Text="Previous Game History" 
@@ -75,8 +76,8 @@
                     Clicked="OnExitClicked"
                     Grid.Row="1" Grid.ColumnSpan="2" />
 
+            </Grid>
 
-   
         </VerticalStackLayout>
     </ScrollView>
 

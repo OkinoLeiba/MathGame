@@ -1,4 +1,5 @@
-﻿using MathGame;
+﻿
+using MathGame;
 
 namespace MathGameMaui
 {
@@ -16,7 +17,7 @@ namespace MathGameMaui
 
 		public MainPage()
 		{
-			InitializeComponent();
+			InitializeComponent(); 
 		}
 
 		//public MainPage(string? userName)
@@ -70,7 +71,7 @@ namespace MathGameMaui
 
 			for (int i = 0; i < columnCount; i++)
 			{
-				GamGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+				GameGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
 			}
 
 			for (int i = 0; i < methodCount; i++)
@@ -87,7 +88,11 @@ namespace MathGameMaui
 				//	// Handle button click event here
 				//	DisplayAlert("Button Clicked", $"You clicked: {MethodName[i]}", "OK");
 				//};
-				GameGrid.Children.Add(button, column, row);
+
+				// TOOO: change the name of method to navigate to the corresponding operation
+				button.Clicked += OnGameSelectionClicked; // attach the event handler for button clicks
+				//GameGrid.Children.Add(button, column, row);
+				
 			}
 
 			// Uncomment and adjust the following lines if needed
@@ -97,7 +102,12 @@ namespace MathGameMaui
 			// grid.Children.Add(new Label { Text = "Another label" }, 1, 1);
 			// Content = grid;
 		}
-	
+
+		private void OnMathGameClicked(object sender, EventArgs e)
+		{
+			CreateGridButtons();
+		}
+
 		private void OnGameButtonClicked(object sender, EventArgs e)
 		{
 			if (sender is Button button)
@@ -117,7 +127,24 @@ namespace MathGameMaui
 					DisplayAlert("Selected Operation", $"You selected: {operation}", "OK");
 					// logic to handle the selected operation
 				}
+				//SemanticScreenReader.Announce();
 			}
+		}
+
+		private void OnGameSelectionClicked(object sender, EventArgs e)
+		{
+			if (sender is Button button)
+			{
+				Button btn = (Button)sender;
+				Navigation.PushAsync(new GamePage(btn.Text));
+
+				SemanticScreenReader.Announce($"{btn.Text} pressed.");
+			}
+			else
+			{
+				new ArgumentException("Argument passed not type button.");
+			}
+			
 		}
 
 		private void OnGameHistoryClicked(object sender, EventArgs e)
@@ -125,13 +152,26 @@ namespace MathGameMaui
 			// logic to display game history
 			DisplayAlert("Game History", "Displaying game history...", "OK");
 			// this could be replaced with actual logic to navigate to a game history page or display a list of previous games
+			if (sender is Button button)
+			{
+				Button btn = new Button();
+				Navigation.PushAsync(new PreviousHistory());
+
+				SemanticScreenReader.Announce($"{btn.Text} pressed");
+			}
+			else
+			{
+				new ArgumentException("Argument passed not type button.");
+			}
 		}
 
 		private void OnExitClicked(object sender, EventArgs e)
 		{
+			Button button = (Button)sender;
 			// logic to exit the application
 			Application.Current.Quit(); // close the application
-			// or use Environment.Exit(0); // to terminate the process
+			//Environment.Exit(0); // or use to terminate the process
+			SemanticScreenReader.Announce(SemanticProperties.GetDescription(button));
 		}
 
 		//private void OnCounterClicked(object? sender, EventArgs e)
