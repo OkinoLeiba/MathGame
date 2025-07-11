@@ -183,7 +183,7 @@ namespace MathGame
 			// different approach to access a specific instance of the Instance list by the type
 			// instead of using the index of the list
 			//var game = AppManager.Instances.Find(i => i is GameIntro) as GameIntro;
-			if (mainMenu.GetType().ToString() == "ConsoleKeyInfo" || mainMenu is not null) AppManager.Instances.OfType<GameIntro>().FirstOrDefault().GameIntroMethod();
+			if (mainMenu.GetType().ToString() == "ConsoleKeyInfo") AppManager.Instances.OfType<GameIntro>().FirstOrDefault().GameIntroMethod();
 		}
 
 		public void ClearGameHistory()

@@ -124,7 +124,7 @@ namespace MathGame
 			// this could involve updating UI, game logic, etc...
 			// SwitchState is absolved of that responsibility and has only the one responsibility 
 			ExitCurrentState(_currentState);
-			_currentState = newState;
+			_currentState = GameStateManager.GameState.Loading;
 			EnterNewState(_currentState);
 		}
 
@@ -258,7 +258,7 @@ namespace MathGame
 			switch (_currentState)
 			{
 				case GameState.InProgress:
-					Console.WriteLine("Action in progress...");
+					HandleActions();
 					break;
 				case GameState.Completed:
 					Console.WriteLine("Action completed...");
@@ -353,10 +353,15 @@ namespace MathGame
 		/// <return>void</return>
 		private void HandleActions()
 		{
-			Task taskManager = new Task(() =>
+			Task taskManager = Task.Run(() =>
 			{
+				Console.WriteLine(_currentState);
+				Console.WriteLine(GameStateManager.GameState.InProgress);
+				Console.WriteLine(Task.CompletedTask.IsCompletedSuccessfully);
+
 				if (GameStateManager.GameState.InProgress == _currentState)
 				{
+					
 					Task.Delay(250).Wait();
 					if (Task.CompletedTask.IsCompletedSuccessfully) SwitchState(GameStateManager.GameState.Completed);
 				}
@@ -385,7 +390,7 @@ namespace MathGame
 							while (!ctx.IsFinished)
 							{
 								// simulate some work
-								Task.Delay(250);
+								Task.Delay(950000000);
 
 								// increment
 								task1.Increment(0.5);
@@ -397,11 +402,12 @@ namespace MathGame
 				{
 					Console.WriteLine("Action Completed.");
 				}
-				else
+				else if (GameStateManager.GameState.NotStarted == _currentState)
 				{
-
+					SwitchState(GameStateManager.GameState.Started);
 				}
 			});
+
 		}
 
 		/// <summary>
