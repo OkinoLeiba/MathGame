@@ -1,6 +1,8 @@
 using System;
 using MathGame.Model;
 using Microsoft.VisualStudio.TestPlatform;
+using UnitTest = Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute;
+
 //using VSQualityTools = Microsoft.VisualStudio.QualityTools.UnitTestFramework;
 //using VSTestPlatform = Microsoft.VisualStudio.TestPlatform;
 
@@ -9,11 +11,11 @@ using Microsoft.VisualStudio.TestPlatform;
 
 namespace MSMathGameTest;
 
-[TestClass]
+[UnitTest.TestClass]
 public class GameLoggerTest
 {
 		
-	[TestMethod]
+	[UnitTest.TestMethod]
 	public void PassTest_ValidateCorrectData()
 	{
 		// arrange
@@ -48,14 +50,14 @@ public class GameLoggerTest
 		bool isValid = ValidateGameStats(gameLog);
 
 		// assert
-		Assert.IsTrue(isValid, "The game stats should be valid.");
+		UnitTest.Assert.IsTrue(isValid, "The game stats should be valid.");
 	
 	}
 
-	[TestMethod]
+	[UnitTest.TestMethod]
 	public void FailTest_InvalidData()
 	{
-		// rrange
+		// arrange
 		GameLogger gameLogger= new GameLogger
 		(
 			userName: null,  // invalid username
@@ -73,11 +75,11 @@ public class GameLoggerTest
 			update: DateTime.Now
 		);
 
-		// Act
+		// act
 		bool isValid = ValidateGameStats(gameLogger);
 
-		// Assert
-		Assert.IsFalse(isValid, "The game stats should be invalid due to incorrect values.");
+		// assert
+		UnitTest.Assert.IsFalse(isValid, "The game stats should be invalid due to incorrect values.");
 	}
 
 	private bool ValidateGameStats(GameLogger gameLogger)

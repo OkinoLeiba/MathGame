@@ -32,6 +32,7 @@ namespace MathGame.Model
 		private static readonly List<GameLogger> _instances = new List<GameLogger>();
 
 
+		#region GameLogger Properties
 		public string? UserName { get; set; }
 		public DateTime Date { get; set; } = DateTime.Now;
 		public int Score { get; set; }
@@ -45,9 +46,10 @@ namespace MathGame.Model
 			get => score;
 			set => score = Math.Min(score, value);
 		}
-		public int TotalScore { 
-			get => totalScore; 
-			set => Score += value; 
+		public int TotalScore
+		{
+			get => totalScore;
+			set => Score += value;
 		}
 		public int AverageScore
 		{
@@ -73,22 +75,24 @@ namespace MathGame.Model
 		public DateTime Update { get; set; }
 
 		public static IReadOnlyList<GameIntro> Instances => (IReadOnlyList<GameIntro>)_instances.AsReadOnly();
+		#endregion
 
 
+		#region GameLogger Constructor
 		public GameLogger
 			(
-			string? userName, 
-			DateTime date, 
-			int score, 
+			string? userName,
+			DateTime date,
+			int score,
 			int maxScore,
-			int minScore, 
-			int totalScore, 
-			int averageScore, 
-			int correctAnswer, 
-			int wrongAnswer, 
-			int gameCount, 
-			LinkedList<Dictionary<string, int>> gameWon, 
-			LinkedList<Dictionary<string, int>> gameLost, 
+			int minScore,
+			int totalScore,
+			int averageScore,
+			int correctAnswer,
+			int wrongAnswer,
+			int gameCount,
+			LinkedList<Dictionary<string, int>> gameWon,
+			LinkedList<Dictionary<string, int>> gameLost,
 			DateTime update
 			)
 		{
@@ -120,10 +124,10 @@ namespace MathGame.Model
 			Update = update;
 
 			_instances.Add(this); // add the current instance to the list of instances
-		}
+		} 
+		#endregion
 
-		
 
-		
+
 	}
 }

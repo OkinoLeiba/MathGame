@@ -115,12 +115,18 @@ namespace MathGame
 			} while (string.IsNullOrEmpty(Name));
 
 			Console.WriteLine($"Hello {Name}, the date is {Date}.\nDo you want to play a game with me?");
+
+			// part of method chain, managed by AppManager
 			// gameSelection.GameRequestSelectionUser();
 		}
 
 
 		//TODO: In Development - manage game selection process and invoke methods based on user input
 		//TODO: Try to remember why I created this method and what it is supposed to do
+		/// <summary>
+		/// Manage the user input of numbers to generate questions and answer of math game or operation pass as argument
+		/// </summary>
+		/// <return>void</return>
 		public void GameInputManager(string operation)
 		{
 			int firstNum = default(int);
@@ -136,13 +142,14 @@ namespace MathGame
 			//System.Threading.LazyInitializer.EnsureInitialized<Operations>(ref operations);
 			//System.Threading.LazyInitializer.EnsureInitialized(Operations);
 
+			// get number of parameters from methods in the Operations class
 			try
 			{
 				numOfParam = typeof(Operations).GetMethod(char.ToUpper(operation[0]) + operation.Substring(1))!.GetParameters().Length;
 			}
 			catch (NullReferenceException nfe) { Console.WriteLine(nfe.Message); return; } // exit if the method is not found 
 
-
+			#region User Input Prompt for Numbers
 			if (numOfParam == 1)
 			{
 				try
@@ -159,12 +166,13 @@ namespace MathGame
 					Console.WriteLine(nfe.Message);
 				}
 
-				try { 
-					var result = (double) typeof(Operations).GetMethod(char.ToUpper(operation[0]) + operation.Substring(1))?.Invoke(this.GetType(), new object[] { firstNum })!;
+				try
+				{
+					var result = (double)typeof(Operations).GetMethod(char.ToUpper(operation[0]) + operation.Substring(1))?.Invoke(this.GetType(), new object[] { firstNum })!;
 				}
 				catch (NullReferenceException nfe) { Console.WriteLine(nfe.Message); return; } // exit if the method is not found 
 			}
-			else if (numOfParam == 2) 
+			else if (numOfParam == 2)
 			{
 				try
 				{
@@ -186,9 +194,10 @@ namespace MathGame
 				{
 					Console.WriteLine(nfe.Message);
 				}
-				
-				try { 
-					var result = (double) typeof(Operations).GetMethod(char.ToUpper(operation[0]) + operation.Substring(1))?.Invoke(typeof(Operations), new object[] { firstNum, secondNum })!;
+
+				try
+				{
+					var result = (double)typeof(Operations).GetMethod(char.ToUpper(operation[0]) + operation.Substring(1))?.Invoke(typeof(Operations), new object[] { firstNum, secondNum })!;
 				}
 				catch (NullReferenceException nfe) { Console.WriteLine(nfe.Message); return; } // exit if the method is not found 
 
@@ -196,10 +205,8 @@ namespace MathGame
 			else
 			{
 				Console.WriteLine("No valid numbers were provided!");
-			}
-		
-
-
+			} 
+			#endregion
 
 
 			// two approaches to invoke methods utilizing reflection and type 

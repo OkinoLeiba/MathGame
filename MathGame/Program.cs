@@ -30,12 +30,13 @@ using System.Linq;
 
 internal class Program
 {
+	/// <summary>
+	/// Main entry point to program
+	/// </summary>
+	/// <return>void</return>
 	private static void Main(string[] args)
 	
 	{
-		//TODO: may change after refactoring 
-		//int score = 0;
-		
 		//GameIntro gameIntro = new GameIntro();
 		//GameSelection gameSelection = new GameSelection();
 		//GameLogManager gameLogManager = new GameLogManager();

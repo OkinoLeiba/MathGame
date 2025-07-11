@@ -13,6 +13,10 @@ using Timer = System.Timers.Timer;
 
 namespace MathGame;
 
+/// <summary>
+/// Class provides data and functions to manage the selection of games
+/// includes options using switch statements and randomly choosing a game
+/// </summary>
 public class GameSelection
 {
 	
@@ -30,7 +34,10 @@ public class GameSelection
 	GameIntro gameIntro = new GameIntro();
 	QuestionGenerator questionGenerator = new QuestionGenerator();
 
-
+	/// <summary>
+	/// Manage the selection of game after presenting the user with option
+	/// </summary>
+	/// <return>viod</return>
 	public GameSelection() 
 	{
 		GameSelect = gameSelect ?? string.Empty;
@@ -91,6 +98,8 @@ public class GameSelection
 
 				""");
 		}
+
+		// print out games to user
 		for (int i = 0, c = 0; i < MethodNames.Count; i++)
 		{
 			string? col = default(string);
@@ -101,12 +110,11 @@ public class GameSelection
 
 		}
 
-
-
 		Console.WriteLine("Prev - Previous Game History");
 		Console.WriteLine("Q - Exit");
 		Console.WriteLine("-----------------------------------------------------------------------");
 
+		#region Print Games with AnsiConsole and Custom Code
 		// ask for the user's game selection using Spectre.Console for better UI experience
 		var gameSelection = AnsiConsole.Prompt(
 			new SelectionPrompt<string>()
@@ -200,15 +208,15 @@ public class GameSelection
 
 		// add columns to grid
 		grid.AddColumns(numColumns).Centered(); // add a column for game options
-		// for (int i = 0; i < numColumns; i++)
-		// {
-			// add a column for game options
-			// grid.AddColumn(new GridColumn().NoWrap().Centered());
+												// for (int i = 0; i < numColumns; i++)
+												// {
+												// add a column for game options
+												// grid.AddColumn(new GridColumn().NoWrap().Centered());
 
-			// add header row to grid
-			// grid.AddRow($"Game Option {i + 1}");
+		// add header row to grid
+		// grid.AddRow($"Game Option {i + 1}");
 		// }
-		
+
 		for (int i = 0; i < 10; i++)
 		{
 			//new [].append($"Game Option {i + 1}"));
@@ -256,7 +264,8 @@ public class GameSelection
 		);
 
 		// render the layout
-		AnsiConsole.Write(layout);
+		AnsiConsole.Write(layout); 
+		#endregion
 
 
 		GameSelect = gameSelection;
@@ -277,6 +286,7 @@ public class GameSelection
 		if (!validInputGame) { inputRepeatValidationSignal++; GameRequestSelectionUser(); }
 
 		// manage game selection
+		#region Try Statement GameSelection User Input
 		try
 		{
 			if (GameSelect.Count() == 1 && string.IsNullOrEmpty(GameSelect))
@@ -290,18 +300,18 @@ public class GameSelection
 					{
 						// different approach to retrieve string from enum via the cast of int to string literal
 						//Enum.GetName(typeof(OperationEnum.EnumOperationMethod), (int) game).ToString();
-						
+
 						Console.WriteLine($"The {gameName} game was selected.");
 						GameSelect = gameName;
-						
+
 						// prevent the execution of the conditional body when function stack unravels 
 						// to location where it jumped from -- solution?: move invocation of function
 						//GameSelect = null;
 						//break;
 						//return;
-						
+
 					}
-					
+
 
 				}
 			}
@@ -310,7 +320,7 @@ public class GameSelection
 				foreach (var selectedGame in Enum.GetNames(typeof(OperationsEnum.EnumOperationsMethod)))
 				{
 					if (GameSelect.ToLower() == selectedGame.ToString().ToLower()) Console.WriteLine($"The {selectedGame} game was selected.");
-					
+
 				}
 			}
 			else if (GameSelect.Trim().ToLower() == "prev" || GameSelect.Trim().ToLower() == "previous" || GameSelect.Trim().ToLower() == "game history")
@@ -348,7 +358,7 @@ public class GameSelection
 				timer.Interval = 10000;
 				timer.Stop();
 				timer.Dispose();
-	
+
 				Environment.Exit(1);
 			}
 			else if (GameSelect.Trim().ToLower() == "restart" || GameSelect.Trim().ToLower() == "r")
@@ -389,9 +399,10 @@ public class GameSelection
 		catch (NullReferenceException nfe)
 		{
 			Console.WriteLine(nfe.Message);
-		}
+		} 
+		#endregion
 
-		
+
 		questionGenerator.MathQuestion(GameSelect.Trim().ToLower());
 
 		// generate a list of characters 
@@ -426,6 +437,7 @@ public class GameSelection
 
 
 		// series of if statement to print out message to user concerning the selection of game
+		#region GameSelection If Statement
 		if (GameSelect.Trim().ToLower() == "addition" || GameSelect.Trim().ToLower() == "a")
 		{
 			Console.WriteLine("The addition game was selected.");
@@ -505,9 +517,11 @@ public class GameSelection
 		else
 		{
 			Console.WriteLine("Invalid selection.");
-		}
+		} 
+		#endregion
 
 		// same series conditional statements as switch statements
+		#region GameSelection Switch Statement 
 		switch (GameSelect.Trim().ToLower())
 		{
 			case "addition":
@@ -606,7 +620,10 @@ public class GameSelection
 				Console.WriteLine("Invalid selection.");
 				break;
 		}
+		#endregion 
 
+		// new switch statement syntax
+		#region GameSelection Switch Statement(New Syntax)
 		Console.WriteLine(GameSelect.Trim().ToLower() switch
 		{
 			"addition" or "a" => "The addition game was selected.",
@@ -630,8 +647,7 @@ public class GameSelection
 			"exit" => new Action(() => Environment.Exit(1)),
 			_ => "Invalid selection."
 		});
-
-
+		#endregion
 
 		Console.WriteLine("-----------------------------------------------------------------------");
 	}
@@ -669,7 +685,8 @@ public class GameSelection
 		//	_ => "\nKeep trying, you get it!\n"
 		//};
 
-		string gameFinalFeedback =  default(string);
+		#region String FeedBack to Print to User
+		string gameFinalFeedback = default(string);
 		switch ((double)GameIntro.Score / (double)gameTotal)
 		{
 			case double i when i == 1.0:
@@ -687,10 +704,8 @@ public class GameSelection
 			default:
 				gameFinalFeedback = "\nKeep trying, you get it!\n";
 				break;
-
-
-
-		}
+		} 
+		#endregion
 
 
 		if (gameTotal >= GAMECOUNT) Console.WriteLine(gameFinalFeedback);

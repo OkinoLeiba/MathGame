@@ -113,8 +113,8 @@ public partial class GamePage : ContentPage
 	private void GenerateResult()
 	{
 		var result = numParams == 1 ?
-			(int)(double)typeof(Operations).GetMethod(string.Concat(char.ToUpper(GameSelect[0]), GameSelect.Substring(1)))?.Invoke(Activator.CreateInstance(typeof(Operations)), new object[] { FirstNum }) :
-			(int)(double)typeof(Operations).GetMethod(string.Concat(char.ToUpper(GameSelect[0]), GameSelect.Substring(1)))?.Invoke(Activator.CreateInstance(typeof(Operations)), new object[] { FirstNum, SecondNum });
+			(int)(double)typeof(MathGame.Operations).GetMethod(string.Concat(char.ToUpper(GameSelect[0]), GameSelect.Substring(1)))?.Invoke(Activator.CreateInstance(typeof(Operations)), new object[] { FirstNum }) :
+			(int)(double)typeof(MathGame.Operations).GetMethod(string.Concat(char.ToUpper(GameSelect[0]), GameSelect.Substring(1)))?.Invoke(Activator.CreateInstance(typeof(Operations)), new object[] { FirstNum, SecondNum });
 
 		if (result is int intResult) // ensure the result is cast to an integer
 		{
@@ -163,7 +163,7 @@ public partial class GamePage : ContentPage
 		{
 			GameOver();
 		}
-		//NeutralGameState();
+	
 	}
 
 	private void GameOver()
@@ -177,9 +177,9 @@ public partial class GamePage : ContentPage
 
 		//Application.Current?.Resources["GameRepository"] = new Model.Game { GameCount = totalQuestion, Score = score, GameSelect = GameSelect };
 
-		//App.Current?.GameRespository?.UpdateGameHistory();
+		//App.Current?.GameRepository?.UpdateGameHistory();
 
-		//Application.Current?.GameRespository.UpdateGameHistory(new Model.Game { GameCount = totalQuestion, Score = score, GameSelect = GameSelect });
+		//Application.Current?.GameRepository.UpdateGameHistory(new Model.Game { GameCount = totalQuestion, Score = score, GameSelect = GameSelect });
 
 		//= App.GameRepository.SaveGameAsync(new Model.Game { GameCount = totalQuestion, Score = score, GameSelect = GameSelect }).ContinueWith(task =>
 		//{

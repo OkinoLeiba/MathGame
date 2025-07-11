@@ -17,10 +17,12 @@ namespace MathGame
 			gameHistory = new List<string>();
 		}
 
-		GameSelection gameSelection = new GameSelection();
-		GameIntro gameIntro = new GameIntro();
+		// appManager will initialize the GameIntro class and GameSelection class
+		//GameSelection gameSelection = new GameSelection();
+		//GameIntro gameIntro = new GameIntro();
 
-		// the correctAnswer, wrongAnswer, score variables and perspective properties are static and can be accessed without creating an instance of the GameLogger class
+		// the correctAnswer, wrongAnswer, score variables and perspective properties are static
+		// and can be accessed without creating an instance of the GameLogger class
 		// and update the gameWin, gameLost, score for the game name in the dictionary
 		GameLogger gameLog = new GameLogger
 			(
@@ -103,7 +105,7 @@ namespace MathGame
 
 			// two approaches to find dictionary item in LinkedList by game name and update score
 			// both assign a reference to the GameWon and GameLost properties so changes will be reflected in the instance 
-			// of the class and will not require return the value and replacing it in the property 
+			// of the class and will not require returning the value and replacing it in the property 
 			// the first approach is to use LINQ to find the dictionary in the LinkedList that contains the game name
 			// the second approach is to use a foreach loop to iterate through the LinkedList and find the dictionary that contains the game name
 			Dictionary<string, int> gameWin = (Dictionary<string, int>) gameLogger.GameWon.Where(n => n.ContainsKey(gameName));
@@ -133,6 +135,7 @@ namespace MathGame
 		//{
 		//	return $"{gameIntro.Date} - {gameSelection.GameSelect}: {gameIntro.Score}";
 		//}
+
 		public override string ToString()
 		{
 			string localRefGame = $"{gameIntro.Date} - {gameSelection.GameSelect}: {GameIntro.Score}";
@@ -142,7 +145,7 @@ namespace MathGame
 
 		public void UpdateGameHistory(string gameName)
 		{
-			string localRefGame = $"{gameIntro.Date} - {gameSelection.GameSelect}: {GameIntro.Score}";
+			//string localRefGame = $"{gameIntro.Date} - {gameSelection.GameSelect}: {GameIntro.Score}";
 			//gameHistory.Add("31/05/2025 16:38:27 - Addition : 0");
 			//bool test = localRefGame.Contains(gameName);
 			//bool tst = GameHistory.Any(h => h.Contains("gameName"));

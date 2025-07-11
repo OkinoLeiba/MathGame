@@ -47,7 +47,7 @@ namespace MathGame
 			
 		}
 
-		// unicode characters will be used to aviod issues and be able to use a variety of characters
+		// unicode characters will be used to avoid issues and be able to use a variety of characters
 		public enum EnumOperationMethodUnicodeSymbol
 		{
 			u002B,

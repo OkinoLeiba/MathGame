@@ -30,7 +30,7 @@
                 <Label Grid.Column="5" Text="Average Score" FontSize="16" TextColor="SteelBlue"/>
                 <Label Grid.Column="6" Text="" FontSize="16"/>
             </Grid>
-            <!-- Empty for Delete Button -->
+            <!-- empty for delete button -->
                 <CollectionView 
                 x:Name="gameList">
                 <CollectionView.ItemTemplate>

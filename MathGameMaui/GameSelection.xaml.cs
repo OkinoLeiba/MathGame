@@ -1,4 +1,4 @@
-using MathGame;
+
 namespace MathGameMaui;
 
 public partial class GameSelection : ContentPage
@@ -7,8 +7,6 @@ public partial class GameSelection : ContentPage
 	{
 		InitializeComponent();
 	}
-
-
 
 	protected override void OnAppearing()
 	{
@@ -32,9 +30,9 @@ public partial class GameSelection : ContentPage
 		int rowCount = 10;
 		int columnCount = (int)Math.Ceiling((double)methodCount / rowCount);
 
-		// Grid grid = new Grid { };
-
 		// var buttonStyle = (Style)Application.Current.Resources["GameButton"];
+
+		// took different approach, defined each property individually 
 		// define the button style in the resources
 		var buttonStyle = new Style(typeof(Button))
 		{
@@ -51,7 +49,7 @@ public partial class GameSelection : ContentPage
 		   	}
 		};
 	
-		  //var buttonStyle2 = new { "BackgroundColor" : "Chocolate",
+		  //var buttonStyle = new { "BackgroundColor" : "Chocolate",
 		  //					"FontFamily" : "Helvetica",
 		  //					"FontSize" : 28,
 		  //					"VerticalOptions" : "Center",
@@ -93,7 +91,7 @@ public partial class GameSelection : ContentPage
 			//	DisplayAlert("Button Clicked", $"You clicked: {MethodName[i]}", "OK");
 			//};
 
-			// TOOO: change the name of method to navigate to the corresponding operation
+			
 			button.Clicked += OnGameSelectionClicked; // attach the event handler for button clicks
 			// GameGrid.Style = buttonStyle; // apply the button style from resources
 			button.BackgroundColor = Colors.Chocolate;
@@ -110,15 +108,12 @@ public partial class GameSelection : ContentPage
 			// Set the row and column for the button using the appropriate methods
 			//Grid.SetRow(button, row);
 			//Grid.SetColumn(button, column);
-				
-			
-
 
 		}
 
 		GameGrid.IsVisible = true; // ensure the grid is visible
 
-		// Uncomment and adjust the following lines if needed
+		// uncomment and adjust the following lines if needed
 		// grid.Children.Add(new Label { Text = "Hello, World!" }, 0, 0);
 		// grid.Children.Add(new Button { Text = "Click Me" }, 1, 0);
 		// grid.Children.Add(new Entry { Placeholder = "Enter text" }, 0, 1);

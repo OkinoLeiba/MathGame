@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-// Ensure the correct namespace is used for ExecutionScope  
+// ensure the correct namespace is used for executionscope  
 using Microsoft.Testing.Platform.MSBuild;
 
 // This assembly attribute is used to configure the test execution settings for MSTest.  
