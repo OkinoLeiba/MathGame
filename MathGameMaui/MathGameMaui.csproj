@@ -65,7 +65,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\MathCalculator\MathGame.csproj" />
+	  <ProjectReference Include="..\MathGame\MathGame.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

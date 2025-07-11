@@ -1,1 +1,1 @@
-# MathCalculator
+# MathGame
