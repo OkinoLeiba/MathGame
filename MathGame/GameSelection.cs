@@ -21,10 +21,10 @@ public class GameSelection
 {
 	
 	public List<string> methodNames = default(List<string>)!;
-	public string? gameSelect = default(string)!;
+	static public string? gameSelect = default(string)!;
 	public int inputRepeatValidationSignal = default(int);
 
-	public string? GameSelect { get; set; }
+	static public string? GameSelect { get; set; }
 	public List<string> MethodNames { get; set; }
 
 	Timer timer = new Timer();
@@ -63,18 +63,12 @@ public class GameSelection
 		// it is will not work as enums are static and cannot be modified at runtime
 		// two theoretical approaches is to create a new enum type at runtime using Reflection.Emit,
 		// but it is complex and may not be recommended for this use case
-		// dynamically create copies of the enum type while garbage collecting the old enum type 
 
+		// another attempt to dynamically create copies of the enum type while garbage collecting the old enum type 
 		//EnumMethodName enumMethodName = (EnumMethodName)Enum.Parse(typeof(EnumMethodName), methodNames.First());
 		//enum EMethodName = methodNames.Select(s => Enum.Parse(typeof(Enum), s)).ToList();
 		//methodNames.Select(s =>  EnumMethodName s = EnumMethodName(0)); 
 
-		//Console.WriteLine("What game would you like to play today with me?");
-		//for (int i = 0; i < methodNames.Count; i++)
-		//{
-		//	if (i == 59) i = +12;
-		//	Console.WriteLine($"{(char)('A' + i)} - {methodNames[i]}");
-		//};
 	}
 
 	/// <summary>
@@ -622,7 +616,7 @@ public class GameSelection
 		}
 		#endregion 
 
-		// new switch statement syntax
+		// same series with new switch statement syntax
 		#region GameSelection Switch Statement(New Syntax)
 		Console.WriteLine(GameSelect.Trim().ToLower() switch
 		{
@@ -653,6 +647,10 @@ public class GameSelection
 	}
 
 	//TODO: In Development - generate random selection of game
+	/// <summary>
+	/// Random selection of game.
+	/// </summary>
+	/// <return>void</return>
 	public string RandomGameSelect()
 	{
 		Random random = new Random();
@@ -668,10 +666,7 @@ public class GameSelection
 
 	public void ContinueGameSelectOrEnd(string gameName)
 	{
-		// TODO: refactor the code to use a switch expression or a switch statement
-		// TODO: refactor the code to use a ternary operator or a conditional operator
-		// TODO: refactor the code to use a lambda expression or a delegate
-		// TODO: change GAMECOUNT to a constant value of 10
+	
 		GameSelect = gameName;
 		const int GAMECOUNT = 10;
 		int gameTotal = GameIntro.CorrectAnswer + GameIntro.WrongAnswer;

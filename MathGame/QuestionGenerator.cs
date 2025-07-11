@@ -7,6 +7,9 @@ using static MathGame.OperationsEnum;
 
 namespace MathGame;
 
+/// <summary>
+/// Manage the questions of the games.
+/// </summary>
 public class QuestionGenerator
 {
 	static public int firstNum = 0;
@@ -18,8 +21,11 @@ public class QuestionGenerator
 	static public int FirstNum { get; private set; }
 	static public int SecondNum { get; private set; }
 	static public int NumOfParam { get; private set; }
-
 	
+	/// <summary>
+	/// Generate math questions for the game
+	/// </summary>
+	/// <param name="operation">the question generate is based on mathematical operation</param>
 	public void MathQuestion(string operation)
 	{
 		

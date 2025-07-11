@@ -14,12 +14,12 @@ using static MathGame.OperationsEnum;
 namespace MathGame
 {
 	/// <summary>
-	/// Beginning of program after main entry point and initialized
+	/// Beginning of program after main entry point and main class is initialized
 	/// </summary>
 	public class GameIntro
 	{
 		static public string? name = default(string);
-		public DateTime? date = default(DateTime?);
+		static public DateTime? date = default(DateTime?);
 		static public int score = 0;
 		static public int correctAnswer = 0;
 		static public int wrongAnswer = 0;
@@ -29,7 +29,7 @@ namespace MathGame
 
 
 		static public string? Name { get; set; }
-		public DateTime? Date { get; set; }
+		static public DateTime? Date { get; set; }
 		static public int Score { get; set; }
 		static public int CorrectAnswer { get; set; }
 		static public int WrongAnswer { get; set; }
@@ -41,14 +41,16 @@ namespace MathGame
 		// class containing the model for game logger and game history
 		GameLogger gameLogger = new GameLogger();
 
-		private static readonly List<GameIntro> _instances = new List<GameIntro>();
+		// AppManager will now hangle this, keep for learning purposes
+		//private static readonly List<GameIntro> _instances = new List<GameIntro>();
 
 		public GameIntro() {
 			Name = name ?? string.Empty;
 			Date = date ?? DateTime.Now;
 			GameLog = gameLogger;
 
-			_instances.Add(this);
+			// AppManager will now hangle this, keep for learning purposes
+			//_instances.Add(this);
 
 		}
 
@@ -67,8 +69,8 @@ namespace MathGame
 		//}
 
 
-
-		public static IReadOnlyList<GameIntro> Instances => _instances.AsReadOnly();
+		// AppManager will now hangle this, keep for learning purposes
+		//public static IReadOnlyList<GameIntro> Instances => _instances.AsReadOnly();
 
 
 		/// <summary>
@@ -147,7 +149,7 @@ namespace MathGame
 			{
 				numOfParam = typeof(Operations).GetMethod(char.ToUpper(operation[0]) + operation.Substring(1))!.GetParameters().Length;
 			}
-			catch (NullReferenceException nfe) { Console.WriteLine(nfe.Message); return; } // exit if the method is not found 
+			catch (NullReferenceException nfe) { Console.WriteLine(nfe.Message); return; } // exit if the method is not found and leave stack 
 
 			#region User Input Prompt for Numbers
 			if (numOfParam == 1)
@@ -170,7 +172,7 @@ namespace MathGame
 				{
 					var result = (double)typeof(Operations).GetMethod(char.ToUpper(operation[0]) + operation.Substring(1))?.Invoke(this.GetType(), new object[] { firstNum })!;
 				}
-				catch (NullReferenceException nfe) { Console.WriteLine(nfe.Message); return; } // exit if the method is not found 
+				catch (NullReferenceException nfe) { Console.WriteLine(nfe.Message); return; } // exit if the method is not found and leave stack 
 			}
 			else if (numOfParam == 2)
 			{
@@ -199,7 +201,7 @@ namespace MathGame
 				{
 					var result = (double)typeof(Operations).GetMethod(char.ToUpper(operation[0]) + operation.Substring(1))?.Invoke(typeof(Operations), new object[] { firstNum, secondNum })!;
 				}
-				catch (NullReferenceException nfe) { Console.WriteLine(nfe.Message); return; } // exit if the method is not found 
+				catch (NullReferenceException nfe) { Console.WriteLine(nfe.Message); return; } // exit if the method is not found and leave stack 
 
 			}
 			else
@@ -213,12 +215,13 @@ namespace MathGame
 			try {
 				var _ = (double) typeof(Operations).InvokeMember(char.ToUpper(operation[0]) + operation.Substring(1), BindingFlags.InvokeMethod | BindingFlags.Instance, null, Activator.CreateInstance(typeof(Operations)), new object[] { firstNum, secondNum })!;
 			}
-			catch (NullReferenceException nfe) { Console.WriteLine(nfe.Message); return; } // exit if the method is not found 
+			catch (NullReferenceException nfe) { Console.WriteLine(nfe.Message); return; } // exit if the method is not found and leave stack 
+
 
 			try {
 				var _ = (double) typeof(Operations).GetMethod(char.ToUpper(operation[0]) + operation.Substring(1))?.Invoke(Activator.CreateInstance(typeof(Operations)), new object[] { firstNum, secondNum })!;
 			}
-			catch (NullReferenceException nfe) { Console.WriteLine(nfe.Message); return; } // exit if the method is not found 
+			catch (NullReferenceException nfe) { Console.WriteLine(nfe.Message); return; } // exit if the method is not found and leave stack 
 
 
 
@@ -226,17 +229,5 @@ namespace MathGame
 			//Console.ReadKey();
 		}
 
-		//TODO: In Development - manage continuation of game based on conditions of max 10 games and user interrupt
-		//public bool ContinueGame()
-		//{
-		//	const int gameCount = 10;
-		//	for (int i = 0; i < gameCount; i++)
-		//	{
-		//		gameSelection.GameRequestSelectionUser();
-
-		//		if (i == 10) { Console.WriteLine($"Game over, your Great!!!. Your final score is {gameIntro.Score}"); Console.ReadLine(); }
-
-		//	}
-		//}
 	}
 }

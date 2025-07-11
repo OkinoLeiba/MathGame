@@ -12,6 +12,9 @@ using static MathGame.GameStateManager;
 
 namespace MathGame
 {
+	/// <summary>
+	/// Manages application-level tasks, game states, user session, and global settings.
+	/// </summary>
 	internal class AppManager
 	{
 		//// this class manages the application-level tasks and interactions between different components of the game.
@@ -26,7 +29,7 @@ namespace MathGame
 		//// and will be responsible for managing the game flow and user interactions
 		//// and/or managing the state and the data of that class and not the AppManager class
 
-		//TODO: consider designing AppManager to have access to state and data of all the classes in the application and within the entire namespace
+		//Implemented: designed AppManager to have access to state and data of all the classes in the application and within the entire namespace
 		//TODO: consider whether to use a singleton pattern for the AppManager class or not
 		//TODO: consider using the observer pattern to notify other classes of changes in the game state or user interactions; meaning global accessibility for the AppManager class
 
@@ -43,16 +46,16 @@ namespace MathGame
 
 		private GameStateManager.GameState _currentState; // part of FSM implementation 
 
-		private List<object> _instances = new List<object>(); // list of instances of the AppManager class
+		static private List<object> _instances = new List<object>(); // list of instances of the AppManager class
 
-		public List<object> Instances { get; } // read-only property to access list of instances of the AppManager class
+		static public List<object> Instances { get; } // read-only property to access list of instances of the AppManager class
 
 		/// default constructor initializes the AppManager without any parameters
 		public AppManager()
 		{
 			// initialize the application manager, which can handle various app-level tasks
 			// such as managing game states, user sessions, or other global settings.
-			Console.WriteLine("AppManager initialized.");
+			Console.WriteLine("AppManager initialized...");
 			_gameIntro = new GameIntro() ?? throw new ArgumentNullException(nameof(_gameIntro));
 			_gameLogManager = new GameLogManager() ?? throw new ArgumentNullException(nameof(_gameLogManager));
 			_gameSelection = new GameSelection() ?? throw new ArgumentNullException(nameof(_gameSelection));
@@ -80,7 +83,7 @@ namespace MathGame
 			StartGame();
 		}
 		/// <summary>
-		/// Initial entry point into the program that starts the game and logger
+		/// Initial starting point of the program that begins all other behavior and starts the game and logger
 		/// </summary>
 		/// <return>void</return>
 		private void StartGame()
@@ -88,9 +91,10 @@ namespace MathGame
 			_gameIntro.GameIntroMethod();
 			_gameLogManager.UpdateGameHistory("Addition"); // updating game history
 
-			if (_gameIntro.GetType().IsInstanceOfType(typeof(GameIntro)) && _gameLogManager.GetType().IsInstanceOfType(typeof(GameLogManager)))
+			if (_gameIntro.GetType() == typeof(GameIntro) && _gameLogManager.GetType() == typeof(GameLogManager))
 			{
 				SwitchState(GameStateManager.GameState.Completed);
+				
 			}
 			else
 			{
@@ -98,8 +102,7 @@ namespace MathGame
 				SwitchState(GameStateManager.GameState.Failed);
 			}
 
-			SwitchState(GameStateManager.GameState.Started);
-			Console.WriteLine("Game has started successfully!");
+			
 		}
 
 		/// Implementing Finite State Machine (FSM) or State Pattern for managing game states ///
@@ -109,7 +112,7 @@ namespace MathGame
 		/// refer: https://www.aleksandrhovhannisyan.com/blog/implementing-a-finite-state-machine-in-cpp/
 
 
-		// single abstraction to manage the entire process of changing the game state 
+		// single level of abstraction to manage the entire process of changing the game state 
 		/// <summary>
 		/// Manage the exit and enter state within a single method
 		/// </summary>
@@ -232,6 +235,10 @@ namespace MathGame
 
 
 		// change behavior of game based on state or control the flow of the game based on state
+		/// <summary>
+		/// The method will manage the game flow based on the game state.
+		/// </summary>
+		/// <return>void</return>
 		private void UpdateGameState()
 		{
 
@@ -289,37 +296,61 @@ namespace MathGame
 			Console.WriteLine($"Game state updated to: {_currentState}");
 		}
 
-
+		/// <summary>
+		/// Handles the start of the game.
+		/// </summary>
+		/// <return>void</return>
 		private void HandleGameStart()
 		{
 			_gameSelection.GameRequestSelectionUser();
 			SwitchState(GameStateManager.GameState.Started);
+
+			Console.WriteLine("Game has started successfully!");
 		}
 
+		/// <summary>
+		/// Handles the game UI by printing out an introduction for the game.
+		/// </summary>
+		/// <return>void</return>
 		private void HandleGameIntro()
 		{
 			if (GameStateManager.GameState.Failed.ToString() == "Failed") Console.WriteLine("Game failed to load, restarting game.");
 			_gameIntro.GameIntroMethod();
 			SwitchState(GameStateManager.GameState.Started);
 		}
+
+		/// <summary>
+		/// Handles the game UI by printing out the menu with game options.
+		/// </summary>
+		/// <return>void</return>
 		private void HandleMainMenu()
 		{
 			Console.WriteLine("Main Menu logic...");
 			_gameSelection.GameRequestSelectionUser();
 
 		}
+
+
 		private void HandleGameplay() => Console.WriteLine("Gameplay logic...");
 
 
 		// both this method and gameAnswerManager method can call the ContinueGameSelectOrEnd method
 		// ideally only this method should manage the game-over state
 		// or the game over behavior should be a single action and not the two of continue or end 
+		/// <summary>
+		/// Handles the end of the game.
+		/// </summary>
+		/// <return>void</return>
 		private void HandleGameOver()
 		{
-			_gameSelection.ContinueGameSelectOrEnd(_gameSelection.GameSelect);
+			_gameSelection.ContinueGameSelectOrEnd(GameSelection.GameSelect);
 			// TODO: include logic to save game history
 		}
 
+		/// <summary>
+		/// Handles the transitions of actions.
+		/// </summary>
+		/// <return>void</return>
 		private void HandleActions()
 		{
 			Task taskManager = new Task(() =>
@@ -373,6 +404,10 @@ namespace MathGame
 			});
 		}
 
+		/// <summary>
+		/// Handles the pausing of the game.
+		/// </summary>
+		/// <return>void</return>
 		private void HandleGamePaused()
 		{
 			// logic to handle game paused actions, such as saving game state, showing pause menu, etc...
@@ -422,6 +457,10 @@ namespace MathGame
 			}
 		}
 
+		/// <summary>
+		/// Handles the updating of the game data or logs.
+		/// </summary>
+		/// <return>void</return>
 		private void HandleGameProgress()
 		{ 
 			// logic to handle game progress actions, such as updating score, showing progress bar, etc...

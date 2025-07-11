@@ -4,6 +4,9 @@ using System.Timers;
 
 namespace MathGame;
 
+/// <summary>
+/// Provide methods to manage the answers associated with the game by the user.
+/// </summary>
 public class GameAnswer
 {
 	public int score;
@@ -21,7 +24,10 @@ public class GameAnswer
 
 	}
 
-
+	/// <summary>
+	/// Prompt user for their answer to question including validation of answer.
+	/// </summary>
+	/// <return>void</return>
 	public void gameAnswerPrompt()
 	{
 		Timer timer = new Timer();
@@ -53,6 +59,10 @@ public class GameAnswer
 
 	}
 
+	/// <summary>
+	/// Manage the answers of the game by confirming if the answer provided by user is correct.
+	/// </summary>
+	/// <return>void</return>
 	public void gameAnswerManager()
 	{
 		int numOfParam = QuestionGenerator.NumOfParam; // number of parameters for the operation method

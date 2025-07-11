@@ -31,7 +31,7 @@ using System.Linq;
 internal class Program
 {
 	/// <summary>
-	/// Main entry point to program
+	/// Main entry point to program.
 	/// </summary>
 	/// <return>void</return>
 	private static void Main(string[] args)

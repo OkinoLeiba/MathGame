@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace MathGame
 {
+	/// <summary>
+	/// Manages the game history assoicated with the user session.
+	/// </summary>
 	internal class GameLogManager
 	{
 		public List<string> gameHistory;
@@ -46,17 +49,17 @@ namespace MathGame
 
 
 
-		//	gameLog.UserName = gameIntro.Name.ToString();
+		//	gameLog.UserName = GameIntro.Name.ToString();
 		//	gameLog.Date = DateTime.Now;
-		//	gameLog.Score = gameIntro.Score;
-		//	gameLog.MaxScore = gameIntro.Score;
-		//	gameLog.MinScore = gameIntro.Score;
-		//	gameLog.TotalScore = gameIntro.Score;
-		//	gameLog.CorrectAnswer =	gameIntro.CorrectAnswer;
-		//	gameLog.WrongAnswer = gameIntro.WrongAnswer;
-		//	gameLog.GameCount = gameIntro.CorrectAnswer + gameIntro.WrongAnswer;
-		//	gameLog.GameWon.AddLast(new Dictionary<string, int>() { { gameSelection.GameSelect, 1 } });
-		//	gameLog.GameLost.AddLast(new Dictionary<string, int>() { { gameSelection.GameSelect, 1 } });
+		//	gameLog.Score = GameIntro.Score;
+		//	gameLog.MaxScore = GameIntro.Score;
+		//	gameLog.MinScore = GameIntro.Score;
+		//	gameLog.TotalScore = GameIntro.Score;
+		//	gameLog.CorrectAnswer =	GameIntro.CorrectAnswer;
+		//	gameLog.WrongAnswer = GameIntro.WrongAnswer;
+		//	gameLog.GameCount = GameIntro.CorrectAnswer + GameIntro.WrongAnswer;
+		//	gameLog.GameWon.AddLast(new Dictionary<string, int>() { { GameSelection.GameSelect, 1 } });
+		//	gameLog.GameLost.AddLast(new Dictionary<string, int>() { { GameSelection.GameSelect, 1 } });
 		//	gameLog.Update = DateTime.Now;
 
 
@@ -133,19 +136,19 @@ namespace MathGame
 
 		//public virtual string ToString()
 		//{
-		//	return $"{gameIntro.Date} - {gameSelection.GameSelect}: {gameIntro.Score}";
+		//	return $"{GameIntro.Date} - {gameSelection.GameSelect}: {GameIntro.Score}";
 		//}
 
 		public override string ToString()
 		{
-			string localRefGame = $"{gameIntro.Date} - {gameSelection.GameSelect}: {GameIntro.Score}";
+			string localRefGame = $"{GameIntro.Date} - {GameSelection.GameSelect}: {GameIntro.Score}";
 			return localRefGame;
 			//return base.ToString(localRefGame);
 		}
 
 		public void UpdateGameHistory(string gameName)
 		{
-			//string localRefGame = $"{gameIntro.Date} - {gameSelection.GameSelect}: {GameIntro.Score}";
+			//string localRefGame = $"{GameIntro.Date} - {gameSelection.GameSelect}: {GameIntro.Score}";
 			//gameHistory.Add("31/05/2025 16:38:27 - Addition : 0");
 			//bool test = localRefGame.Contains(gameName);
 			//bool tst = GameHistory.Any(h => h.Contains("gameName"));
@@ -155,10 +158,10 @@ namespace MathGame
 			if (GameHistory.Any(h => h.Contains(gameName)) == true)
 			{ 
 				GameHistory.Remove(GameHistory.Find(h => h.Contains(gameName)));
-				GameHistory.Add($"{gameIntro.Date} - {gameName}: {GameIntro.Score}");
+				GameHistory.Add($"{GameIntro.Date} - {gameName}: {GameIntro.Score}");
 		
 			}
-			else GameHistory.Add($"{gameIntro.Date} - {gameSelection.GameSelect}: {GameIntro.Score}");
+			else GameHistory.Add($"{GameIntro.Date} - {GameSelection.GameSelect}: {GameIntro.Score}");
 			
 		}
 
@@ -177,7 +180,10 @@ namespace MathGame
 			Console.WriteLine("Press any key to return to the main menu...");
 			var mainMenu = Console.ReadKey();
 
-			if (mainMenu.GetType().ToString() == "ConsoleKeyInfo") gameIntro.GameIntroMethod();
+			// different approach to access a specific instance of the Instance list by the type
+			// instead of using the index of the list
+			//var game = AppManager.Instances.Find(i => i is GameIntro) as GameIntro;
+			if (mainMenu.GetType().ToString() == "ConsoleKeyInfo" || mainMenu is not null) AppManager.Instances.OfType<GameIntro>().FirstOrDefault().GameIntroMethod();
 		}
 
 		public void ClearGameHistory()
