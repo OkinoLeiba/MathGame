@@ -52,7 +52,7 @@ namespace MathGame
 
 		}
 
-
+		// approach to use a constructor with parameters to initialize the GameIntro and GameLogger properties
 		//public GameIntro() : GameLogger(string.Empty, DateTime.Now, 0, 0, 0, 0, new GameLogger())
 		//{
 		//	// this constructor initializes the properties with default values for game logger
@@ -65,8 +65,8 @@ namespace MathGame
 		//	GameLog = new GameLogger();
 		//	_instances.Add(this);
 		//}
-	
-			
+
+
 
 		public static IReadOnlyList<GameIntro> Instances => _instances.AsReadOnly();
 
@@ -77,7 +77,8 @@ namespace MathGame
 		/// <return>void</return>
 		public void GameIntroMethod()
 		{
-			GameSelection gameSelection = new GameSelection();
+			// GameSelection gameSelection = new GameSelection();
+			Console.Write("Game Intro Starting...\n");
 			do {
 				Console.WriteLine("""
     ##::::'##::::'###::::'########:'##::::'##::'######::::::'###::::'##::::'##:'########:
@@ -114,7 +115,7 @@ namespace MathGame
 			} while (string.IsNullOrEmpty(Name));
 
 			Console.WriteLine($"Hello {Name}, the date is {Date}.\nDo you want to play a game with me?");
-			gameSelection.GameRequestSelectionUser();
+			// gameSelection.GameRequestSelectionUser();
 		}
 
 

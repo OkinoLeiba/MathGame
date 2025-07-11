@@ -36,13 +36,13 @@ internal class Program
 		//TODO: may change after refactoring 
 		//int score = 0;
 		
-		GameIntro gameIntro = new GameIntro();
+		//GameIntro gameIntro = new GameIntro();
 		//GameSelection gameSelection = new GameSelection();
-		GameLogManager gameLogManager = new GameLogManager();
+		//GameLogManager gameLogManager = new GameLogManager();
 		//gameLogManager.UpdateGameHistory("Addition");
-		gameIntro.GameIntroMethod();
+		//gameIntro.GameIntroMethod();
 
-		AppManager appManager = new AppManager(gameIntro, gameLogManager);
+		AppManager appManager = new AppManager();
 
 	}
 }
