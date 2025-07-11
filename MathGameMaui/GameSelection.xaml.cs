@@ -1,3 +1,4 @@
+using MathGame;
 namespace MathGameMaui;
 
 public partial class GameSelection : ContentPage
@@ -12,10 +13,9 @@ public partial class GameSelection : ContentPage
 	protected override void OnAppearing()
 	{
 		base.OnAppearing();
-		CreateGridButtons(); // Call the method to create grid buttons when the page appears
+		CreateGridButtons(); // call the method to create grid buttons when the page appears
 			
 	}
-
 
 
 	private void CreateGridButtons()

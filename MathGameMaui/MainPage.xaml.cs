@@ -103,8 +103,8 @@ namespace MathGameMaui
 
 			}
 
-			// Uncomment and adjust the following lines if needed
-			// grid.Children.Add(new Label { Text = "Hello, World!" }, 0, 0);
+			// uncomment and adjust the lines if needed
+			// grid.Children.Add(new Label { Text = "Label" }, 0, 0);
 			// grid.Children.Add(new Button { Text = "Click Me" }, 1, 0);
 			// grid.Children.Add(new Entry { Placeholder = "Enter text" }, 0, 1);
 			// grid.Children.Add(new Label { Text = "Another label" }, 1, 1);
@@ -173,7 +173,7 @@ namespace MathGameMaui
 			// this could be replaced with actual logic to navigate to a game history page or display a list of previous games
 			if (sender is Button button)
 			{
-				Button btn = new Button();
+				Button btn = (Button)sender;
 				Navigation.PushAsync(new PreviousHistory());
 
 				SemanticScreenReader.Announce($"{btn.Text} pressed");

@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MathGameMaui.GamePage"
-             Title="GamePage">
+             Title="GamePage"
+             BackgroundImageSource="bg.jpg">
     <ContentPage.Resources>
         <Style TargetType="Label" x:Key="Title">
             <Setter Property="FontSize" Value="48" />
@@ -21,69 +22,72 @@
             <Setter Property="WidthRequest" Value="300" />
         </Style>
     </ContentPage.Resources>
-     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to GamePage"
-            TextColor="NavajoWhite"
-            FontSize="56"
-            Style="{StaticResource Title}"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center"
-            HorizontalTextAlignment="Center"/>
+    <ScrollView>
+         <VerticalStackLayout
+             Padding="100"
+             Spacing="25">
+            <Label 
+                Text="Welcome to GamePage"
+                TextColor="NavajoWhite"
+                FontSize="56"
+                Style="{StaticResource Title}"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"/>
         
-        <Label 
-            Text="{Binding GameSelect}"
-            Style="{StaticResource SubTitle}"/>
+            <Label 
+                Text="{Binding GameSelect}"
+                FontSize="32"
+                Style="{StaticResource SubTitle}"/>
     
-        <Label 
-            x:Name="QuestionLabel"
-            Text="{Binding Question}"
-            TextColor="PapayaWhip"
-            FontSize="Medium"
-            Style="{StaticResource SubTitle}"
-            BackgroundColor="Maroon"
-            WidthRequest="300"/>
+            <Label 
+                x:Name="QuestionLabel"
+                Text="{Binding Question}"
+                TextColor="PapayaWhip"
+                FontSize="Medium"
+                Style="{StaticResource SubTitle}"
+                BackgroundColor="Maroon"
+                WidthRequest="300"/>
 
-        <Entry
-            x:Name="AnswerEntry"
-            VerticalOptions="Center"
-            HorizontalOptions="Center"
-            HorizontalTextAlignment="Center"
-            BackgroundColor="OliveDrab"
-            WidthRequest="300">
+            <Entry
+                x:Name="AnswerEntry"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                BackgroundColor="OliveDrab"
+                WidthRequest="300">
 
-        </Entry>
+            </Entry>
 
-        <Button
-            x:Name="AnswerButton"
-            Text="Answer"
-            Clicked="OnAnswerSubmit"
-            VerticalOptions="Center"
-            HorizontalOptions="Center"
-            BackgroundColor="Peru"
-            WidthRequest="300"
-            />
+            <Button
+                x:Name="AnswerButton"
+                Text="Answer"
+                Clicked="OnAnswerSubmit"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                BackgroundColor="Peru"
+                WidthRequest="300" />
 
-        <Label 
-            x:Name="ResultLabel"
-            IsVisible="False"
-            VerticalOptions="Center"
-            HorizontalOptions="Center"
-            BackgroundColor="MediumSlateBlue" />
+            <Label 
+                x:Name="ResultLabel"
+                FontSize="32"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                BackgroundColor="MediumSlateBlue" />
 
-        <Label 
-            x:Name="ScoreLabel"
-            IsVisible="False"
-            VerticalOptions="Center"
-            HorizontalOptions="Center"
-            BackgroundColor="SpringGreen" />
+            <Label 
+                x:Name="ScoreLabel"
+                FontSize="32"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                BackgroundColor="SpringGreen" />
 
-        <Label 
-          x:Name="GameOverLabel"
-          IsVisible="False"
-          VerticalOptions="Center"
-          HorizontalOptions="Center"
-          BackgroundColor="MediumSlateBlue" />
-
-    </VerticalStackLayout>
+            <Label 
+              x:Name="GameOverLabel"
+              FontSize="32"
+              VerticalOptions="Center"
+              HorizontalOptions="Center"
+              BackgroundColor="MediumSlateBlue" />
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

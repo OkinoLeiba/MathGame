@@ -1,7 +1,12 @@
+
 using MathGame;
+using MathGameMaui.Data;
+using MathGameMaui.Model;
 using System.ComponentModel;
 using System.Reflection;
+
 using static MathGame.OperationsEnum;
+
 
 namespace MathGameMaui;
 
@@ -11,8 +16,8 @@ public partial class GamePage : ContentPage
 	private int numParams;
 	private int firstNum = 0;
 	private int secondNum = 0;
-	private int score = 0;
-	const int totalQuestion = 10;
+	static private int score = 0;
+	const int totalQuestion = 2;
 	private int gameCount = totalQuestion;
 
 	Random random = new Random();
@@ -56,7 +61,7 @@ public partial class GamePage : ContentPage
 	private void NeutralGameState()
 	{
 
-		ScoreLabel.IsVisible = false;
+		//ScoreLabel.IsVisible = false;
 		ResultLabel.IsVisible = false;
 		AnswerEntry.Text = string.Empty;
 	}
@@ -102,7 +107,7 @@ public partial class GamePage : ContentPage
 			//$"{string.Concat(char.ToUpper(GameSelect[0]), GameSelect.Substring(1))}\n{operationSybmol} {FirstNum}" : 
 			//$"{string.Concat(char.ToUpper(GameSelect[0]), GameSelect.Substring(1))}\n{FirstNum} {operationSybmol} {SecondNum}";
 
-
+		if (ScoreLabel.IsVisible) NeutralGameState();
 	}
 
 	private void GenerateResult()
@@ -119,6 +124,7 @@ public partial class GamePage : ContentPage
 		{
 			throw new InvalidCastException("The result could not be cast to an integer.");
 		}
+	
 	}
 
 	private void ProcessAnswer(int result)
@@ -127,6 +133,7 @@ public partial class GamePage : ContentPage
 
 		if ((int)answer == (int)result) // convert int to account for different numerical datatype
 		{
+			score++;
 			ResultLabel.IsVisible = true;
 			ResultLabel.Text = "Congratulations! You got the correct answer!";
 		}
@@ -141,22 +148,22 @@ public partial class GamePage : ContentPage
 
 		gameCount--;
 
-		NeutralGameState();
-
 		GameManager(gameCount);
+		
 	}
 
 	private void GameManager(int count)
 	{
 		if (count > 0)
 		{
-			NeutralGameState();
+			
 			GenerateQuestion();
 		}
 		else
 		{
 			GameOver();
 		}
+		//NeutralGameState();
 	}
 
 	private void GameOver()
@@ -164,15 +171,113 @@ public partial class GamePage : ContentPage
 		GameOverLabel.IsVisible = true;
 		GameOverLabel.Text = $"Game Over! Congratulations you got {score} out of {totalQuestion} right!";
 
-		NeutralGameState();
+		// different approaches to save the game history to the repository
+		// used the app instance, the current instance to access the GameRepository and save the game history
+		//App.GameRepository.UpdateGameHistory(new Model.Game { GameCount = totalQuestion, Score = score, GameSelect = GameSelect });
+
+		//Application.Current?.Resources["GameRepository"] = new Model.Game { GameCount = totalQuestion, Score = score, GameSelect = GameSelect };
+
+		//App.Current?.GameRespository?.UpdateGameHistory();
+
+		//Application.Current?.GameRespository.UpdateGameHistory(new Model.Game { GameCount = totalQuestion, Score = score, GameSelect = GameSelect });
+
+		//= App.GameRepository.SaveGameAsync(new Model.Game { GameCount = totalQuestion, Score = score, GameSelect = GameSelect }).ContinueWith(task =>
+		//{
+		//	if (task.IsCompletedSuccessfully)
+		//	{
+		//		Console.WriteLine("Game history saved successfully.");
+		//	}
+		//	else
+		//	{
+		//		Console.WriteLine($"Error saving game history: {task.Exception?.Message}");
+		//	}
+		//});
+		// ?? new GameRepository(App.Current.GameRepository.DatabasePath); // ensure the GameRepository is initialized
+
+		//App.Current?.GetType().GetProperty("GameRepository").GetValue(App.Current); // get the GameRepository instance from the app
+
+		//GameRepository gameRepository = new GameRepository(App.Current.GameRepository.DatabasePath); // assuming you have a database path set up in your app
+		//gameRepository.SaveGameAsync(new Model.Game { GameCount = totalQuestion, Score = score, GameSelect = GameSelect }).ContinueWith(task =>
+		//{
+		//	if (task.IsCompletedSuccessfully)
+		//	{
+		//		Console.WriteLine("Game history saved successfully.");
+		//	}
+		//	else
+		//	{
+		//		Console.WriteLine($"Error saving game history: {task.Exception?.Message}");
+		//	}
+		//});
+
+		//App.Current?.FindByName<GameRepository>("GameRepository").SaveGameAsync(new Model.Game { GameCount = totalQuestion, Score = score, GameSelect = GameSelect }).ContinueWith(task =>
+		//{
+		//	if (task.IsCompletedSuccessfully)
+		//	{
+		//		Console.WriteLine("Game history saved successfully.");
+		//	}
+		//	else
+		//	{
+		//		Console.WriteLine($"Error saving game history: {task.Exception?.Message}");
+		//	}
+		//});
+
+		App.GameRepository.SaveGameAsync(new Model.Game { GameCount = totalQuestion, Score = score, GameSelect = GameSelect }).ContinueWith(task =>
+		{
+			if (task.IsCompletedSuccessfully)
+			{
+				Console.WriteLine("Game history saved successfully.");
+			}
+			else
+			{
+				Console.WriteLine($"Error saving game history: {task.Exception?.Message}");
+			}
+		});
+
+	
+
 
 		// logic to exit the application
 		// Application.Current.Quit(); // close the application
-		Environment.Exit(0); // or use to terminate the process
+		// Environment.Exit(0); // or use to terminate the process
 	}
 
 	private void OnAnswerSubmit(object sender, EventArgs e)
 	{	
 		GenerateResult();
+	}
+
+	private void OnBackMenuClicked(object sender, EventArgs e)
+	{
+		if (sender is Button button)
+		{
+			Button btn = (Button)sender;
+			Navigation.PopAsync(); // navigate back to the previous page
+			SemanticScreenReader.Announce($"{btn.Text} pressed.");
+		}
+		else
+		{
+			DisplayAlert("Error", "Please enter a valid answer before going back.", "OK");
+		}
+	}
+
+	private void OnBackToMainClicked(object sender, EventArgs e)
+	{
+		if (sender is Button button)
+		{
+			score = 0; // reset score
+			gameCount = totalQuestion; // reset game count
+			// NeutralGameState(); // reset the game state
+			// AnswerEntry.Text = string.Empty; // clear the answer entry field
+			// GameOverLabel.IsVisible = false; // hide the game over label
+
+			Button btn = (Button)sender;
+			Navigation.PushAsync(new MainPage()); // navigate back to the main page
+			// Navigation.PopToRootAsync() to go back to the root page
+			SemanticScreenReader.Announce($"{btn.Text} pressed.");
+		}
+		else
+		{
+			DisplayAlert("Error", "Please enter a valid answer before going back.", "OK");
+		}
 	}
 }

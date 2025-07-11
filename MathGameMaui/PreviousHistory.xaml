@@ -2,11 +2,72 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MathGameMaui.PreviousHistory"
-             Title="PreviousHistory">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to Previous History Page!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="PreviousHistory"
+             BackgroundImageSource="bg.jpg">
+    <ScrollView>
+            <VerticalStackLayout
+            Padding="100, 50, 100, 50"
+                Spacing="8">
+            <Label 
+                Text="Welcome to Previous History Page!"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" 
+                FontSize="32"
+                TextColor="DarkSlateBlue"
+                BackgroundColor="Khaki"
+                />
+            <Grid
+                RowDefinitions="Auto, Auto, Auto"
+                ColumnDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto"
+                HorizontalOptions="Fill"
+                ColumnSpacing="10"
+                BackgroundColor="LightGray">
+                <Label Grid.Column="0" Text="Date" FontSize="20" TextColor="Black"/>
+                <Label Grid.Column="1" Text="Game" FontSize="16" TextColor="DarkGray"/>
+                <Label Grid.Column="2" Text="Score" FontSize="16" TextColor="DarkGreen"/>
+                <Label Grid.Column="3" Text="Correct Answer" FontSize="16" TextColor="SteelBlue"/>
+                <Label Grid.Column="4" Text="Wrong Answer" FontSize="16" TextColor="SteelBlue"/>
+                <Label Grid.Column="5" Text="Average Score" FontSize="16" TextColor="SteelBlue"/>
+                <Label Grid.Column="6" Text="" FontSize="16"/>
+            </Grid>
+            <!-- Empty for Delete Button -->
+                <CollectionView 
+                x:Name="gameList">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <!--<StackLayout Padding="10" Margin="5" BackgroundColor="LightGray">
+                            <Label Text="{Binding GameName}" FontSize="20" TextColor="Black"/>
+                            <Label Text="{Binding DatePlayed}" FontSize="16" TextColor="DarkGray"/>
+                            <Label Text="{Binding Score}" FontSize="16" TextColor="DarkGreen"/>
+                        </StackLayout>-->
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Column="0" Text="{Binding Date}" FontSize="20" TextColor="Black"/>
+                            <Label Grid.Column="1" Text="{Binding GameSelect}" FontSize="16" TextColor="DarkOrange"/>
+                            <Label Grid.Column="2" Text="{Binding Score}" FontSize="16" TextColor="DarkGreen"/>
+                            <Label Grid.Column="3" Text="{Binding CorrectAnswer}" FontSize="16" TextColor="DarkBlue"/>
+                            <Label Grid.Column="4" Text="{Binding WrongAnswer}" FontSize="16" TextColor="DarkRed"/>
+                            <Label Grid.Column="5" Text="{Binding AverageScore}" FontSize="16" TextColor="DarkViolet"/>
+                            <!--<Grid.Column="3" Grid.ColumnSpan="2">-->
+                            <Button Grid.Column="6" Text="Delete" Clicked="OnDeleteClicked"  BindingContext="{Binding Id}" />
+                            <!--<Button Grid.Column="3" Text="Play Again" Command="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, Path=BindingContext.PlayAgainCommand}" CommandParameter="{Binding}"/>
+                            <Button Grid.Column="3" Text="View Details" Command="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, Path=BindingContext.ViewDetailsCommand}" CommandParameter="{Binding}"/>-->
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
