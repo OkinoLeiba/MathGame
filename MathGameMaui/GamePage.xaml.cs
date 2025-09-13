@@ -50,7 +50,7 @@ public partial class GamePage : ContentPage
 
 		try
 		{
-			numParams = typeof(MathGame.Operations).GetMethod(string.Concat(char.ToUpper(GameSelect[0]), GameSelect.Substring(1)))!.GetParameters().Length;
+			numParams = typeof(MathGame.Operations).GetMethod(GameSelect)!.GetParameters().Length;
 		}
 		catch (NullReferenceException nfe) { Console.WriteLine(nfe.Message); }
 
@@ -71,11 +71,11 @@ public partial class GamePage : ContentPage
 		firstNum = random.Next(0, 99);
 		secondNum = random.Next(0, 99);
 
-		if (GameSelect.Trim().ToLower() == "division"
-			|| GameSelect.Trim().ToLower() == "subtraction"
-			|| GameSelect.Trim().ToLower() == "power")
+		if (GameSelect.Trim() == "Division"
+			|| GameSelect.Trim() == "Subtraction"
+			|| GameSelect.Trim() == "Power")
 		{
-			if (GameSelect.Trim().ToLower() == "division" && (FirstNum == 0 || SecondNum == 0))
+			if (GameSelect.Trim() == "Division" && (FirstNum == 0 || SecondNum == 0))
 			{
 				FirstNum = random.Next(1, 99); 
 				SecondNum = random.Next(1, 99);
@@ -94,7 +94,7 @@ public partial class GamePage : ContentPage
 		var operationSybmol = typeof(EnumOperationsMethodUnitSymbol)
 			.GetTypeInfo()
 			.DeclaredMembers
-			.SingleOrDefault(m => m.Name.Trim().ToLower() == GameSelect.Trim().ToLower())?
+			.SingleOrDefault(m => m.Name.Trim() == GameSelect.Trim())?
 			.GetCustomAttributes<DescriptionAttribute>(false)
 			.First()
 			.Description
@@ -104,8 +104,8 @@ public partial class GamePage : ContentPage
 			$"{operationSybmol} {FirstNum}" : 
 			$"{FirstNum} {operationSybmol} {SecondNum}";
 
-			//$"{string.Concat(char.ToUpper(GameSelect[0]), GameSelect.Substring(1))}\n{operationSybmol} {FirstNum}" : 
-			//$"{string.Concat(char.ToUpper(GameSelect[0]), GameSelect.Substring(1))}\n{FirstNum} {operationSybmol} {SecondNum}";
+			//$"{GameSelect}\n{operationSybmol} {FirstNum}" : 
+			//$"{GameSelect}\n{FirstNum} {operationSybmol} {SecondNum}";
 
 		if (ScoreLabel.IsVisible) NeutralGameState();
 	}
@@ -113,8 +113,8 @@ public partial class GamePage : ContentPage
 	private void GenerateResult()
 	{
 		var result = numParams == 1 ?
-			(int)(double)typeof(MathGame.Operations).GetMethod(string.Concat(char.ToUpper(GameSelect[0]), GameSelect.Substring(1)))?.Invoke(Activator.CreateInstance(typeof(Operations)), new object[] { FirstNum }) :
-			(int)(double)typeof(MathGame.Operations).GetMethod(string.Concat(char.ToUpper(GameSelect[0]), GameSelect.Substring(1)))?.Invoke(Activator.CreateInstance(typeof(Operations)), new object[] { FirstNum, SecondNum });
+			(int)(double)typeof(MathGame.Operations).GetMethod(GameSelect)?.Invoke(Activator.CreateInstance(typeof(Operations)), new object[] { FirstNum }) :
+			(int)(double)typeof(MathGame.Operations).GetMethod(GameSelect)?.Invoke(Activator.CreateInstance(typeof(Operations)), new object[] { FirstNum, SecondNum });
 
 		if (result is int intResult) // ensure the result is cast to an integer
 		{
