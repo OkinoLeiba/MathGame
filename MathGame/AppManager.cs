@@ -2,11 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading.Tasks;
 using static MathGame.GameStateManager;
 
@@ -124,7 +119,7 @@ namespace MathGame
 			// this could involve updating UI, game logic, etc...
 			// SwitchState is absolved of that responsibility and has only the one responsibility 
 			ExitCurrentState(_currentState);
-			_currentState = GameStateManager.GameState.Loading;
+			_currentState = newState;
 			EnterNewState(_currentState);
 		}
 
@@ -261,7 +256,7 @@ namespace MathGame
 					HandleActions();
 					break;
 				case GameState.Completed:
-					Console.WriteLine("Action completed...");
+					HandleActions();
 					break;
 				case GameState.Failed:
 					HandleGameIntro();
@@ -270,7 +265,7 @@ namespace MathGame
 					HandleGameStart();
 					break;
 				case GameState.Loading:
-					Console.WriteLine("Game loading...");
+					HandleActions();
 					break;
 				case GameState.Started:
 					HandleGameStart();
@@ -302,10 +297,14 @@ namespace MathGame
 		/// <return>void</return>
 		private void HandleGameStart()
 		{
+			if (GameStateManager.GameState.Started.ToString() == "Started") Console.WriteLine("Game is already started.");
+			else Console.WriteLine("Starting game...");
+
 			_gameSelection.GameRequestSelectionUser();
 			SwitchState(GameStateManager.GameState.Started);
 
 			Console.WriteLine("Game has started successfully!");
+
 		}
 
 		/// <summary>
@@ -402,9 +401,15 @@ namespace MathGame
 				{
 					Console.WriteLine("Action Completed.");
 				}
-				else if (GameStateManager.GameState.NotStarted == _currentState)
+				else if (GameStateManager.GameState.Failed == _currentState)
 				{
-					SwitchState(GameStateManager.GameState.Started);
+					Console.WriteLine("Action Failed.");
+					// handle failed action logic, such as retrying or showing an error message
+					SwitchState(GameStateManager.GameState.Failed);
+				}
+				else
+				{
+					new InvalidOperationException("Invalid game state for actions.");
 				}
 			});
 
@@ -419,13 +424,13 @@ namespace MathGame
 			// logic to handle game paused actions, such as saving game state, showing pause menu, etc...
 			Console.WriteLine("Game is paused. Showing pause menu...");
 			// this could involve updating UI or game logic
-			SwitchState(GameStateManager.GameState.Paused);
+			// SwitchState(GameStateManager.GameState.Paused);
 			do
 			{
 				Console.WriteLine("Press any key to unpause the game.");
 				var input = Console.ReadKey().Key.GetHashCode().ToString();
 				//HandleGamePaused?.invoke(input);
-				if (string.IsNullOrEmpty(input)) { SwitchState(GameStateManager.GameState.Playing); return; }
+				if (!string.IsNullOrEmpty(input)) { SwitchState(GameStateManager.GameState.Playing); return; }
 
 			} while (true);
 
@@ -478,7 +483,10 @@ namespace MathGame
 			SwitchState(GameStateManager.GameState.InProgress);
 		}
 
-
+		/// <summary>
+		/// Handles the change of the state of the game and game behavior and updates the game log manager accordingly.
+		/// </summary>
+		/// <return>void</return>
 		private void HandleGameStateChange(GameStateManager.GameState newState)
 		{
 			// logic to handle game state changes, such as updating UI or game logic
@@ -486,6 +494,10 @@ namespace MathGame
 			SwitchState(newState);
 		}
 
+		/// <summary>
+		/// Handles the initial creation and management of the game log manager.
+		/// </summary>
+		/// <return>void</return>
 		private void HandleGameLogManager()
 		{
 			// logic to handle game log manager actions
