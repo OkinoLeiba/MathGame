@@ -2,6 +2,10 @@ using MathGameMaui.Data;
 
 namespace MathGameMaui;
 
+/// <summary>
+/// Class representing the PreviousHistory page in the Math Game application.
+/// </summary>
+/// <return>void</return>
 public partial class PreviousHistory : ContentPage
 {
 	public PreviousHistory()
@@ -12,18 +16,32 @@ public partial class PreviousHistory : ContentPage
 		//App.Current?.On<MathGameMaui.App>().GameRepository.GetGamesAsync(); // load previous games from the repository
 	}
 
+	/// <summary>
+	/// Event handler for when the page is appearing.
+	/// Adds the game list to the UI when the page appears.
+	/// </summary>
+	/// <return>void</return>
 	protected override void OnAppearing()
 	{
 		base.OnAppearing();
 		gameList.ItemsSource = App.GameRepository.GetGames(); // refresh the game list when the page appears
 	}
 
+	/// <summary>
+	/// Event handler for when the page is disappearing.
+	/// Disposes of the game list to free up resources.
+	/// </summary>
+	/// <return>void</return>
 	protected override void OnDisappearing() {
 		base.OnDisappearing();
 		// optionally clear the game list or perform any cleanup here
 		gameList.ItemsSource = null; // clear the list when the page disappears
 	}
 
+	/// <summary>
+	/// Manages the click event for the delete button to delete a game history entry.
+	/// </summary>
+	/// <return>void</return>
 	private void OnDeleteClicked(object sender, EventArgs e)
 	{
 
@@ -54,6 +72,10 @@ public partial class PreviousHistory : ContentPage
 		
 	}
 
+	/// <summary>
+	/// Manages the selection change event for the game list to display selected game details.
+	/// </summary>
+	/// <return>void</return>
 	private void OnGameSelected(object sender, SelectionChangedEventArgs e)
 	{
 		if (e.CurrentSelection.Count > 0 && e.CurrentSelection[0] is Model.Game selectedGame)
