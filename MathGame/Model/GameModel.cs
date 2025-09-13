@@ -6,6 +6,10 @@ namespace MathGame;
 
 internal partial class GameModel : Component		
 {
+	// a static data model to hold all game instances
+	// it is a simple implementation for now, used print to console
+	// this can be extended to use a database or file storage in the future
+
 	private string _name = default(string);
 	private DateTime _date = default(DateTime);
 	private int _score = 0;
