@@ -290,7 +290,7 @@ public class GameSelection
 				foreach (var selectedGame in Enum.GetValues(typeof(OperationsEnum.EnumOperationsMethodPrefix)))
 				{
 					string gameName = ((OperationsEnum.EnumOperationsMethod)selectCount++).ToString();
-					if (GameSelect?.ToLower() == selectedGame.ToString()!.ToLower())
+					if (GameSelect == selectedGame.ToString()!)
 					{
 						// different approach to retrieve string from enum via the cast of int to string literal
 						//Enum.GetName(typeof(OperationEnum.EnumOperationMethod), (int) game).ToString();
@@ -313,11 +313,11 @@ public class GameSelection
 			{
 				foreach (var selectedGame in Enum.GetNames(typeof(OperationsEnum.EnumOperationsMethod)))
 				{
-					if (GameSelect.ToLower() == selectedGame.ToString().ToLower()) Console.WriteLine($"The {selectedGame} game was selected.");
+					if (GameSelect == selectedGame.ToString()) Console.WriteLine($"The {selectedGame} game was selected.");
 
 				}
 			}
-			else if (GameSelect.Trim().ToLower() == "prev" || GameSelect.Trim().ToLower() == "previous" || GameSelect.Trim().ToLower() == "game history")
+			else if (GameSelect.Trim().ToLower() == "prev" || GameSelect.Trim() == "previous" || GameSelect.Trim() == "game history")
 			{
 				foreach (var history in gameLogManager.GameHistory)
 				{
@@ -397,7 +397,7 @@ public class GameSelection
 		#endregion
 
 
-		questionGenerator.MathQuestion(GameSelect.Trim().ToLower());
+		questionGenerator.MathQuestion(GameSelect.Trim());
 
 		// generate a list of characters 
 		// exclude ascii characters after 5A
@@ -432,7 +432,7 @@ public class GameSelection
 
 		// series of if statement to print out message to user concerning the selection of game
 		#region GameSelection If Statement
-		if (GameSelect.Trim().ToLower() == "addition" || GameSelect.Trim().ToLower() == "a")
+		if (GameSelect.Trim() == "addition" || GameSelect.Trim().ToLower() == "a")
 		{
 			Console.WriteLine("The addition game was selected.");
 		}
