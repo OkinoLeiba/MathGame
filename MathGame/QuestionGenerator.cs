@@ -32,15 +32,17 @@ public class QuestionGenerator
 
 		try
 		{
-			// strings requires conversion to title case
-			numOfParam = typeof(Operations).GetMethod(string.Concat(char.ToUpper(operation[0]), operation.Substring(1)))!.GetParameters().Length;
+			// strings may require conversion to title case
+			// the name of game will remain consistent with the naming convection of the methods in the 
+			// Operations class
+			numOfParam = typeof(Operations).GetMethod(operation)!.GetParameters().Length;
 		} catch(NullReferenceException nfe) { Console.WriteLine(nfe.Message); }
 
 		// more type safe way to get the number of parameters for the method
 		//var methodInfo = typeof(Operations).GetMethod(operation);
 		//if (methodInfo != null)
 		//{
-		//	numOfParam = methodInfo.GetParameters(string.Concat(char.ToUpper(operation[0]), operation.Substring(1))).Length;
+		//	numOfParam = methodInfo.GetParameters(operation).Length;
 
 		//}
 		//else
@@ -50,21 +52,23 @@ public class QuestionGenerator
 
 		if (numOfParam == 1) firstNum = random.Next(1, 99); else firstNum = random.Next(0, 99); secondNum = random.Next(0, 99);
 
-		if (operation.Trim().ToLower() == "division" 
-			||  operation.Trim().ToLower() == "subtraction" 
-			|| operation.Trim().ToLower() == "power") firstNum = int.Max(firstNum, secondNum); secondNum = int.Min(firstNum, secondNum);
+		if (operation.Trim() == "Division" 
+			||  operation.Trim() == "Subtraction" 
+			|| operation.Trim() == "Power") firstNum = int.Max(firstNum, secondNum); secondNum = int.Min(firstNum, secondNum);
 
-		if (operation.Trim().ToLower() == "division" && secondNum == 0) secondNum = random.Next(1,99);
+		if (operation.Trim() == "Division" && secondNum == 0) secondNum = random.Next(1,99);
 
 		FirstNum = firstNum;
 		SecondNum = secondNum;
 		NumOfParam = numOfParam;
 
+		// the name of game will remain consistent with the naming convection of the methods in the 
+		// Operations class
 		var operationSybmol = typeof(EnumOperationsMethodUnitSymbol)
 			.GetTypeInfo()
 			.DeclaredMembers
 			//.GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase)
-			.SingleOrDefault(m => m.Name.Trim().ToLower() == operation.Trim().ToLower())?
+			.SingleOrDefault(m => m.Name.Trim() == operation.Trim())?
 			.GetCustomAttributes<DescriptionAttribute>(false)
 			.First()
 			.Description
