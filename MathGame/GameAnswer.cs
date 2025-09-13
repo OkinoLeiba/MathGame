@@ -39,18 +39,19 @@ public class GameAnswer
 		while (string.IsNullOrEmpty(answerString) 
 			|| (!Double.TryParse(answerString, out _) || !Int32.TryParse(answerString, out _)))
 		{
+			if (answerString.Trim().ToLower() == "exit" || answerString.Trim().ToLower() == "e" || answerString.Trim().ToLower() == "close")
+			{
+				Console.WriteLine("Bye for Now!");
+				timer.Interval = 10000;
+				timer.Stop();
+				timer.Dispose();
+				Environment.Exit(1);
+			}
 			Console.WriteLine("Please provide an valid answer");
 			answerString = Console.ReadLine();
 		}
 
-		if (answerString.Trim().ToLower() == "exit" || answerString.Trim().ToLower() == "e" || answerString.Trim().ToLower() == "close")
-		{
-			Console.WriteLine("Bye for Now!");
-			timer.Interval = 10000;
-			timer.Stop();
-			timer.Dispose();
-			Environment.Exit(1);
-		}
+		
 
 		answer = Convert.ToDouble(answerString);
 
@@ -76,7 +77,7 @@ public class GameAnswer
 		{
 			try
 			{
-				result = (double)typeof(Operations).GetMethod(string.Concat(char.ToUpper(GameSelect[0]), GameSelect.Substring(1)))?.Invoke(new Operations(), new object[] { firstNum })!;
+				result = (double)typeof(Operations).GetMethod(GameSelect)?.Invoke(new Operations(), new object[] { firstNum })!;
 			}
 			catch (NullReferenceException nfe) { Console.WriteLine(nfe.Message); return; } // exit if the method is not found 
 		}
@@ -84,7 +85,7 @@ public class GameAnswer
 		{
 			try
 			{
-				result = (double)typeof(Operations).GetMethod(string.Concat(char.ToUpper(GameSelect[0]), GameSelect.Substring(1)))?.Invoke(new Operations(), new object[] { firstNum, secondNum })!;
+				result = (double)typeof(Operations).GetMethod(GameSelect)?.Invoke(new Operations(), new object[] { firstNum, secondNum })!;
 			}
 			catch (NullReferenceException nfe) { Console.WriteLine(nfe.Message); return; } // exit if the method is not found 
 		}
