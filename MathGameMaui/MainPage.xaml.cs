@@ -3,6 +3,10 @@ using MathGame;
 
 namespace MathGameMaui
 {
+	/// <summary>
+	/// Class representing the main page of the Math Game application.
+	/// </summary>
+	/// <return>void</return>
 	public partial class MainPage : ContentPage
 	{
 		
@@ -34,6 +38,12 @@ namespace MathGameMaui
 		//	}
 		//}
 
+		/// <summary>
+		/// Event handler for when the page is appearing.
+		/// Creates grid buttons dynamically based on available operations
+		/// and displays a welcome message in figlet style.
+		/// </summary>
+		/// <return>void</return>
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
@@ -41,6 +51,10 @@ namespace MathGameMaui
 			WelcomeFiglet();
 		}
 
+		/// <summary>
+		/// Assigns a welcome message in figlet style to the FigletWelcome label.
+		/// </summary>
+		/// <return>void</return>
 		public void WelcomeFiglet()
 		{
 			// this method can be used to display a welcome message in a figlet style
@@ -50,6 +64,10 @@ namespace MathGameMaui
 
 		}
 
+		/// <summary>
+		/// Creates grid buttons dynamically based on available operations.
+		/// </summary>
+		/// <return>void</return>
 		private void CreateGridButtons()
 		{
 			var MethodName = typeof(MathGame.Operations)
@@ -111,6 +129,10 @@ namespace MathGameMaui
 			// Content = grid;
 		}
 
+		/// <summary>
+		/// Navigates to the GameSelection page when the MathGame button is clicked.
+		/// </summary>
+		/// <return>void</return>
 		private void OnMathGameClicked(object sender, EventArgs e)
 		{
 			//CreateGridButtons();
@@ -127,11 +149,16 @@ namespace MathGameMaui
 			}
 		}
 
+		/// <summary>
+		/// Manages the click event that handles game operations and displaying previous game history or exiting the application.
+		/// </summary>
+		/// <return>void</return>
 		private void OnGameButtonClicked(object sender, EventArgs e)
 		{
 			if (sender is Button button)
 			{
 				string operation = button.Text.Trim().ToLower();
+				SemanticScreenReader.Announce($"{button.Text} pressed.");
 				if (operation == "prev - previous game history")
 				{
 					DisplayAlert("Game History", "Displaying previous game history...", "OK");
@@ -146,10 +173,14 @@ namespace MathGameMaui
 					DisplayAlert("Selected Operation", $"You selected: {operation}", "OK");
 					// logic to handle the selected operation
 				}
-				//SemanticScreenReader.Announce();
+				
 			}
 		}
 
+		/// <summary>
+		/// Navigates to the GamePage when a game selection button is clicked.
+		/// </summary>
+		/// <return>void</return>
 		private void OnGameSelectionClicked(object sender, EventArgs e)
 		{
 			if (sender is Button button)
@@ -166,6 +197,10 @@ namespace MathGameMaui
 			
 		}
 
+		/// <summary>
+		/// Navigates to the game history page when the Game History button is clicked.
+		/// </summary>
+		/// <return>void</return>
 		private void OnGameHistoryClicked(object sender, EventArgs e)
 		{
 			// logic to display game history
@@ -184,6 +219,10 @@ namespace MathGameMaui
 			}
 		}
 
+		/// <summary>
+		/// Exits the application when the Exit button is clicked.
+		/// </summary>
+		/// <return>void</return>
 		private void OnExitClicked(object sender, EventArgs e)
 		{
 			Button button = (Button)sender;
@@ -193,16 +232,6 @@ namespace MathGameMaui
 			SemanticScreenReader.Announce(SemanticProperties.GetDescription(button));
 		}
 
-		//private void OnCounterClicked(object? sender, EventArgs e)
-		//{
-		//	count++;
-
-		//	if (count == 1)
-		//		CounterBtn.Text = $"Clicked {count} time";
-		//	else
-		//		CounterBtn.Text = $"Clicked {count} times";
-
-		//	SemanticScreenReader.Announce(CounterBtn.Text);
-		//}
+		
 	}
 }

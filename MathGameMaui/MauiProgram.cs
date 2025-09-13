@@ -5,8 +5,16 @@ using System;
 
 namespace MathGameMaui;
 
+/// <summary>
+/// Class MauiProgram contains the entry point for the Maui application.
+/// </summary>
+/// <return>void</return>
 public static class MauiProgram
 {
+	/// <summary>
+	/// CreateMauiApp method initializes the Maui application.
+	/// </summary>
+	/// <return>void</return>
 	public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder();
