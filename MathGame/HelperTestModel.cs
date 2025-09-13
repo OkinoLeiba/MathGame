@@ -7,6 +7,8 @@ namespace MathGame;
 
 internal class HelperTestModel
 {
+
+	/// create a list of test game instances
 	private List<GameModel> testGames = new List<GameModel>
 		{
 			new GameModel("Eve", new DateTime(2025, 4, 10), 175, "Division"),
@@ -34,6 +36,10 @@ internal class HelperTestModel
 		};
 
 	// method to display test data
+	/// <summary>
+	/// Prints the details of each test game instance to the console.
+	/// </summary>
+	/// <return>void</return>
 	public void DisplayTestGames()
 	{
 		foreach (var game in testGames)
