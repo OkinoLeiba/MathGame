@@ -8,7 +8,7 @@ namespace MathGame.Model
 {
 	public struct GameLogger
 	{
-		// a static list to hold all instances of GameLogger
+		// a static data model to create all instances of GameLogger
 		// this allows us to keep track of all game logs created during the program's execution
 		// using registry design pattern: consider weak references if memory consumption is a concern
 		// keep the instance tracker even though there is another version in the GameIntro class
