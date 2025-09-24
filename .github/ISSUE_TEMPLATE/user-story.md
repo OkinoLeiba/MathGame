@@ -17,7 +17,9 @@ assignees: ''
  ### Acceptance Criteria  
    
  ```gherkin
- Given [some context]
- When [certain action is taken]
- Then [the outcome of action is observed]
+Scenario: [a specific situation or example]
+* Given: [the initial context or state]
+* When: [the action or event]
+* Then: Describe the expected testable outcome or result]
+* And [But]: [add additional conditions to the Given, When, and Then steps]
  ```
